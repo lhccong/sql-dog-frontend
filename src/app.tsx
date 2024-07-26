@@ -7,7 +7,8 @@ import { requestConfig } from './requestConfig';
 import {getLoginUserUsingGet} from "@/services/backend/userController";
 
 const loginPath = '/user/login';
-
+const script = document.createElement('script');
+script.src = '/pages/User/Register/tac/js/load.min.js';
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
