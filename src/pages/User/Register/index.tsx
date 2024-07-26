@@ -1,10 +1,10 @@
 import Footer from '@/components/Footer';
 import {SYSTEM_LOGO} from '@/constants';
-import {userRegisterUsingPost} from '@/services/backend/userController';
+import {captcha, userRegister} from '@/services/backend/userController';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {LoginForm, ProFormText} from '@ant-design/pro-form';
-import {message, Tabs} from 'antd';
-import React, {useRef, useState} from 'react';
+import {Col, Form, Image, message, Row, Tabs} from 'antd';
+import React, {useEffect, useRef, useState} from 'react';
 import {history} from 'umi';
 import styles from './index.less';
 
@@ -12,16 +12,17 @@ import styles from './index.less';
 const Register: React.FC = () => {
 
   const [type, setType] = useState<string>('account');
+  const [form] = Form.useForm();
   // @ts-ignore
-  const [valueData, setValueData] = useState<API.UserRegisterRequest>(null);
-
+  const [captchaResult, setCaptchaResult] = useState<API.CaptchaVO>();
   const ref = useRef();
+  useEffect(() => {
+    captcha().then((res) => {
+      setCaptchaResult(res.data)
+      form.setFieldsValue({varKey: res.data?.key})
+    });
+  }, []); // 空依赖数组表示只在组件挂载时运行一次
 
-  const click = () => {
-    const check: any = ref.current;
-    check.verify();
-    console.log(check.verify());
-  };
   // 表单提交
   const handleSubmit = async (values: API.UserRegisterRequest) => {
     const {userPassword, checkPassword} = values;
@@ -33,7 +34,7 @@ const Register: React.FC = () => {
 
     try {
       // 注册
-      const data = await userRegisterUsingPost(values);
+      const data = await userRegister(values);
       if (data.code === 0) {
         const defaultLoginSuccessMessage = '注册成功！';
         message.success(defaultLoginSuccessMessage);
@@ -52,6 +53,7 @@ const Register: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
+          form={form}
           submitter={{
             searchConfig: {
               submitText: '注册',
@@ -60,11 +62,11 @@ const Register: React.FC = () => {
           logo={<img alt="logo" src={SYSTEM_LOGO}/>}
           title="SQL Dog"
           initialValues={{
+            varKey: captchaResult?.key,
             autoLogin: true,
           }}
           onFinish={async (values) => {
-            click();
-            setValueData(values);
+            await handleSubmit(values);
           }}
         >
           <Tabs activeKey={type} onChange={setType}>
@@ -136,6 +138,13 @@ const Register: React.FC = () => {
               {/*  type="auto"*/}
               {/*  ref={ref}*/}
               {/*></Captcha>*/}
+              <ProFormText name="verKey" hidden={true}/>
+              <Row>
+                <Col span={10}><ProFormText name="verCode"></ProFormText></Col>
+                <Col span={12} style={{marginLeft: 20, marginBottom: 10}}><Image src={captchaResult?.code} id="verImg"
+                                                                                 width="130px" height="48px"/></Col>
+              </Row>
+
             </>
           )}
         </LoginForm>

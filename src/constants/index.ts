@@ -1,7 +1,7 @@
 /**
  * 本地后端地址
  */
-export const BACKEND_HOST_LOCAL = 'http://localhost:8108';
+export const BACKEND_HOST_LOCAL = 'http://localhost:8108/api';
 
 /**
  * 线上后端地址

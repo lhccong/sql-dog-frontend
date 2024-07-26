@@ -1,423 +1,190 @@
 declare namespace API {
-  type BaseResponseBoolean_ = {
+  type AuthCallback = {
+    code?: string;
+    auth_code?: string;
+    state?: string;
+    authorization_code?: string;
+    oauth_token?: string;
+    oauth_verifier?: string;
+  };
+
+  type BaseResponseBoolean = {
     code?: number;
     data?: boolean;
     message?: string;
   };
 
-  type BaseResponseListUrlTagCategoryVo_ = {
+  type BaseResponseCaptchaVO = {
     code?: number;
-    data?: UrlTagCategoryVo[];
+    data?: CaptchaVO;
     message?: string;
   };
 
-  type BaseResponseLoginUserVO_ = {
+  type BaseResponseLoginUserVO = {
     code?: number;
     data?: LoginUserVO;
     message?: string;
   };
 
-  type BaseResponseLong_ = {
+  type BaseResponseLong = {
     code?: number;
     data?: number;
     message?: string;
   };
 
-  type BaseResponsePageUrlRelate_ = {
+  type BaseResponsePageUser = {
     code?: number;
-    data?: PageUrlRelate_;
+    data?: PageUser;
     message?: string;
   };
 
-  type BaseResponsePageUrlRelateVo_ = {
+  type BaseResponsePageUserVO = {
     code?: number;
-    data?: PageUrlRelateVo_;
+    data?: PageUserVO;
     message?: string;
   };
 
-  type BaseResponsePageUser_ = {
-    code?: number;
-    data?: PageUser_;
-    message?: string;
-  };
-
-  type BaseResponsePageUserVO_ = {
-    code?: number;
-    data?: PageUserVO_;
-    message?: string;
-  };
-
-  type BaseResponseString_ = {
+  type BaseResponseString = {
     code?: number;
     data?: string;
     message?: string;
   };
 
-  type BaseResponseTokenLoginUserVo_ = {
+  type BaseResponseTokenLoginUserVo = {
     code?: number;
     data?: TokenLoginUserVo;
     message?: string;
   };
 
-  type BaseResponseUrlRelate_ = {
-    code?: number;
-    data?: UrlRelate;
-    message?: string;
-  };
-
-  type BaseResponseUrlRelateVo_ = {
-    code?: number;
-    data?: UrlRelateVo;
-    message?: string;
-  };
-
-  type BaseResponseUrlTagVo_ = {
-    code?: number;
-    data?: UrlTagVo;
-    message?: string;
-  };
-
-  type BaseResponseUser_ = {
+  type BaseResponseUser = {
     code?: number;
     data?: User;
     message?: string;
   };
 
-  type BaseResponseUserVO_ = {
+  type BaseResponseUserVO = {
     code?: number;
     data?: UserVO;
     message?: string;
   };
 
-  type checkUsingGETParams = {
-    /** echostr */
-    echostr?: string;
-    /** nonce */
-    nonce?: string;
-    /** signature */
-    signature?: string;
-    /** timestamp */
-    timestamp?: string;
+  type CaptchaVO = {
+    key?: string;
+    code?: string;
   };
 
   type DeleteRequest = {
     id?: number;
   };
 
-  type getUrlRelateVoByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type getUserByIdParams = {
+    id: number;
   };
 
-  type getUrlRelateVoByShortLinkUsingGETParams = {
-    /** shortLink */
-    shortLink?: string;
-  };
-
-  type getUserByIdUsingGETParams = {
-    /** id */
-    id?: number;
-  };
-
-  type getUserVoByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type getUserVoByIdParams = {
+    id: number;
   };
 
   type LoginUserVO = {
-    createTime?: string;
     id?: number;
-    updateTime?: string;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
-  };
-
-  type ModelAndView = {
-    empty?: boolean;
-    model?: Record<string, any>;
-    modelMap?: Record<string, any>;
-    reference?: boolean;
-    status?:
-      | 'CONTINUE'
-      | 'SWITCHING_PROTOCOLS'
-      | 'PROCESSING'
-      | 'CHECKPOINT'
-      | 'OK'
-      | 'CREATED'
-      | 'ACCEPTED'
-      | 'NON_AUTHORITATIVE_INFORMATION'
-      | 'NO_CONTENT'
-      | 'RESET_CONTENT'
-      | 'PARTIAL_CONTENT'
-      | 'MULTI_STATUS'
-      | 'ALREADY_REPORTED'
-      | 'IM_USED'
-      | 'MULTIPLE_CHOICES'
-      | 'MOVED_PERMANENTLY'
-      | 'FOUND'
-      | 'MOVED_TEMPORARILY'
-      | 'SEE_OTHER'
-      | 'NOT_MODIFIED'
-      | 'USE_PROXY'
-      | 'TEMPORARY_REDIRECT'
-      | 'PERMANENT_REDIRECT'
-      | 'BAD_REQUEST'
-      | 'UNAUTHORIZED'
-      | 'PAYMENT_REQUIRED'
-      | 'FORBIDDEN'
-      | 'NOT_FOUND'
-      | 'METHOD_NOT_ALLOWED'
-      | 'NOT_ACCEPTABLE'
-      | 'PROXY_AUTHENTICATION_REQUIRED'
-      | 'REQUEST_TIMEOUT'
-      | 'CONFLICT'
-      | 'GONE'
-      | 'LENGTH_REQUIRED'
-      | 'PRECONDITION_FAILED'
-      | 'PAYLOAD_TOO_LARGE'
-      | 'REQUEST_ENTITY_TOO_LARGE'
-      | 'URI_TOO_LONG'
-      | 'REQUEST_URI_TOO_LONG'
-      | 'UNSUPPORTED_MEDIA_TYPE'
-      | 'REQUESTED_RANGE_NOT_SATISFIABLE'
-      | 'EXPECTATION_FAILED'
-      | 'I_AM_A_TEAPOT'
-      | 'INSUFFICIENT_SPACE_ON_RESOURCE'
-      | 'METHOD_FAILURE'
-      | 'DESTINATION_LOCKED'
-      | 'UNPROCESSABLE_ENTITY'
-      | 'LOCKED'
-      | 'FAILED_DEPENDENCY'
-      | 'TOO_EARLY'
-      | 'UPGRADE_REQUIRED'
-      | 'PRECONDITION_REQUIRED'
-      | 'TOO_MANY_REQUESTS'
-      | 'REQUEST_HEADER_FIELDS_TOO_LARGE'
-      | 'UNAVAILABLE_FOR_LEGAL_REASONS'
-      | 'INTERNAL_SERVER_ERROR'
-      | 'NOT_IMPLEMENTED'
-      | 'BAD_GATEWAY'
-      | 'SERVICE_UNAVAILABLE'
-      | 'GATEWAY_TIMEOUT'
-      | 'HTTP_VERSION_NOT_SUPPORTED'
-      | 'VARIANT_ALSO_NEGOTIATES'
-      | 'INSUFFICIENT_STORAGE'
-      | 'LOOP_DETECTED'
-      | 'BANDWIDTH_LIMIT_EXCEEDED'
-      | 'NOT_EXTENDED'
-      | 'NETWORK_AUTHENTICATION_REQUIRED';
-    view?: View;
-    viewName?: string;
+    createTime?: string;
+    updateTime?: string;
   };
 
   type OrderItem = {
-    asc?: boolean;
     column?: string;
+    asc?: boolean;
   };
 
-  type PageUrlRelate_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: UrlRelate[];
-    searchCount?: boolean;
-    size?: number;
-    total?: number;
-  };
-
-  type PageUrlRelateVo_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: UrlRelateVo[];
-    searchCount?: boolean;
-    size?: number;
-    total?: number;
-  };
-
-  type PageUser_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
+  type PageUser = {
     records?: User[];
-    searchCount?: boolean;
-    size?: number;
     total?: number;
-  };
-
-  type PageUserVO_ = {
-    countId?: string;
+    size?: number;
     current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
     orders?: OrderItem[];
+    optimizeCountSql?: PageUser;
+    searchCount?: PageUser;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
     pages?: number;
-    records?: UserVO[];
-    searchCount?: boolean;
-    size?: number;
-    total?: number;
   };
 
-  type redirectToLongLinkUsingGETParams = {
-    /** shortLink */
-    shortLink: string;
+  type PageUserVO = {
+    records?: UserVO[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageUserVO;
+    searchCount?: PageUserVO;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
   };
 
   type SaTokenInfo = {
+    tokenName?: string;
+    tokenValue?: string;
     isLogin?: boolean;
-    loginDevice?: string;
     loginId?: Record<string, any>;
     loginType?: string;
-    sessionTimeout?: number;
-    tag?: string;
-    tokenActiveTimeout?: number;
-    tokenName?: string;
-    tokenSessionTimeout?: number;
     tokenTimeout?: number;
-    tokenValue?: string;
+    sessionTimeout?: number;
+    tokenSessionTimeout?: number;
+    tokenActiveTimeout?: number;
+    loginDevice?: string;
+    tag?: string;
   };
 
   type TokenLoginUserVo = {
-    createTime?: string;
     id?: number;
-    saTokenInfo?: SaTokenInfo;
-    updateTime?: string;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
+    createTime?: string;
+    updateTime?: string;
+    saTokenInfo?: SaTokenInfo;
   };
 
-  type uploadFileUsingPOSTParams = {
+  type uploadFileParams = {
+    uploadFileRequest: UploadFileRequest;
+  };
+
+  type UploadFileRequest = {
     biz?: string;
   };
 
-  type UrlRelate = {
-    allowNum?: number;
-    createTime?: string;
-    expireTime?: string;
-    id?: number;
-    ipNums?: number;
-    isDelete?: number;
-    longUrl?: string;
-    password?: string;
-    privateTarget?: number;
-    sortUrl?: string;
-    status?: number;
-    tags?: string;
-    title?: string;
-    updateTime?: string;
-    urlImg?: string;
-    userId?: number;
-    userNums?: number;
-    visits?: number;
-  };
-
-  type UrlRelateAddRequest = {
-    allowNum?: number;
-    expireTime?: string;
-    longUrl?: string;
-    password?: string;
-    privateTarget?: number;
-    tags?: string;
-    title?: string;
-    urlImg?: string;
-  };
-
-  type UrlRelateQueryRequest = {
-    current?: number;
-    id?: number;
-    longUrl?: string;
-    pageSize?: number;
-    sortField?: string;
-    sortOrder?: string;
-    title?: string;
-    userId?: number;
-  };
-
-  type UrlRelateUpdateRequest = {
-    allowNum?: number;
-    expireTime?: string;
-    id?: number;
-    longUrl?: string;
-    password?: string;
-    privateTarget?: number;
-    status?: number;
-    tags?: string;
-    title?: string;
-    urlImg?: string;
-  };
-
-  type UrlRelateVo = {
-    allowNum?: number;
-    expireTime?: string;
-    id?: number;
-    ipNums?: number;
-    longUrl?: string;
-    privateTarget?: number;
-    sortUrl?: string;
-    status?: number;
-    tags?: UrlTagVo[];
-    title?: string;
-    urlImg?: string;
-    userNums?: number;
-    visits?: number;
-  };
-
-  type UrlTagAddRequest = {
-    name?: string;
-    parentId?: number;
-  };
-
-  type UrlTagCategoryVo = {
-    id?: number;
-    name?: string;
-    tags?: UrlTagVo[];
-  };
-
-  type UrlTagVo = {
-    color?: string;
-    id?: number;
-    name?: string;
-    parentId?: number;
-  };
-
   type User = {
-    createTime?: string;
     id?: number;
-    isDelete?: number;
-    mpOpenId?: string;
-    unionId?: string;
-    updateTime?: string;
     userAccount?: string;
-    userAvatar?: string;
-    userName?: string;
     userPassword?: string;
+    unionId?: string;
+    mpOpenId?: string;
+    userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
   };
 
   type UserAddRequest = {
+    userName?: string;
     userAccount?: string;
     userAvatar?: string;
-    userName?: string;
     userRole?: string;
   };
 
-  type userLoginByWxOpenUsingGETParams = {
-    /** code */
-    code: string;
+  type userLoginByGithubParams = {
+    callback: AuthCallback;
   };
 
   type UserLoginRequest = {
@@ -427,48 +194,45 @@ declare namespace API {
 
   type UserQueryRequest = {
     current?: number;
-    id?: number;
-    mpOpenId?: string;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
+    id?: number;
     unionId?: string;
+    mpOpenId?: string;
     userName?: string;
     userProfile?: string;
     userRole?: string;
   };
 
   type UserRegisterRequest = {
-    checkPassword?: string;
     userAccount?: string;
     userPassword?: string;
-    captchaVerification?: string;
+    checkPassword?: string;
+    verKey?: string;
+    verCode?: string;
   };
 
   type UserUpdateMyRequest = {
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
   };
 
   type UserUpdateRequest = {
     id?: number;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
   };
 
   type UserVO = {
-    createTime?: string;
     id?: number;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
-  };
-
-  type View = {
-    contentType?: string;
+    createTime?: string;
   };
 }

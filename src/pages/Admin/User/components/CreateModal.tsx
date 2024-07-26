@@ -1,4 +1,4 @@
-import { addUserUsingPost } from '@/services/backend/userController';
+import { addUser } from '@/services/backend/userController';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
 import '@umijs/max';
 import { message, Modal } from 'antd';
@@ -18,7 +18,7 @@ interface Props {
 const handleAdd = async (fields: API.UserAddRequest) => {
   const hide = message.loading('正在添加');
   try {
-    await addUserUsingPost(fields);
+    await addUser(fields);
     hide();
     message.success('创建成功');
     return true;
