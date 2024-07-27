@@ -19,9 +19,9 @@ const Register: React.FC = () => {
   useEffect(() => {
     captcha().then((res) => {
       setCaptchaResult(res.data)
-      form.setFieldsValue({varKey: res.data?.key})
+      form.setFieldsValue({verKey: res.data?.key})
     });
-  }, []); // 空依赖数组表示只在组件挂载时运行一次
+  }, [form]); // 空依赖数组表示只在组件挂载时运行一次
 
   // 表单提交
   const handleSubmit = async (values: API.UserRegisterRequest) => {
@@ -61,10 +61,6 @@ const Register: React.FC = () => {
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO}/>}
           title="SQL Dog"
-          initialValues={{
-            varKey: captchaResult?.key,
-            autoLogin: true,
-          }}
           onFinish={async (values) => {
             await handleSubmit(values);
           }}
