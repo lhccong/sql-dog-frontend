@@ -4,7 +4,7 @@ import {captcha, userRegister} from '@/services/backend/userController';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {LoginForm, ProFormText} from '@ant-design/pro-form';
 import {Col, Form, Image, message, Row, Tabs} from 'antd';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {history} from 'umi';
 import styles from './index.less';
 
@@ -15,7 +15,6 @@ const Register: React.FC = () => {
   const [form] = Form.useForm();
   // @ts-ignore
   const [captchaResult, setCaptchaResult] = useState<API.CaptchaVO>();
-  const ref = useRef();
   useEffect(() => {
     captcha().then((res) => {
       setCaptchaResult(res.data)
