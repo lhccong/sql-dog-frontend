@@ -18,7 +18,8 @@ export const SqlEditor = ({sql = 'select * from student'}) => {
     });
   }, []);
   const run = () => {
-    console.log('运行', querySQL);
+    // @ts-ignore
+    console.log('运行', editorRef.current.getValue());
     // 在这里可以使用 query 进行进一步处理
   };
 
@@ -31,6 +32,8 @@ export const SqlEditor = ({sql = 'select * from student'}) => {
 
   const reset = () => {
     setQuerySQL('');
+    // @ts-ignore
+    editorRef.current.setValue('');
     console.log('重置');
   };
 
