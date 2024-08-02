@@ -1,12 +1,12 @@
 import CreateModal from '@/pages/Admin/User/components/CreateModal';
 import UpdateModal from '@/pages/Admin/User/components/UpdateModal';
-import { deleteUser, listUserByPage } from '@/services/backend/userController';
-import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import {deleteUser, listUserByPage} from '@/services/backend/userController';
+import {PlusOutlined} from '@ant-design/icons';
+import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import {PageContainer, ProTable} from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, message, Space, Typography } from 'antd';
-import React, { useRef, useState } from 'react';
+import {Button, message, Space, Typography} from 'antd';
+import React, {useRef, useState} from 'react';
 
 /**
  * 用户管理页面
@@ -128,8 +128,7 @@ const UserAdminPage: React.FC = () => {
       ),
     },
   ];
-  return (
-    <PageContainer>
+  return (<>
       <ProTable<API.User>
         headerTitle={'查询表格'}
         actionRef={actionRef}
@@ -145,14 +144,14 @@ const UserAdminPage: React.FC = () => {
               setCreateModalVisible(true);
             }}
           >
-            <PlusOutlined /> 新建
+            <PlusOutlined/> 新建
           </Button>,
         ]}
         request={async (params, sort, filter) => {
           const sortField = Object.keys(sort)?.[0];
           const sortOrder = sort?.[sortField] ?? undefined;
 
-          const { data, code } = await listUserByPage({
+          const {data, code} = await listUserByPage({
             ...params,
             sortField,
             sortOrder,
@@ -190,8 +189,7 @@ const UserAdminPage: React.FC = () => {
         onCancel={() => {
           setUpdateModalVisible(false);
         }}
-      />
-    </PageContainer>
+      /></>
   );
 };
 export default UserAdminPage;
