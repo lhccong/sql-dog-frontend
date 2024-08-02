@@ -3,7 +3,7 @@ import UpdateModal from '@/pages/Admin/User/components/UpdateModal';
 import {deleteUser, listUserByPage} from '@/services/backend/userController';
 import {PlusOutlined} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {PageContainer, ProTable} from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
 import '@umijs/max';
 import {Button, message, Space, Typography} from 'antd';
 import React, {useRef, useState} from 'react';
