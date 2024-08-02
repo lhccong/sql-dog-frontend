@@ -5,7 +5,12 @@ import {format} from "sql-formatter";
 import {initDB, runSQL} from "@/core/sqlExecutor";
 import {Database} from "sql.js";
 
-export const SqlEditor = ({sql = 'select * from student'}) => {
+interface SqlEditorProps {
+  sql?: string;
+  onSubmit: (result: any) => void;
+}
+
+export const SqlEditor: React.FC<SqlEditorProps> = ({sql = 'select * from student',onSubmit}) => {
   const [querySQL, setQuerySQL] = useState(sql);
   const editorRef = useRef(null);
   const db = useRef<Database>();
@@ -47,6 +52,7 @@ export const SqlEditor = ({sql = 'select * from student'}) => {
       console.log("开始执行sql")
       const result = runSQL(db.current, "select * from rewards");
       console.log("执行结果", result);
+      onSubmit(result);  // 将结果传递给父组件
       return result;
     }
 
