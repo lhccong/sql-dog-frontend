@@ -15,6 +15,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
   const [querySQL, setQuerySQL] = useState(sql);
   const editorRef = useRef(null);
   const db = useRef<Database>();
+  const defaultSQL = sql;
   // @ts-ignore
   useEffect(() => {
     // @ts-ignore
@@ -22,7 +23,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
       width: "600",
       height: "600",
       theme: "vs-dark",
-      value: "-- 请在此处输入 SQL\n" + querySQL,
+      value: "-- 请在此处输入 SQL\n" + defaultSQL,
       language: 'sql'
     });
     // 初始化 / 更新 DB
@@ -48,14 +49,14 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
       // @ts-ignore
       console.log('运行', editorRef.current.getValue());
       // @ts-ignore
-      setQuerySQL(editorRef.current.getValue());
-      const result = runSQL(db.current as any, querySQL === null ? "" : querySQL as string);
+      const currentSQL = editorRef.current.getValue();
+      setQuerySQL(currentSQL);
+      const result = runSQL(db.current as any, currentSQL);
       console.log("执行结果", result);
       onSubmit(result);  // 将结果传递给父组件
     } catch (error: any) {
-      message.error("语句错误，" + error.message).then(r => {
-        onSubmit(r);
-      });
+      message.error("语句错误，" + error.message).then();
+      onSubmit(true);
     }
   };
 
@@ -69,7 +70,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
   const reset = () => {
     setQuerySQL('');
     // @ts-ignore
-    editorRef.current.setValue('');
+    editorRef.current.setValue("-- 请在此处输入 SQL\n" + defaultSQL);
     console.log('重置');
   };
 

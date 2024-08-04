@@ -1,4 +1,4 @@
-import initSqlJs, { Database, SqlJsStatic } from "sql.js";
+import initSqlJs, {Database, SqlJsStatic} from "sql.js";
 
 /**
  * SQL 执行器
@@ -22,8 +22,8 @@ export const initDB = async (initSql?: string) => {
       locateFile: () => "./sql-wasm.wasm",
     });
   }
-  console.log("完成加载",SQL)
-  console.log("初始化数据库的sql:",initSql);
+  console.log("完成加载", SQL)
+  console.log("初始化数据库的sql:", initSql);
   // Create a database
   const db = new SQL.Database();
   if (initSql) {
@@ -39,5 +39,6 @@ export const initDB = async (initSql?: string) => {
  * @param sql
  */
 export const runSQL = (db: Database, sql: string) => {
+  console.log("当前执行的SQL是：", sql)
   return db.exec(sql);
 };
