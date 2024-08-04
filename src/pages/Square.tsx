@@ -29,12 +29,12 @@ const Square: React.FC = () => {
       ],
     }]
   )
-  const handleResult = (result: any) => {
-    console.log("获取到执行结果啦", result);
-    if (result === true) {
-      setSqlExecResult(0);
-    }else {
+  const handleResult = (sql: string, result: QueryExecResult[], answerResult: QueryExecResult[], errorMsg: string | undefined) => {
+    console.log("获取到执行结果啦:", result);
+    if (errorMsg === "") {
       setSqlExecResult(1);
+    } else {
+      setSqlExecResult(0);
     }
     setResult(result)
   };
@@ -48,7 +48,7 @@ const Square: React.FC = () => {
       <Row>
         <Col span={11}>
           <Card>
-            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"}/>
+            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0}/>
           </Card>
         </Col>
         <Col span={12} style={{marginLeft: 10}}><SqlResultCard result={result}

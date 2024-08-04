@@ -3,13 +3,18 @@ import {Button, message} from 'antd';
 import * as monaco from "monaco-editor";
 import {format} from "sql-formatter";
 import {initDB, runSQL} from "@/core/sqlExecutor";
-import {Database} from "sql.js";
+import {Database, QueryExecResult} from "sql.js";
 
 interface SqlEditorProps {
   sql?: string;
   initSql?: string;
-  onSubmit: (result: any) => void;
+  onSubmit: (sql: string,
+             result: QueryExecResult[],
+             answerResult: QueryExecResult[],
+             errorMsg?: string) => void;
+  resultStatus: number;
 }
+
 
 export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) => {
   const [querySQL, setQuerySQL] = useState(sql);
@@ -34,8 +39,10 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
       db.current = await initDB(initSql);
       console.log("开始执行sql")
       const result = runSQL(db.current, querySQL === null ? "" : querySQL as string);
+      const answerResult = runSQL(db.current, querySQL === null ? "" : querySQL as string);
       console.log("执行结果", result);
-      onSubmit(result);  // 将结果传递给父组件
+      onSubmit("", result, answerResult, "");  // 将结果传递给父组件
+      // 将结果传递给父组件
       return result;
     }
 
@@ -52,11 +59,13 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
       const currentSQL = editorRef.current.getValue();
       setQuerySQL(currentSQL);
       const result = runSQL(db.current as any, currentSQL);
+      const answerResult = runSQL(db.current as any, currentSQL);
       console.log("执行结果", result);
-      onSubmit(result);  // 将结果传递给父组件
+      onSubmit("", result, answerResult, "");  // 将结果传递给父组件
+      // 将结果传递给父组件
     } catch (error: any) {
       message.error("语句错误，" + error.message).then();
-      onSubmit(true);
+      onSubmit("", null as any, null as any, error.message);
     }
   };
 
