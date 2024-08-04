@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button} from 'antd';
+import {Button, message} from 'antd';
 import * as monaco from "monaco-editor";
 import {format} from "sql-formatter";
 import {initDB, runSQL} from "@/core/sqlExecutor";
@@ -7,10 +7,11 @@ import {Database} from "sql.js";
 
 interface SqlEditorProps {
   sql?: string;
+  initSql?: string;
   onSubmit: (result: any) => void;
 }
 
-export const SqlEditor: React.FC<SqlEditorProps> = ({sql = 'select * from student',onSubmit}) => {
+export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) => {
   const [querySQL, setQuerySQL] = useState(sql);
   const editorRef = useRef(null);
   const db = useRef<Database>();
@@ -26,31 +27,12 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql = 'select * from studen
     });
     // 初始化 / 更新 DB
     // @ts-ignore
-    console.log("开始初始化数据库");
+    console.log("开始初始化数据库,SQL:", initSql);
 
     async function fetchData() {
-      db.current = await initDB("CREATE TABLE if not exists rewards (\n" +
-        "    adventurer_id INT,\n" +
-        "    adventurer_name VARCHAR(50),\n" +
-        "    task_id INT,\n" +
-        "    task_name VARCHAR(100),\n" +
-        "    reward_coins INT\n" +
-        ");" +
-        "INSERT INTO rewards (adventurer_id, adventurer_name, task_id, task_name, reward_coins)\n" +
-        "VALUES\n" +
-        "    (1, 'Alice', 101, 'Dragon Slaying', 500),\n" +
-        "    (1, 'Alice', 102, 'Treasure Hunt', 300),\n" +
-        "    (1, 'Alice', 103, 'Rescue Mission', 200),\n" +
-        "    (2, 'Bob', 101, 'Dragon Slaying', 600),\n" +
-        "    (2, 'Bob', 102, 'Treasure Hunt', 400),\n" +
-        "    (3, 'Charlie', 103, 'Rescue Mission', 250),\n" +
-        "    (4, 'David', 101, 'Dragon Slaying', 450),\n" +
-        "    (4, 'David', 102, 'Treasure Hunt', 350),\n" +
-        "    (4, 'David', 103, 'Rescue Mission', 150),\n" +
-        "    (5, 'Eve', 101, 'Dragon Slaying', 700),\n" +
-        "    (5, 'Eve', 102, 'Treasure Hunt', 250);");
+      db.current = await initDB(initSql);
       console.log("开始执行sql")
-      const result = runSQL(db.current, "select * from rewards");
+      const result = runSQL(db.current, querySQL === null ? "" : querySQL as string);
       console.log("执行结果", result);
       onSubmit(result);  // 将结果传递给父组件
       return result;
@@ -62,14 +44,23 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql = 'select * from studen
 
   }, []);
   const run = () => {
-    // @ts-ignore
-    console.log('运行', editorRef.current.getValue());
-
-    // 在这里可以使用 query 进行进一步处理
+    try {
+      // @ts-ignore
+      console.log('运行', editorRef.current.getValue());
+      // @ts-ignore
+      setQuerySQL(editorRef.current.getValue());
+      const result = runSQL(db.current as any, querySQL === null ? "" : querySQL as string);
+      console.log("执行结果", result);
+      onSubmit(result);  // 将结果传递给父组件
+    } catch (error: any) {
+      message.error("语句错误，" + error.message).then(r => {
+        onSubmit(r);
+      });
+    }
   };
 
   const formatSQL = () => {
-    const resultStr = format(querySQL, {language: "sqlite"});
+    const resultStr = format(querySQL === null ? "" : querySQL as string, {language: "sqlite"});
     // @ts-ignore
     editorRef.current.setValue(resultStr);
     console.log('格式化' + resultStr);

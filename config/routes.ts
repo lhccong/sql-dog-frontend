@@ -1,6 +1,6 @@
 export default [
   { path: '/user', layout: false, routes: [{ path: '/user/login', component: './User/Login' },{ path: '/user/register', component: './User/Register' }] },
-  { path: '/welcome', icon: 'smile', component: './Welcome', name: '首页' },
+  { path: '/square', icon: 'smile', component: './Square', name: '广场' },
   {
     path: '/admin',
     icon: 'crown',
@@ -11,6 +11,6 @@ export default [
       { icon: 'table', path: '/admin/user', component: './Admin/User', name: '用户管理' },
     ],
   },
-  { path: '/', redirect: '/welcome' },
+  { path: '/', redirect: '/square' },
   { path: '*', layout: false, component: './404' },
 ];

@@ -17,7 +17,7 @@ interface Props {
 
 const RESULT_STATUS_INFO_MAP: Record<number, string> = {
   // 映射状态码到描述信息
-  0: '状态0',
+  0: '失败❌',
   1: '通过✅',
   // 添加其他状态映射
 };
