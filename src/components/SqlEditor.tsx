@@ -6,17 +6,19 @@ import {initDB, runSQL} from "@/core/sqlExecutor";
 import {Database, QueryExecResult} from "sql.js";
 
 interface SqlEditorProps {
+  level: any;
   sql?: string;
   initSql?: string;
   onSubmit: (sql: string,
              result: QueryExecResult[],
              answerResult: QueryExecResult[],
+             execPlanResult: QueryExecResult[],
              errorMsg?: string) => void;
   resultStatus: number;
 }
 
 
-export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) => {
+export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, level}) => {
   const [querySQL, setQuerySQL] = useState(sql);
   const editorRef = useRef(null);
   const db = useRef<Database>();
@@ -38,10 +40,14 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
     async function fetchData() {
       db.current = await initDB(initSql);
       console.log("开始执行sql")
+      let answerResult = null as unknown as QueryExecResult[];
       const result = runSQL(db.current, querySQL === null ? "" : querySQL as string);
-      const answerResult = runSQL(db.current, querySQL === null ? "" : querySQL as string);
+      const execPlanResult = runSQL(db.current, querySQL === null ? "" : "EXPLAIN QUERY PLAN " + querySQL as string);
+      if (level !== null) {
+        answerResult = runSQL(db.current, querySQL === null ? "" : querySQL as string);
+      }
       console.log("执行结果", result);
-      onSubmit("", result, answerResult, "");  // 将结果传递给父组件
+      onSubmit("", result, answerResult, execPlanResult, "");  // 将结果传递给父组件
       // 将结果传递给父组件
       return result;
     }
@@ -60,8 +66,9 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql}) =>
       setQuerySQL(currentSQL);
       const result = runSQL(db.current as any, currentSQL);
       const answerResult = runSQL(db.current as any, currentSQL);
+      const execPlanResult = runSQL(db.current as any, "EXPLAIN QUERY PLAN " + currentSQL);
       console.log("执行结果", result);
-      onSubmit("", result, answerResult, "");  // 将结果传递给父组件
+      onSubmit("", result, answerResult, execPlanResult, ""); // 将结果传递给父组件
       // 将结果传递给父组件
     } catch (error: any) {
       message.error("语句错误，" + error.message).then();

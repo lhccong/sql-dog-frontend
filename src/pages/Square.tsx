@@ -29,14 +29,24 @@ const Square: React.FC = () => {
       ],
     }]
   )
-  const handleResult = (sql: string, result: QueryExecResult[], answerResult: QueryExecResult[], errorMsg: string | undefined) => {
+  const [execPlanResult, setExecPlanResult] = useState<QueryExecResult[]>(
+    [{
+      columns: ['a', 'b'],
+      values: [
+        [0, 'hello'],
+        [1, 'world'],
+      ],
+    }]
+  )
+  const handleResult = (sql: string, result: QueryExecResult[], answerResult: QueryExecResult[], execPlanResult: QueryExecResult[], errorMsg: string | undefined) => {
     console.log("获取到执行结果啦:", result);
     if (errorMsg === "") {
       setSqlExecResult(1);
     } else {
       setSqlExecResult(0);
     }
-    setResult(result)
+    setResult(result);
+    setExecPlanResult(execPlanResult);
   };
   // 当数据仍在加载时显示加载指示器
   if (loading) {
@@ -48,11 +58,12 @@ const Square: React.FC = () => {
       <Row>
         <Col span={11}>
           <Card>
-            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0}/>
+            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0} level={null}/>
           </Card>
         </Col>
         <Col span={12} style={{marginLeft: 10}}><SqlResultCard result={result}
                                                                answerResult={result}
+                                                               execPlanResult={execPlanResult}
                                                                resultStatus={sqlExecResult}/></Col>
       </Row>
     </>

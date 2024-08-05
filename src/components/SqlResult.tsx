@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Tabs} from 'antd';
+import {Button, Card, Empty, Tabs} from 'antd';
 import {SqlResultTable} from './SqlResultTable';
 import {AlignLeftOutlined, AreaChartOutlined, SunOutlined} from "@ant-design/icons";
 
@@ -11,6 +11,7 @@ interface QueryExecResult {
 interface Props {
   result: QueryExecResult[];
   answerResult: QueryExecResult[];
+  execPlanResult: QueryExecResult[];
   resultStatus: number;
   errorMsg?: string;
   // level?: LevelType;
@@ -26,6 +27,7 @@ const RESULT_STATUS_INFO_MAP: Record<number, string> = {
 export const SqlResultCard: React.FC<Props> = ({
                                                  result = [],
                                                  // answerResult = [],
+                                                 execPlanResult = [],
                                                  resultStatus,
                                                  errorMsg = '',
                                                  // level,
@@ -49,10 +51,31 @@ export const SqlResultCard: React.FC<Props> = ({
           </Card>
         </Tabs.TabPane>
         <Tabs.TabPane tab="执行计划" key="2" icon={<AreaChartOutlined/>}>
-          Content of Tab Pane 2
+          <Card
+            id="sqlResult"
+            title="Plan"
+            extra={RESULT_STATUS_INFO_MAP[resultStatus]}
+            bordered={false}
+            style={{maxHeight: '420px', overflowY: 'auto'}}
+          >
+            {!errorMsg ? (
+              <SqlResultTable result={execPlanResult}/>
+            ) : (
+              <div>❌ 语句错误：{errorMsg}</div>
+            )}
+          </Card>
         </Tabs.TabPane>
         <Tabs.TabPane tab="优化建议" key="3" icon={<SunOutlined/>}>
-          Content of Tab Pane 3
+          <Card
+            id="sqlResult"
+            title="advice"
+            extra={<Button type={"primary"} onClick={() => {
+            }}>生成建议🔍</Button>}
+            bordered={false}
+            style={{maxHeight: '420px', overflowY: 'auto'}}
+          >
+            <Empty/>
+          </Card>
         </Tabs.TabPane>
       </Tabs>
     </>
