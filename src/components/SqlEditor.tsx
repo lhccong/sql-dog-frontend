@@ -39,35 +39,31 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
 
     async function fetchData() {
       db.current = await initDB(initSql);
-      console.log("开始执行sql")
       let answerResult = null as unknown as QueryExecResult[];
       const result = runSQL(db.current, querySQL === null ? "" : querySQL as string);
       const execPlanResult = runSQL(db.current, querySQL === null ? "" : "EXPLAIN QUERY PLAN " + querySQL as string);
       if (level !== null) {
         answerResult = runSQL(db.current, querySQL === null ? "" : querySQL as string);
       }
-      console.log("执行结果", result);
       onSubmit("", result, answerResult, execPlanResult, "");  // 将结果传递给父组件
       // 将结果传递给父组件
       return result;
     }
 
     fetchData().then(r => {
-      console.log(r)
+      console.log("初始化数据库完成,结果:", r);
     });
 
   }, []);
   const run = () => {
     try {
       // @ts-ignore
-      console.log('运行', editorRef.current.getValue());
-      // @ts-ignore
       const currentSQL = editorRef.current.getValue();
       setQuerySQL(currentSQL);
       const result = runSQL(db.current as any, currentSQL);
       const answerResult = runSQL(db.current as any, currentSQL);
       const execPlanResult = runSQL(db.current as any, "EXPLAIN QUERY PLAN " + currentSQL);
-      console.log("执行结果", result);
+      console.log("执行结果：", result);
       onSubmit("", result, answerResult, execPlanResult, ""); // 将结果传递给父组件
       // 将结果传递给父组件
     } catch (error: any) {
@@ -84,7 +80,6 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
   };
 
   const reset = () => {
-    setQuerySQL('');
     // @ts-ignore
     editorRef.current.setValue("-- 请在此处输入 SQL\n" + defaultSQL);
     console.log('重置');
