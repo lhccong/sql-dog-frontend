@@ -1,9 +1,9 @@
 import {Card, Col, Empty, Row} from 'antd';
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import React, {useEffect, useState} from "react";
-import {SqlEditor} from "@/components/SqlEditor";
+import {SqlEditor} from "@/components/SqlEditor/SqlEditor";
 import {QueryExecResult} from "sql.js";
-import {SqlResultCard} from "@/components/SqlResult";
+import {SqlResultCard} from "@/components/SqlResult/SqlResult";
 
 
 const Square: React.FC = () => {
@@ -58,13 +58,17 @@ const Square: React.FC = () => {
       <Row>
         <Col span={11}>
           <Card>
-            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0} level={null}/>
+            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0}
+                       level={null}/>
           </Card>
         </Col>
-        <Col span={12} style={{marginLeft: 10}}><SqlResultCard result={result}
-                                                               answerResult={result}
-                                                               execPlanResult={execPlanResult}
-                                                               resultStatus={sqlExecResult}/></Col>
+        <Col span={12} style={{marginLeft: 10}}>
+          <SqlResultCard result={result}
+                         answerResult={result}
+                         execPlanResult={execPlanResult}
+                         resultStatus={sqlExecResult}/>
+
+        </Col>
       </Row>
     </>
   );

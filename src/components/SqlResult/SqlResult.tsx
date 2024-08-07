@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Card, Empty, Tabs} from 'antd';
-import {SqlResultTable} from './SqlResultTable';
+import {SqlResultTable} from '../SqlResultTable/SqlResultTable';
 import {AlignLeftOutlined, AreaChartOutlined, SunOutlined} from "@ant-design/icons";
 
 interface QueryExecResult {
