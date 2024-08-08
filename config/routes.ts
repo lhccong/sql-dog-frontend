@@ -5,7 +5,7 @@ export default [
     routes: [{path: '/user/login', component: './User/Login'}, {path: '/user/register', component: './User/Register'}]
   },
   {path: '/study', icon: 'BookOutlined', component: './Levels/LevelsPage', name: '学习'},
-  {path: '/code', icon: 'ExperimentOutlined', component: './Levels/LevelsPage', name: '代码生成'},
+  {path: '/code', icon: 'ExperimentOutlined', component: './CodeGenerate/CodeGenerate', name: '代码生成'},
   {path: '/level', icon: 'ThunderboltOutlined', component: './LevelIndex/LevelIndex', name: '关卡'},
   {path: '/square', icon: 'smile', component: './Square/Square', name: '广场'},
   {

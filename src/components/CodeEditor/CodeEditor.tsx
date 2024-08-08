@@ -3,10 +3,11 @@ import * as monaco from "monaco-editor";
 
 interface SqlEditorProps {
   code?: string;
+  language?: string;
 }
 
 
-export const CodeEditor: React.FC<SqlEditorProps> = ({code}) => {
+export const CodeEditor: React.FC<SqlEditorProps> = ({code, language}) => {
   const editorRef = useRef(null);
   // @ts-ignore
   useEffect(() => {
@@ -17,7 +18,7 @@ export const CodeEditor: React.FC<SqlEditorProps> = ({code}) => {
       theme: "vs-dark",
       value: code,
       readOnly: true, // 设置为只读
-      language: 'sql'
+      language: language
     });
 
   }, []);
