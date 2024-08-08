@@ -4,10 +4,28 @@ export default [
     layout: false,
     routes: [{path: '/user/login', component: './User/Login'}, {path: '/user/register', component: './User/Register'}]
   },
-  {path: '/square', icon: 'smile', component: './Square/Square', name: '广场'},
   {path: '/study', icon: 'BookOutlined', component: './Levels/LevelsPage', name: '学习'},
+  {path: '/code', icon: 'ExperimentOutlined', component: './Levels/LevelsPage', name: '代码生成'},
   {path: '/level', icon: 'ThunderboltOutlined', component: './LevelIndex/LevelIndex', name: '关卡'},
-  {path: 'https://github.com/lhccong/sql-dog-backend', icon: 'github', name: '代码开源'},
+  {path: '/square', icon: 'smile', component: './Square/Square', name: '广场'},
+  {
+    path: '/library',
+    icon: 'crown',
+    name: '库表大全',
+    routes: [
+      {icon: 'table', path: '/library/vocabulary', component: './Admin/User', name: '词库'},
+      {icon: 'table', path: '/library/table', component: './Admin/User', name: '表'},
+      {icon: 'table', path: '/library/field', component: './Admin/User', name: '字段'},
+    ],
+  },
+  {
+    icon: 'github',
+    name: '代码开源',
+    routes: [
+      {path: 'https://github.com/lhccong/sql-dog-frontend', name: '前端💡'},
+      {path: 'https://github.com/lhccong/sql-dog-backend', name: '后端🚀'},
+    ],
+  },
   {
     path: '/admin',
     icon: 'crown',
