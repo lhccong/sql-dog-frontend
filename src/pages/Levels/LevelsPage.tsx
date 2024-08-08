@@ -7,7 +7,7 @@ import {MdViewer} from "@/components/MdViewer/MdViewer";
 import {SqlResultCard} from "@/components/SqlResult/SqlResult";
 
 
-const Square: React.FC = () => {
+const LevelsPage: React.FC = () => {
 
   const onChange = (key: string | string[]) => {
     console.log(key);
@@ -105,7 +105,7 @@ const Square: React.FC = () => {
         </Col>
         <Col span={12} style={{marginLeft: 10}}>
 
-          <Card extra={<Image style={{width: 40}}
+          <Card title={"Tip：在输入框中执行📑"} extra={<Image style={{width: 40}}
                               src={"https://5b0988e595225.cdn.sohucs.com/images/20190421/8c4ca8cbc42b46c6ae43a12b55065e8a.gif.gif"}/>}>
             <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0}
                        level={null}/>
@@ -117,5 +117,5 @@ const Square: React.FC = () => {
   );
 
 };
-export default Square;
+export default LevelsPage;
 
