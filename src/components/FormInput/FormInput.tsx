@@ -1,6 +1,4 @@
-// import FieldInfoCreateModal from '@/components/FieldInfoModal/FieldInfoCreateModal';
 // import ImportFieldDrawer from '@/components/ImportFieldDrawer';
-// import TableInfoCreateModal from '@/components/TableInfoModal/TableInfoCreateModal';
 import {
   COMMON_FIELD_LIST,
   DEFAULT_ADD_FIELD,
@@ -10,7 +8,7 @@ import {
   ON_UPDATE_LIST,
 } from '@/constants';
 // import { listMyDict } from '@/services/dictService';
-import { DownOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
+import {DownOutlined, PlusOutlined, UpOutlined} from '@ant-design/icons';
 import {
   AutoComplete,
   Button,
@@ -32,8 +30,11 @@ import React, {
   useState,
 } from 'react';
 import './index.less';
+import FieldInfoCreateModal from "@/components/FieldInfoModal/FieldInfoCreateModal";
+import TableInfoCreateModal from "@/components/TableInfoModal/TableInfoCreateModal";
+import ImportFieldDrawer from "@/components/ImportFieldDrawer/ImportFieldDrawer";
 
-const { Option } = Select;
+const {Option} = Select;
 
 interface Props {
   onSubmit: (values: TableSchema) => void;
@@ -45,7 +46,7 @@ interface Props {
  * @constructor
  */
 const FormInput: React.FC<Props> = forwardRef((props, ref) => {
-  const { onSubmit } = props;
+  const {onSubmit} = props;
   const [form] = Form.useForm();
   const [dictList, setDictList] = useState<DictType.Dict[]>([]);
   const [fieldInfoCreateModalVisible, setFieldInfoCreateModalVisible] =
@@ -127,6 +128,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
       <Form<TableSchema>
         className="form-input"
         form={form}
+        requiredMark={"optional"}
         scrollToFirstError
         onFinish={onFinish}
         onReset={() => {
@@ -134,29 +136,29 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
         }}
       >
         <Form.Item name="dbName" label="库名">
-          <Input placeholder="多个单词间建议用下划线分割" />
+          <Input placeholder="多个单词间建议用下划线分割"/>
         </Form.Item>
         <Form.Item
           name="tableName"
           label="表名"
           initialValue="test_table"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
         >
-          <Input placeholder="多个单词间建议用下划线分割" />
+          <Input placeholder="多个单词间建议用下划线分割"/>
         </Form.Item>
         <Form.Item name="tableComment" label="表注释">
-          <Input placeholder="描述表的中文名称、作用等" />
+          <Input placeholder="描述表的中文名称、作用等"/>
         </Form.Item>
         <Form.Item
           label="生成条数"
           name="mockNum"
           initialValue={20}
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
         >
-          <InputNumber min={10} max={100} />
+          <InputNumber min={10} max={100}/>
         </Form.Item>
         <Form.List name="fieldList">
-          {(fields, { add, remove, move }) => (
+          {(fields, {add, remove, move}) => (
             <>
               <Collapse
                 activeKey={activeKey}
@@ -169,13 +171,13 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                     key={field.key}
                     header={
                       <Form.Item
-                        style={{ maxWidth: 320, marginBottom: 0 }}
+                        style={{maxWidth: 320, marginBottom: 0}}
                         label="字段名"
-                        requiredMark="optional"
+                        // requiredMark=""
                         name={[field.name, 'fieldName']}
-                        rules={[{ required: true }]}
+                        rules={[{required: true}]}
                       >
-                        <Input placeholder="建议用纯英文" />
+                        <Input placeholder="建议用纯英文"/>
                       </Form.Item>
                     }
                     extra={
@@ -188,7 +190,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                               e.stopPropagation();
                             }}
                           >
-                            <UpOutlined />
+                            <UpOutlined/>
                           </Button>
                         )}
                         {index < fields.length - 1 && (
@@ -199,7 +201,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                               e.stopPropagation();
                             }}
                           >
-                            <DownOutlined />
+                            <DownOutlined/>
                           </Button>
                         )}
                         <Button
@@ -234,10 +236,10 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                       <Form.Item
                         label="字段类型"
                         name={[field.name, 'fieldType']}
-                        rules={[{ required: true }]}
+                        rules={[{required: true}]}
                       >
                         <AutoComplete
-                          style={{ width: 120 }}
+                          style={{width: 120}}
                           placeholder="请输入"
                           options={fieldTypeOptions}
                           filterOption={filterOption}
@@ -247,17 +249,17 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                         label="默认值"
                         name={[field.name, 'defaultValue']}
                       >
-                        <Input placeholder="要和字段类型匹配" />
+                        <Input placeholder="要和字段类型匹配"/>
                       </Form.Item>
                       <Form.Item label="注释" name={[field.name, 'comment']}>
-                        <Input placeholder="描述中文名称、作用等" />
+                        <Input placeholder="描述中文名称、作用等"/>
                       </Form.Item>
                       <Form.Item
                         label="onUpdate"
                         name={[field.name, 'onUpdate']}
                       >
                         <AutoComplete
-                          style={{ width: 180 }}
+                          style={{width: 180}}
                           placeholder="字段更新动作"
                           options={onUpdateOptions}
                           filterOption={filterOption}
@@ -268,21 +270,21 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                         name={[field.name, 'notNull']}
                         valuePropName="checked"
                       >
-                        <Checkbox />
+                        <Checkbox/>
                       </Form.Item>
                       <Form.Item
                         label="主键"
                         name={[field.name, 'primaryKey']}
                         valuePropName="checked"
                       >
-                        <Checkbox />
+                        <Checkbox/>
                       </Form.Item>
                       <Form.Item
                         label="自增"
                         name={[field.name, 'autoIncrement']}
                         valuePropName="checked"
                       >
-                        <Checkbox />
+                        <Checkbox/>
                       </Form.Item>
                       <Form.Item
                         label="模拟类型"
@@ -290,7 +292,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                         initialValue="固定"
                       >
                         <Select
-                          style={{ width: 120 }}
+                          style={{width: 120}}
                           onChange={() => {
                             form.setFieldValue(
                               ['fieldList', index, 'mockParams'],
@@ -323,7 +325,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                                 label="固定值"
                                 name={[field.name, 'mockParams']}
                               >
-                                <Input placeholder="请输入固定值" />
+                                <Input placeholder="请输入固定值"/>
                               </Form.Item>
                             );
                           } else if (mockType === '随机') {
@@ -332,7 +334,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                                 label="随机规则"
                                 name={[field.name, 'mockParams']}
                               >
-                                <Select style={{ width: 120 }}>
+                                <Select style={{width: 120}}>
                                   {MOCK_PARAMS_RANDOM_TYPE_LIST.map((item) => (
                                     <Option key={item} value={item}>
                                       {item}
@@ -346,9 +348,9 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                               <Form.Item
                                 label="规则"
                                 name={[field.name, 'mockParams']}
-                                rules={[{ required: true }]}
+                                rules={[{required: true}]}
                               >
-                                <Input placeholder="请输入正则表达式" />
+                                <Input placeholder="请输入正则表达式"/>
                               </Form.Item>
                             );
                           } else if (mockType === '递增') {
@@ -356,9 +358,9 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                               <Form.Item
                                 label="起始值"
                                 name={[field.name, 'mockParams']}
-                                rules={[{ required: true }]}
+                                rules={[{required: true}]}
                               >
-                                <InputNumber />
+                                <InputNumber/>
                               </Form.Item>
                             );
                           } else if (mockType === '词库') {
@@ -368,12 +370,12 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                                 name={[field.name, 'mockParams']}
                               >
                                 <Select
-                                  style={{ width: 150 }}
+                                  style={{width: 150}}
                                   showSearch
                                   dropdownRender={(menu) => (
                                     <>
                                       {menu}
-                                      <Divider style={{ margin: '8px 0' }} />
+                                      <Divider style={{margin: '8px 0'}}/>
                                       <Space
                                         align="center"
                                         size={24}
@@ -420,13 +422,13 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
               <Form.Item>
                 <Space
                   direction="vertical"
-                  style={{ width: '100%', marginTop: 16 }}
+                  style={{width: '100%', marginTop: 16}}
                 >
                   <Button
                     type="dashed"
                     onClick={() => add(DEFAULT_ADD_FIELD)}
                     block
-                    icon={<PlusOutlined />}
+                    icon={<PlusOutlined/>}
                   >
                     新增字段
                   </Button>
@@ -439,7 +441,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                       setImportFieldDrawerVisible(true);
                     }}
                     block
-                    icon={<PlusOutlined />}
+                    icon={<PlusOutlined/>}
                   >
                     导入字段
                   </Button>
@@ -451,27 +453,27 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                       });
                     }}
                     block
-                    icon={<PlusOutlined />}
+                    icon={<PlusOutlined/>}
                   >
                     新增通用字段
                   </Button>
                 </Space>
               </Form.Item>
-              {/*<ImportFieldDrawer*/}
-              {/*  onImport={(fieldInfo) => {*/}
-              {/*    add(JSON.parse(fieldInfo.content), importIndex);*/}
-              {/*    setImportFieldDrawerVisible(false);*/}
-              {/*    message.success('导入成功');*/}
-              {/*  }}*/}
-              {/*  visible={importFieldDrawerVisible}*/}
-              {/*  onClose={() => setImportFieldDrawerVisible(false)}*/}
-              {/*/>*/}
+              <ImportFieldDrawer
+                onImport={(fieldInfo) => {
+                  add(JSON.parse(fieldInfo.content), importIndex);
+                  setImportFieldDrawerVisible(false);
+                  message.success('导入成功');
+                }}
+                visible={importFieldDrawerVisible}
+                onClose={() => setImportFieldDrawerVisible(false)}
+              />
             </>
           )}
         </Form.List>
         <Form.Item>
           <Space size="large" wrap>
-            <Button type="primary" htmlType="submit" style={{ width: 180 }}>
+            <Button type="primary" htmlType="submit" style={{width: 180}}>
               一键生成
             </Button>
             <Button
@@ -503,18 +505,18 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
           </Space>
         </Form.Item>
       </Form>
-      {/*<TableInfoCreateModal*/}
-      {/*  modalVisible={tableInfoCreateModalVisible}*/}
-      {/*  initialValues={createTableInfo}*/}
-      {/*  onSubmit={() => setTableInfoCreateModalVisible(false)}*/}
-      {/*  onCancel={() => setTableInfoCreateModalVisible(false)}*/}
-      {/*/>*/}
-      {/*<FieldInfoCreateModal*/}
-      {/*  modalVisible={fieldInfoCreateModalVisible}*/}
-      {/*  initialValues={createFieldInfo}*/}
-      {/*  onSubmit={() => setFieldInfoCreateModalVisible(false)}*/}
-      {/*  onCancel={() => setFieldInfoCreateModalVisible(false)}*/}
-      {/*/>*/}
+      <TableInfoCreateModal
+        modalVisible={tableInfoCreateModalVisible}
+        initialValues={createTableInfo}
+        onSubmit={() => setTableInfoCreateModalVisible(false)}
+        onCancel={() => setTableInfoCreateModalVisible(false)}
+      />
+      <FieldInfoCreateModal
+        modalVisible={fieldInfoCreateModalVisible}
+        initialValues={createFieldInfo}
+        onSubmit={() => setFieldInfoCreateModalVisible(false)}
+        onCancel={() => setFieldInfoCreateModalVisible(false)}
+      />
     </>
   );
 });
