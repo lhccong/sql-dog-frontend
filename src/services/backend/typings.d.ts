@@ -20,6 +20,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseGenerateVO = {
+    code?: number;
+    data?: GenerateVO;
+    message?: string;
+  };
+
   type BaseResponseLoginUserVO = {
     code?: number;
     data?: LoginUserVO;
@@ -29,6 +35,18 @@ declare namespace API {
   type BaseResponseLong = {
     code?: number;
     data?: number;
+    message?: string;
+  };
+
+  type BaseResponsePageTableInfo = {
+    code?: number;
+    data?: PageTableInfo;
+    message?: string;
+  };
+
+  type BaseResponsePageTableInfoVo = {
+    code?: number;
+    data?: PageTableInfoVo;
     message?: string;
   };
 
@@ -47,6 +65,12 @@ declare namespace API {
   type BaseResponseString = {
     code?: number;
     data?: string;
+    message?: string;
+  };
+
+  type BaseResponseTableInfoVo = {
+    code?: number;
+    data?: TableInfoVo;
     message?: string;
   };
 
@@ -77,6 +101,34 @@ declare namespace API {
     id?: number;
   };
 
+  type Field = {
+    fieldName?: string;
+    fieldType?: string;
+    defaultValue?: string;
+    notNull?: boolean;
+    comment?: string;
+    primaryKey?: boolean;
+    autoIncrement?: boolean;
+    mockType?: string;
+    mockParams?: string;
+    onUpdate?: string;
+  };
+
+  type GenerateVO = {
+    tableSchema?: TableSchema;
+    createSql?: string;
+    dataList?: Record<string, any>[];
+    insertSql?: string;
+    dataJson?: string;
+    javaEntityCode?: string;
+    javaObjectCode?: string;
+    typescriptTypeCode?: string;
+  };
+
+  type getTableInfoVoByIdParams = {
+    id: number;
+  };
+
   type getUserByIdParams = {
     id: number;
   };
@@ -98,6 +150,34 @@ declare namespace API {
   type OrderItem = {
     column?: string;
     asc?: boolean;
+  };
+
+  type PageTableInfo = {
+    records?: TableInfo[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageTableInfo;
+    searchCount?: PageTableInfo;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageTableInfoVo = {
+    records?: TableInfoVo[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageTableInfoVo;
+    searchCount?: PageTableInfoVo;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
   };
 
   type PageUser = {
@@ -128,6 +208,12 @@ declare namespace API {
     pages?: number;
   };
 
+  type ReviewRequest = {
+    id?: number;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
   type SaTokenInfo = {
     tokenName?: string;
     tokenValue?: string;
@@ -140,6 +226,72 @@ declare namespace API {
     tokenActiveTimeout?: number;
     loginDevice?: string;
     tag?: string;
+  };
+
+  type TableInfo = {
+    id?: number;
+    name?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+  };
+
+  type TableInfoAddRequest = {
+    id?: number;
+    name?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type TableInfoEditRequest = {
+    id?: number;
+    name?: string;
+    content?: string;
+  };
+
+  type TableInfoQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    id?: number;
+    name?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    searchText?: string;
+  };
+
+  type TableInfoUpdateRequest = {
+    id?: number;
+    name?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type TableInfoVo = {
+    id?: number;
+    name?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    user?: UserVO;
+  };
+
+  type TableSchema = {
+    dbName?: string;
+    tableName?: string;
+    tableComment?: string;
+    mockNum?: number;
+    fieldList?: Field[];
   };
 
   type TokenLoginUserVo = {

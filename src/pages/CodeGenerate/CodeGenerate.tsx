@@ -23,6 +23,7 @@ import FormInput from "@/components/FormInput/FormInput";
 import JsonInputModal from "@/components/JsonInputModal/JsonInputModal";
 import SqlInputModal from "@/components/SqlInputModal/SqlInputModal";
 import ImportTableDrawer from "@/components/ImportTableDrawer/ImportTableDrawer";
+import {generateBySchema} from "@/services/backend/sqlController";
 
 const CodeGenerate: React.FC = () => {
   const [result, setResult] = useState<GenerateVO>();
@@ -56,8 +57,8 @@ const CodeGenerate: React.FC = () => {
   const doGenerateBySchema = async (values: TableSchema) => {
     setGenLoading(true);
     try {
-      // const res = await generateBySchema(values);
-      // setResult(res.data);
+      const res = await generateBySchema(values);
+      setResult(res.data as any);
       message.success('已生成');
     } catch (e: any) {
       message.error('生成错误，' + e.message);
