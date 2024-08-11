@@ -11,6 +11,7 @@ const Square: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [sqlExecResult, setSqlExecResult] = useState<number>(1);
   useEffect(() => {
+
     fetch('/initSQL.txt')
       .then(response => response.text())
       .then(data => {
@@ -59,7 +60,7 @@ const Square: React.FC = () => {
         <Col span={11}>
           <Card>
             <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0}
-                       level={null}/>
+                       level={null as any}/>
           </Card>
         </Col>
         <Col span={12} style={{marginLeft: 10}}>

@@ -6,7 +6,7 @@ import {initDB, runSQL} from "@/core/sqlExecutor";
 import {Database, QueryExecResult} from "sql.js";
 
 interface SqlEditorProps {
-  level: any;
+  level: API.TopicLevelVo;
   sql?: string;
   initSql?: string;
   onSubmit: (sql: string,
@@ -43,7 +43,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       const result = runSQL(db.current, querySQL === null ? "" : querySQL as string);
       const execPlanResult = runSQL(db.current, querySQL === null ? "" : "EXPLAIN QUERY PLAN " + querySQL as string);
       if (level !== null) {
-        answerResult = runSQL(db.current, querySQL === null ? "" : querySQL as string);
+        answerResult = runSQL(db.current, querySQL === null ? "" : level.answer as string);
       }
       onSubmit("", result, answerResult, execPlanResult, "");  // 将结果传递给父组件
       // 将结果传递给父组件
@@ -61,7 +61,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       const currentSQL = editorRef.current.getValue();
       setQuerySQL(currentSQL);
       const result = runSQL(db.current as any, currentSQL);
-      const answerResult = runSQL(db.current as any, currentSQL);
+      const answerResult = runSQL(db.current as any, level.answer as string);
       const execPlanResult = runSQL(db.current as any, "EXPLAIN QUERY PLAN " + currentSQL);
       console.log("执行结果：", result);
       onSubmit("", result, answerResult, execPlanResult, ""); // 将结果传递给父组件
