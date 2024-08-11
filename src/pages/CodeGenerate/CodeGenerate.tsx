@@ -127,6 +127,7 @@ const CodeGenerate: React.FC = () => {
     </Card>
   );
 
+  // @ts-ignore
   return (
     <div id="indexPage">
       <PageContainer

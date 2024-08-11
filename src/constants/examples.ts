@@ -7,7 +7,7 @@ export const AUTO_INPUT_EXAMPLE = "id，用户名，创建时间，更新时间�
  * JSON 输入示例
  */
 export const JSON_INPUT_EXAMPLE = {
-  dbName: 'yupi_db',
+  dbName: 'cong_db',
   tableName: 'user',
   tableComment: '用户表',
   fieldList: [
@@ -69,7 +69,7 @@ export const JSON_INPUT_EXAMPLE = {
  */
 export const SQL_INPUT_EXAMPLE =
   '-- 用户表\n' +
-  'create table if not exists yupi_db.user\n' +
+  'create table if not exists cong_db.user\n' +
   '(\n' +
   "id bigint not null auto_increment comment '主键' primary key,\n" +
   "username varchar(256) not null comment '用户名',\n" +

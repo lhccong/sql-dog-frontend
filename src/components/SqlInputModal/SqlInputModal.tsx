@@ -13,7 +13,7 @@ interface Props {
  * 建表 SQL 输入模态框
  *
  * @constructor
- * @author https://github.com/liyupi
+ * @author https://github.com/lhccong
  */
 const SqlInput: React.FC<Props> = (props) => {
   const { onSubmit, visible, onClose } = props;

@@ -32,7 +32,7 @@ interface Props {
  * 表信息列表
  *
  * @constructor
- * @author https://github.com/liyupi
+ * @author https://github.com/lhccong
  */
 const TableInfoList: React.FC<Props> = (props) => {
   const { dataList, pagination, loading, showTag = true, onImport } = props;

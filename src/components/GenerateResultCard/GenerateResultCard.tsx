@@ -13,6 +13,7 @@ import {
 import copy from 'copy-to-clipboard';
 import React from 'react';
 import {CodeEditor} from "@/components/CodeEditor/CodeEditor";
+import ReactPlantUML from "react-plantuml";
 
 interface Props {
   result?: any;
@@ -29,6 +30,7 @@ interface Props {
 const GenerateResultCard: React.FC<Props> = (props) => {
   const {result, loading = false, showCard = true} = props;
 
+  console.log(result)
   /**
    * 下载 excel 数据
    */
@@ -133,6 +135,60 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                   }
                 >
                   <CodeEditor key={"insertSqlEditor"} code={result.insertSql} language="sql"/>
+                </Collapse.Panel>
+              </Collapse>
+            </>
+          ),
+        },
+        {
+          label: `ER 图`,
+          key: 'erPic',
+          children: (
+            <>
+              <Space>
+                <Button
+                  icon={<CopyOutlined/>}
+                  type="primary"
+                  onClick={(e) => {
+                    if (!result) {
+                      return;
+                    }
+                    copy(`${result.createSql}\n\n${result.insertSql}`);
+                    e.stopPropagation();
+                    message.success('已复制到剪切板');
+                  }}
+                >
+                  复制全部
+                </Button>
+              </Space>
+              <div style={{marginTop: 16}}/>
+              <Collapse defaultActiveKey={['1']}>
+                <Collapse.Panel
+                  header="ER图"
+                  key="1"
+                  className="code-collapse-panel"
+                >
+                  <ReactPlantUML src={result?.plantUmlCode} alt={""}/>
+                </Collapse.Panel>
+                <Collapse.Panel
+                  header="PlantUML 代码"
+                  key="2"
+                  className="code-collapse-panel"
+                  extra={
+                    <Button
+                      size="small"
+                      icon={<CopyOutlined/>}
+                      onClick={(e) => {
+                        copy(result?.plantUmlCode);
+                        e.stopPropagation();
+                        message.success('已复制到剪切板');
+                      }}
+                    >
+                      复制
+                    </Button>
+                  }
+                >
+                  <CodeEditor key={"mermaidEditor"} code={result.plantUmlCode} language="java"/>
                 </Collapse.Panel>
               </Collapse>
             </>

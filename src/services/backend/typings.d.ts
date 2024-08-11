@@ -20,6 +20,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseFieldInfoVO = {
+    code?: number;
+    data?: FieldInfoVO;
+    message?: string;
+  };
+
   type BaseResponseGenerateVO = {
     code?: number;
     data?: GenerateVO;
@@ -38,6 +44,18 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponsePageFieldInfo = {
+    code?: number;
+    data?: PageFieldInfo;
+    message?: string;
+  };
+
+  type BaseResponsePageFieldInfoVO = {
+    code?: number;
+    data?: PageFieldInfoVO;
+    message?: string;
+  };
+
   type BaseResponsePageTableInfo = {
     code?: number;
     data?: PageTableInfo;
@@ -47,6 +65,24 @@ declare namespace API {
   type BaseResponsePageTableInfoVo = {
     code?: number;
     data?: PageTableInfoVo;
+    message?: string;
+  };
+
+  type BaseResponsePageTopicLevel = {
+    code?: number;
+    data?: PageTopicLevel;
+    message?: string;
+  };
+
+  type BaseResponsePageTopicLevelVo = {
+    code?: number;
+    data?: PageTopicLevelVo;
+    message?: string;
+  };
+
+  type BaseResponsePageTopicVo = {
+    code?: number;
+    data?: PageTopicVo;
     message?: string;
   };
 
@@ -80,6 +116,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseTopicLevelVo = {
+    code?: number;
+    data?: TopicLevelVo;
+    message?: string;
+  };
+
   type BaseResponseUser = {
     code?: number;
     data?: User;
@@ -95,6 +137,19 @@ declare namespace API {
   type CaptchaVO = {
     key?: string;
     code?: string;
+  };
+
+  type ContentJson = {
+    fieldName?: string;
+    fieldType?: string;
+    defaultValue?: string;
+    notNull?: boolean;
+    comment?: string;
+    primaryKey?: boolean;
+    autoIncrement?: boolean;
+    mockType?: string;
+    mockParams?: string;
+    onUpdate?: string;
   };
 
   type DeleteRequest = {
@@ -114,6 +169,73 @@ declare namespace API {
     onUpdate?: string;
   };
 
+  type FieldInfo = {
+    id?: number;
+    name?: string;
+    fieldName?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+  };
+
+  type FieldInfoAddRequest = {
+    name?: string;
+    fieldName?: string;
+    content?: ContentJson;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type FieldInfoEditRequest = {
+    id?: number;
+    name?: string;
+    fieldName?: string;
+    content?: ContentJson;
+  };
+
+  type FieldInfoQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    id?: number;
+    name?: string;
+    fieldName?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    searchText?: string;
+  };
+
+  type FieldInfoUpdateRequest = {
+    id?: number;
+    name?: string;
+    fieldName?: string;
+    content?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type FieldInfoVO = {
+    id?: number;
+    name?: string;
+    fieldName?: string;
+    content?: string;
+    reviewStatus?: number;
+    userId?: number;
+    reviewMessage?: string;
+    createTime?: string;
+    updateTime?: string;
+    userVO?: UserVO;
+  };
+
   type GenerateVO = {
     tableSchema?: TableSchema;
     createSql?: string;
@@ -123,9 +245,18 @@ declare namespace API {
     javaEntityCode?: string;
     javaObjectCode?: string;
     typescriptTypeCode?: string;
+    plantUmlCode?: string;
+  };
+
+  type getFieldInfoVoByIdParams = {
+    id: number;
   };
 
   type getTableInfoVoByIdParams = {
+    id: number;
+  };
+
+  type getTopicLevelVoByIdParams = {
     id: number;
   };
 
@@ -152,6 +283,34 @@ declare namespace API {
     asc?: boolean;
   };
 
+  type PageFieldInfo = {
+    records?: FieldInfo[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageFieldInfo;
+    searchCount?: PageFieldInfo;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageFieldInfoVO = {
+    records?: FieldInfoVO[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageFieldInfoVO;
+    searchCount?: PageFieldInfoVO;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
   type PageTableInfo = {
     records?: TableInfo[];
     total?: number;
@@ -174,6 +333,48 @@ declare namespace API {
     orders?: OrderItem[];
     optimizeCountSql?: PageTableInfoVo;
     searchCount?: PageTableInfoVo;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageTopicLevel = {
+    records?: TopicLevel[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageTopicLevel;
+    searchCount?: PageTopicLevel;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageTopicLevelVo = {
+    records?: TopicLevelVo[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageTopicLevelVo;
+    searchCount?: PageTopicLevelVo;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageTopicVo = {
+    records?: TopicVo[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageTopicVo;
+    searchCount?: PageTopicVo;
     optimizeJoinOfCountSql?: boolean;
     maxLimit?: number;
     countId?: string;
@@ -241,7 +442,6 @@ declare namespace API {
   };
 
   type TableInfoAddRequest = {
-    id?: number;
     name?: string;
     content?: string;
     reviewStatus?: number;
@@ -303,6 +503,106 @@ declare namespace API {
     createTime?: string;
     updateTime?: string;
     saTokenInfo?: SaTokenInfo;
+  };
+
+  type TopicLevel = {
+    id?: number;
+    title?: string;
+    initSQL?: string;
+    mdContent?: string;
+    defaultSQL?: string;
+    answer?: string;
+    hint?: string;
+    type?: string;
+    userId?: number;
+    createTime?: string;
+    preLevelId?: number;
+    nextLevelId?: number;
+    updateTime?: string;
+    isDelete?: number;
+  };
+
+  type TopicLevelAddRequest = {
+    title?: string;
+    initSQL?: string;
+    mdContent?: string;
+    defaultSQL?: string;
+    answer?: string;
+    hint?: string;
+    type?: string;
+  };
+
+  type TopicLevelEditRequest = {
+    id?: number;
+    title?: string;
+    initSQL?: string;
+    mdContent?: string;
+    defaultSQL?: string;
+    answer?: string;
+    hint?: string;
+    type?: string;
+  };
+
+  type TopicLevelQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    id?: number;
+    title?: string;
+    initSQL?: string;
+    mdContent?: string;
+    defaultSQL?: string;
+    answer?: string;
+    hint?: string;
+    type?: string;
+    searchText?: string;
+    userId?: number;
+  };
+
+  type TopicLevelUpdateRequest = {
+    id?: number;
+    title?: string;
+    initSQL?: string;
+    mdContent?: string;
+    defaultSQL?: string;
+    answer?: string;
+    hint?: string;
+    type?: string;
+  };
+
+  type TopicLevelVo = {
+    id?: number;
+    title?: string;
+    initSQL?: string;
+    mdContent?: string;
+    defaultSQL?: string;
+    answer?: string;
+    hint?: string;
+    type?: string;
+    preLevelId?: number;
+    nextLevelId?: number;
+    createTime?: string;
+    updateTime?: string;
+    userId?: number;
+    user?: UserVO;
+  };
+
+  type TopicQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    id?: number;
+    title?: string;
+    type?: string;
+    searchText?: string;
+  };
+
+  type TopicVo = {
+    id?: number;
+    title?: string;
+    type?: string;
   };
 
   type uploadFileParams = {

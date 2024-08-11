@@ -37,6 +37,7 @@ interface GenerateVO {
   javaEntityCode: string;
   javaObjectCode: string;
   typescriptTypeCode: string;
+  plantUmlCode?: string;
 }
 
 /**
