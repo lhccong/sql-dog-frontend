@@ -93,7 +93,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                 </Button>
               </Space>
               <div style={{marginTop: 16}}/>
-              <Collapse defaultActiveKey={['1', '2']}>
+              <Collapse defaultActiveKey={['1']}>
                 <Collapse.Panel
                   header="建表语句"
                   key="1"
@@ -112,7 +112,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                     </Button>
                   }
                 >
-                  <CodeEditor code={result.createSql}/>
+                  <CodeEditor key={"createSqlEditor"} language={"sql"} code={result.createSql}/>
                 </Collapse.Panel>
                 <Collapse.Panel
                   header="插入语句"
@@ -132,7 +132,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                     </Button>
                   }
                 >
-                  <CodeEditor code={result.insertSql} language="sql"/>
+                  <CodeEditor key={"insertSqlEditor"} code={result.insertSql} language="sql"/>
                 </Collapse.Panel>
               </Collapse>
             </>
@@ -180,7 +180,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                 </Button>
               </Space>
               <div style={{marginTop: 16}}/>
-              <CodeEditor code={result.dataJson} language="json"/>
+              <CodeEditor key={"jsonEditor"} code={result.dataJson} language="json"/>
             </>
           ),
         },
@@ -208,7 +208,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                     </Button>
                   }
                 >
-                  <CodeEditor code={result.javaEntityCode} language="java"/>
+                  <CodeEditor key={"entityEditor"} code={result.javaEntityCode} language="java"/>
                 </Collapse.Panel>
                 <Collapse.Panel
                   header="对象代码"
@@ -228,7 +228,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                     </Button>
                   }
                 >
-                  <CodeEditor code={result.javaObjectCode} language="java"/>
+                  <CodeEditor key={"objectEditor"} code={result.javaObjectCode} language="java"/>
                 </Collapse.Panel>
               </Collapse>
             </>
@@ -259,6 +259,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
                   }
                 >
                   <CodeEditor
+                    key={"typescriptEditor"}
                     code={result.typescriptTypeCode}
                     language="typescript"
                   />

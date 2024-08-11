@@ -82,7 +82,7 @@ const LevelsPage: React.FC = () => {
     {
       key: '3',
       label: '查看建表语句',
-      children: <CodeEditor language={"sql"} code={"-- `student`\n" +
+      children: <CodeEditor key={"createTableEditor"} language={"sql"} code={"-- `student`\n" +
         "create table if not exists `student`\n" +
         "(\n" +
         "    `id`       integer          not null primary key AUTOINCREMENT,\n" +
