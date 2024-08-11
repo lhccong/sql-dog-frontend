@@ -145,23 +145,6 @@ const GenerateResultCard: React.FC<Props> = (props) => {
           key: 'erPic',
           children: (
             <>
-              <Space>
-                <Button
-                  icon={<CopyOutlined/>}
-                  type="primary"
-                  onClick={(e) => {
-                    if (!result) {
-                      return;
-                    }
-                    copy(`${result.createSql}\n\n${result.insertSql}`);
-                    e.stopPropagation();
-                    message.success('已复制到剪切板');
-                  }}
-                >
-                  复制全部
-                </Button>
-              </Space>
-              <div style={{marginTop: 16}}/>
               <Collapse defaultActiveKey={['1']}>
                 <Collapse.Panel
                   header="ER图"
