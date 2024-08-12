@@ -4,6 +4,7 @@ import * as monaco from "monaco-editor";
 import {format} from "sql-formatter";
 import {initDB, runSQL} from "@/core/sqlExecutor";
 import {Database, QueryExecResult} from "sql.js";
+import {RESULT_STATUS_ENUM} from "@/core/useCheckResult";
 
 interface SqlEditorProps {
   level: API.TopicLevelVo;
@@ -46,10 +47,16 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       let answerResult = null as unknown as QueryExecResult[];
       const result = runSQL(db.current, sql === null ? "" : sql as string);
       const execPlanResult = runSQL(db.current, sql === null ? "" : "EXPLAIN QUERY PLAN " + sql as string);
+      let errorMsg = ""
       if (level !== null) {
         answerResult = runSQL(db.current, level === null ? "" : level.answer as string);
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        const compareResult = checkResult(result, answerResult);
+        if (compareResult !== 1) {
+          errorMsg = "与正确答案不符喔";
+        }
       }
-      onSubmit("", result, answerResult, execPlanResult, "");  // 将结果传递给父组件
+      onSubmit("", result, answerResult, execPlanResult, errorMsg);  // 将结果传递给父组件
       // 将结果传递给父组件
       return result;
     }
@@ -60,6 +67,8 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
 
     console.log("切换题目页面")
   }, [level.title]);
+
+
   const run = () => {
     try {
       // @ts-ignore
@@ -67,12 +76,18 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       setQuerySQL(currentSQL);
       const result = runSQL(db.current as any, currentSQL);
       let answerResult = null as unknown as QueryExecResult[];
+      let errorMsg = "";
       if (level !== null) {
         answerResult = runSQL(db.current as any, level.answer as string);
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        const compareResult = checkResult(result, answerResult);
+        if (compareResult !== 1) {
+          errorMsg = "与正确答案不符喔";
+        }
       }
       const execPlanResult = runSQL(db.current as any, "EXPLAIN QUERY PLAN " + currentSQL);
       console.log("执行结果：", result);
-      onSubmit("", result, answerResult, execPlanResult, ""); // 将结果传递给父组件
+      onSubmit("", result, answerResult, execPlanResult, errorMsg); // 将结果传递给父组件
       // 将结果传递给父组件
     } catch (error: any) {
       message.error("语句错误，" + error.message).then();
@@ -93,6 +108,30 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
     console.log('重置');
   };
 
+  /**
+   * 判断结果是否正确的 Hook
+   * @param result 用户结果
+   * @param answerResult 答案结果
+   */
+
+  const checkResult = (result: QueryExecResult[], answerResult: QueryExecResult[]) => {
+    if (!result?.[0] || !answerResult?.[0]) {
+      return RESULT_STATUS_ENUM.ERROR;
+    }
+    // 列名需要一致
+    const resultColumns = result[0].columns;
+    const answerResultColumns = answerResult[0].columns;
+    if (JSON.stringify(resultColumns) !== JSON.stringify(answerResultColumns)) {
+      return RESULT_STATUS_ENUM.ERROR;
+    }
+    // 数据需要一致
+    const resultValues = result[0].values;
+    const answerResultValues = answerResult[0].values;
+    if (JSON.stringify(resultValues) === JSON.stringify(answerResultValues)) {
+      return RESULT_STATUS_ENUM.SUCCEED;
+    }
+    return RESULT_STATUS_ENUM.ERROR;
+  };
   return (
     <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
       <div style={{height: 400, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>

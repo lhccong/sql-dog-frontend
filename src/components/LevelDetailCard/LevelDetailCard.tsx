@@ -23,7 +23,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
   const [initSQL, setInitSQL] = useState('');
   const [initMd, setInitMd] = useState('');
   const [loading, setLoading] = useState(true);
-  const [sqlExecResult, setSqlExecResult] = useState<number>(1);
+  const [sqlExecResult, setSqlExecResult] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,15 +107,15 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
             {topicData?.preLevelId as any > 0 && (
               <Button style={{width: 100}} onClick={() => setTopicId(topicData?.preLevelId as any)}>上一题</Button>)}
             {topicData?.nextLevelId as any > 0 && (
-              <Button type={"primary"} style={{width: 100, marginLeft: 40}}
-                      onClick={() => setTopicId(32)}>下一题</Button>)}
-
+              <Button type={"primary"} disabled={sqlExecResult !== 1} style={{width: 100, marginLeft: 40}}
+                      onClick={() => setTopicId(topicData?.nextLevelId as any)}>下一题</Button>)}
           </div>
         </Col>
         <Col span={12} style={{marginLeft: 10}}>
           <Card title={"Tip：在输入框中执行📑"} extra={<Image style={{width: 40}}
                                                             src={"https://5b0988e595225.cdn.sohucs.com/images/20190421/8c4ca8cbc42b46c6ae43a12b55065e8a.gif.gif"}/>}>
-            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={topicData?.defaultSQL} resultStatus={0}
+            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={topicData?.defaultSQL}
+                       resultStatus={sqlExecResult}
                        level={topicData as any}/>
           </Card>
           <Collapse style={{marginTop: 30}} items={items} defaultActiveKey={['1']} onChange={onChange}/>
