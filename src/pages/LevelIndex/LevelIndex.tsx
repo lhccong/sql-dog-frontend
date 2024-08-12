@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Card, Col, List, Row} from "antd";
+import {Badge, Button, Card, Col, List, Row} from "antd";
 import {listTopicVoByPage} from "@/services/backend/topicLevelController";
 import {useNavigate} from 'react-router-dom'; // 用于跳转
 const LevelIndex: React.FC = () => {
@@ -53,20 +53,22 @@ const LevelIndex: React.FC = () => {
     <Row gutter={16}>
       <Col className="gutter-row" span={12}>
         <div style={style}>
-          <Card title={"主线关卡"}>
-            <List
-              pagination={{total: currentSystemTotal, pageSize: 10, onChange: onPageSystemChange}}
-              itemLayout="horizontal"
-              dataSource={topicSystemData as API.TopicVo[]}
-              renderItem={(item) => (
-                <List.Item extra={<Button onClick={() => toDetail(item.id)}>挑战</Button>}>
-                  <List.Item.Meta
-                    title={<a href="https://ant.design">{item.title}</a>}
-                  />
-                </List.Item>
-              )}
-            />
-          </Card>
+          <Badge.Ribbon text={"官方精选⭐"} color={"green"}>
+            <Card title={"主线关卡"}>
+              <List
+                pagination={{total: currentSystemTotal, pageSize: 10, onChange: onPageSystemChange}}
+                itemLayout="horizontal"
+                dataSource={topicSystemData as API.TopicVo[]}
+                renderItem={(item) => (
+                  <List.Item extra={<Button onClick={() => toDetail(item.id)}>挑战</Button>}>
+                    <List.Item.Meta
+                      title={<a href="https://ant.design">{item.title}</a>}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Card>
+          </Badge.Ribbon>
         </div>
       </Col>
       <Col className="gutter-row" span={12}>

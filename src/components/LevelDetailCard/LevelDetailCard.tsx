@@ -1,4 +1,4 @@
-import {Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row} from 'antd';
+import {Badge, Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row} from 'antd';
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import React, {useEffect, useState} from "react";
 import {SqlEditor} from "@/components/SqlEditor/SqlEditor";
@@ -102,7 +102,9 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
     <>
       <Row>
         <Col span={11}>
-          <MdViewer content={initMd}/>
+          <Badge.Ribbon text={topicData?.user?.userRole === "admin" ? "官方精选⭐" : "用户："+topicData?.user?.userName} color={topicData?.user?.userRole === "admin" ? "green" : "bule"}>
+            <MdViewer content={initMd}/>
+          </Badge.Ribbon>
           <div style={{display: "flex", float: "right", paddingTop: 40}}>
             {topicData?.preLevelId as any > 0 && (
               <Button style={{width: 100}} onClick={() => setTopicId(topicData?.preLevelId as any)}>上一题</Button>)}
