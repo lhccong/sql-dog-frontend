@@ -25,6 +25,10 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
   const defaultSQL = sql;
   // @ts-ignore
   useEffect(() => {
+    if (editorRef.current) {
+      // @ts-ignore
+      editorRef.current.dispose(); // 如果已经有编辑器实例，先销毁
+    }
     // @ts-ignore
     editorRef.current = monaco.editor.create(document.getElementById('container'), {
       width: "600",
@@ -40,10 +44,10 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
     async function fetchData() {
       db.current = await initDB(initSql);
       let answerResult = null as unknown as QueryExecResult[];
-      const result = runSQL(db.current, querySQL === null ? "" : querySQL as string);
-      const execPlanResult = runSQL(db.current, querySQL === null ? "" : "EXPLAIN QUERY PLAN " + querySQL as string);
+      const result = runSQL(db.current, sql === null ? "" : sql as string);
+      const execPlanResult = runSQL(db.current, sql === null ? "" : "EXPLAIN QUERY PLAN " + sql as string);
       if (level !== null) {
-        answerResult = runSQL(db.current, querySQL === null ? "" : level.answer as string);
+        answerResult = runSQL(db.current, level === null ? "" : level.answer as string);
       }
       onSubmit("", result, answerResult, execPlanResult, "");  // 将结果传递给父组件
       // 将结果传递给父组件
@@ -54,7 +58,8 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       console.log("初始化数据库完成,结果:", r);
     });
 
-  }, []);
+    console.log("切换题目页面")
+  }, [level.title]);
   const run = () => {
     try {
       // @ts-ignore
@@ -90,7 +95,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
 
   return (
     <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
-      <div style={{height: 400, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id="container"/>
+      <div style={{height: 400, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%', maxWidth: 800}}>
         <Button type="primary" onClick={run}>运行</Button>
         <Button onClick={formatSQL}>格式化</Button>
