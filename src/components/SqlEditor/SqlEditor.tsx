@@ -61,7 +61,10 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       const currentSQL = editorRef.current.getValue();
       setQuerySQL(currentSQL);
       const result = runSQL(db.current as any, currentSQL);
-      const answerResult = runSQL(db.current as any, level.answer as string);
+      let answerResult = null as unknown as QueryExecResult[];
+      if (level !== null) {
+        answerResult = runSQL(db.current as any, level.answer as string);
+      }
       const execPlanResult = runSQL(db.current as any, "EXPLAIN QUERY PLAN " + currentSQL);
       console.log("执行结果：", result);
       onSubmit("", result, answerResult, execPlanResult, ""); // 将结果传递给父组件
