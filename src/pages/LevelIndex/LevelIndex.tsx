@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Card, Col, List, Row} from "antd";
 import {listTopicVoByPage} from "@/services/backend/topicLevelController";
-
+import {useNavigate} from 'react-router-dom'; // 用于跳转
 const LevelIndex: React.FC = () => {
   const [currentSystemPage, setCurrentSystemPage] = useState(1); // 用于存储当前页码
   const [currentSystemTotal, setCurrentSystemTotal] = useState(1); // 用于存储当前页码
@@ -25,6 +25,13 @@ const LevelIndex: React.FC = () => {
 
     })
   }
+  const navigate = useNavigate();
+
+  const toDetail = (jumpId: any) => {
+    // 跳转到 LevelsPage，并传递 id 参数
+    navigate(`/study/${jumpId}`); // 这里的 1 是你想要传递的 id
+  };
+
 
   useEffect(() => {
     getCustomTopicData();
@@ -51,10 +58,9 @@ const LevelIndex: React.FC = () => {
               pagination={{total: currentSystemTotal, pageSize: 10, onChange: onPageSystemChange}}
               itemLayout="horizontal"
               dataSource={topicSystemData as API.TopicVo[]}
-              renderItem={(item, index) => (
-                <List.Item extra={<Button>挑战</Button>}>
+              renderItem={(item) => (
+                <List.Item extra={<Button onClick={() => toDetail(item.id)}>挑战</Button>}>
                   <List.Item.Meta
-                    // avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}/>}
                     title={<a href="https://ant.design">{item.title}</a>}
                   />
                 </List.Item>
@@ -70,10 +76,9 @@ const LevelIndex: React.FC = () => {
               itemLayout="horizontal"
               pagination={{total: currentCustomTotal, pageSize: 10, onChange: onPageCustomChange}}
               dataSource={topicCustomData as API.TopicVo[]}
-              renderItem={(item, index) => (
-                <List.Item extra={<Button>挑战</Button>}>
+              renderItem={(item) => (
+                <List.Item extra={<Button onClick={() => toDetail(item.id)}>挑战</Button>}>
                   <List.Item.Meta
-                    // avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}/>}
                     title={<a href="https://ant.design">{item.title}</a>}
                   />
                 </List.Item>

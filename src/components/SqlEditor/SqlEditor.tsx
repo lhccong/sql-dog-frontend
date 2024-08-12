@@ -65,8 +65,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       console.log("初始化数据库完成,结果:", r);
     });
 
-    console.log("切换题目页面")
-  }, [level.title]);
+  }, [level ? level.title : null]);
 
 
   const run = () => {

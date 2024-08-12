@@ -23,14 +23,6 @@ export async function getInitialState(): Promise<InitialState> {
     } catch (error: any) {
       // 如果未登录
     }
-
-    // 模拟登录用户
-    // const mockUser: API.LoginUserVO = {
-    //   userAvatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-    //   userName: 'cong',
-    //   userRole: 'admin',
-    // };
-    // initialState.currentUser = mockUser;
   }
   return initialState;
 }
