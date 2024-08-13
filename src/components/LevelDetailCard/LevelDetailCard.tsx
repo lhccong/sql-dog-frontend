@@ -1,4 +1,4 @@
-import {Badge, Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row} from 'antd';
+import {Badge, Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row, Tooltip} from 'antd';
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import React, {useEffect, useState} from "react";
 import {SqlEditor} from "@/components/SqlEditor/SqlEditor";
@@ -102,15 +102,18 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
     <>
       <Row>
         <Col span={11}>
-          <Badge.Ribbon text={topicData?.user?.userRole === "admin" ? "官方精选⭐" : "用户："+topicData?.user?.userName} color={topicData?.user?.userRole === "admin" ? "green" : "bule"}>
+          <Badge.Ribbon text={topicData?.user?.userRole === "admin" ? "官方精选⭐" : "用户：" + topicData?.user?.userName}
+                        color={topicData?.user?.userRole === "admin" ? "green" : "bule"}>
             <MdViewer content={initMd}/>
           </Badge.Ribbon>
           <div style={{display: "flex", float: "right", paddingTop: 40}}>
             {topicData?.preLevelId as any > 0 && (
               <Button style={{width: 100}} onClick={() => setTopicId(topicData?.preLevelId as any)}>上一题</Button>)}
             {topicData?.nextLevelId as any > 0 && (
-              <Button type={"primary"} disabled={sqlExecResult !== 1} style={{width: 100, marginLeft: 40}}
-                      onClick={() => setTopicId(topicData?.nextLevelId as any)}>下一题</Button>)}
+              <Tooltip placement="topLeft" title={"回答正确✅才可以进行下一关喔"} >
+                <Button type={"primary"} disabled={sqlExecResult !== 1} style={{width: 100, marginLeft: 40}}
+                        onClick={() => setTopicId(topicData?.nextLevelId as any)}>下一题</Button></Tooltip>)
+            }
           </div>
         </Col>
         <Col span={12} style={{marginLeft: 10}}>
