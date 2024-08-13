@@ -1,4 +1,4 @@
-import {Badge, Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row, Tooltip} from 'antd';
+import {Badge, Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row, Tabs, TabsProps, Tooltip} from 'antd';
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import React, {useEffect, useState} from "react";
 import {SqlEditor} from "@/components/SqlEditor/SqlEditor";
@@ -7,6 +7,7 @@ import {MdViewer} from "@/components/MdViewer/MdViewer";
 import {SqlResultCard} from "@/components/SqlResult/SqlResult";
 import {CodeEditor} from "@/components/CodeEditor/CodeEditor";
 import {getTopicLevelVoById} from "@/services/backend/topicLevelController";
+import {BookOutlined, BugOutlined, BulbOutlined} from '@ant-design/icons';
 
 interface LevelsPageProps {
   id: number;
@@ -67,15 +68,11 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
     setResult(result);
     setExecPlanResult(execPlanResult);
   };
-
   const items: CollapseProps['items'] = [
     {
       key: '1',
-      label: '查看执行结果',
-      children: <SqlResultCard result={result}
-                               answerResult={result}
-                               execPlanResult={execPlanResult}
-                               resultStatus={sqlExecResult}/>,
+      label: '查看答案',
+      children: <p>{topicData?.answer}</p>,
     },
     {
       key: '2',
@@ -87,12 +84,49 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
       label: '查看建表语句',
       children: <CodeEditor key={"createTableEditor"} language={"sql"} code={topicData?.initSQL}/>,
     },
+
+  ];
+
+  const tabsItems: TabsProps['items'] = [
     {
-      key: '4',
-      label: '查看答案',
-      children: <p>{topicData?.answer}</p>,
+      key: '1',
+      label: '题目描述',
+      icon: <BookOutlined/>,
+      children: <>
+        <Badge.Ribbon
+          text={topicData?.user?.userRole === "admin" ? "官方精选⭐" : "用户：" + topicData?.user?.userName}
+          color={topicData?.user?.userRole === "admin" ? "green" : "blue"}>
+          <MdViewer content={initMd}/>
+        </Badge.Ribbon>
+        <div style={{display: "flex", float: "right", paddingTop: 20}}>
+          {topicData?.preLevelId as any > 0 && (
+            <Button style={{width: 100}} onClick={() => setTopicId(topicData?.preLevelId as any)}>上一题</Button>)}
+          {topicData?.nextLevelId as any > 0 && (
+            <Tooltip placement="topLeft" title={"回答正确✅才可以进行下一关喔"}>
+              <Button type={"primary"} disabled={sqlExecResult !== 1} style={{width: 100, marginLeft: 40}}
+                      onClick={() => setTopicId(topicData?.nextLevelId as any)}>下一题</Button></Tooltip>)
+          }
+        </div>
+      </>,
+    },
+    {
+      key: '2',
+      label: '运行',
+      icon: <BugOutlined/>,
+      children: <SqlResultCard result={result}
+                               answerResult={result}
+                               execPlanResult={execPlanResult}
+                               resultStatus={sqlExecResult}/>,
+    },
+    {
+      key: '3',
+      label: '答案',
+      icon: <BulbOutlined/>,
+      children: <Collapse ghost={true} items={items} defaultActiveKey={['1']} onChange={onChange}/>
+      ,
     },
   ];
+
 
   if (loading) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={"加载中啦，别催！！"}/>;
@@ -102,19 +136,9 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
     <>
       <Row>
         <Col span={11}>
-          <Badge.Ribbon text={topicData?.user?.userRole === "admin" ? "官方精选⭐" : "用户：" + topicData?.user?.userName}
-                        color={topicData?.user?.userRole === "admin" ? "green" : "bule"}>
-            <MdViewer content={initMd}/>
-          </Badge.Ribbon>
-          <div style={{display: "flex", float: "right", paddingTop: 40}}>
-            {topicData?.preLevelId as any > 0 && (
-              <Button style={{width: 100}} onClick={() => setTopicId(topicData?.preLevelId as any)}>上一题</Button>)}
-            {topicData?.nextLevelId as any > 0 && (
-              <Tooltip placement="topLeft" title={"回答正确✅才可以进行下一关喔"} >
-                <Button type={"primary"} disabled={sqlExecResult !== 1} style={{width: 100, marginLeft: 40}}
-                        onClick={() => setTopicId(topicData?.nextLevelId as any)}>下一题</Button></Tooltip>)
-            }
-          </div>
+          <Card>
+            <Tabs tabPosition={"left"} defaultActiveKey="1" items={tabsItems} onChange={onChange}/>
+          </Card>
         </Col>
         <Col span={12} style={{marginLeft: 10}}>
           <Card title={"Tip：在输入框中执行📑"} extra={<Image style={{width: 40}}
@@ -123,7 +147,6 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
                        resultStatus={sqlExecResult}
                        level={topicData as any}/>
           </Card>
-          <Collapse style={{marginTop: 30}} items={items} defaultActiveKey={['1']} onChange={onChange}/>
         </Col>
       </Row>
     </>

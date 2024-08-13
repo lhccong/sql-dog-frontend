@@ -64,15 +64,17 @@ const Square: React.FC = () => {
           </Card>
         </Col>
         <Col span={12} style={{marginLeft: 10}}>
-          <SqlResultCard result={result}
-                         answerResult={result}
-                         execPlanResult={execPlanResult}
-                         resultStatus={sqlExecResult}/>
-
+          <Card>
+            <SqlResultCard result={result}
+                           answerResult={result}
+                           execPlanResult={execPlanResult}
+                           resultStatus={sqlExecResult}/>
+          </Card>
         </Col>
       </Row>
     </>
-  );
+  )
+    ;
 
 };
 export default Square;

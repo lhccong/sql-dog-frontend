@@ -35,6 +35,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       width: "600",
       height: "600",
       theme: "vs-dark",
+      fontSize: 20,
       value: "-- 请在此处输入 SQL\n" + defaultSQL,
       language: 'sql'
     });
@@ -133,7 +134,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
   };
   return (
     <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
-      <div style={{height: 400, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
+      <div style={{height: 650, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%', maxWidth: 800}}>
         <Button type="primary" onClick={run}>运行</Button>
         <Button onClick={formatSQL}>格式化</Button>

@@ -11,7 +11,7 @@ import {oneLight} from 'react-syntax-highlighter/dist/esm/styles/prism'; // ä½¿ç
 // @ts-ignore
 export const MdViewer = ({content}) => {
   return (
-    <Card style={{height: "auto", maxHeight: 1200, overflowY: "scroll"}} className="markdown-body">
+    <Card style={{height: "auto", maxHeight: 700, overflowY: "scroll"}} className="markdown-body">
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}
