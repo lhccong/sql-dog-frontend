@@ -6,6 +6,7 @@ export default [
   },
   {path: '/study', icon: 'BookOutlined', component: './Levels/LevelsPage', name: '学习'},
   {path: '/study/:id', icon: 'BookOutlined', component: './Levels/LevelsPage'},
+  {path: '/user/:id', component: './User/UserDetail'},
   {path: '/code', icon: 'ExperimentOutlined', component: './CodeGenerate/CodeGenerate', name: '代码生成'},
   {path: '/level', icon: 'ThunderboltOutlined', component: './LevelIndex/LevelIndex', name: '关卡'},
   {path: '/square', icon: 'smile', component: './Square/Square', name: '广场'},
@@ -20,6 +21,7 @@ export default [
     ],
   },
   {
+    path: '/github',
     icon: 'github',
     name: '代码开源',
     routes: [
