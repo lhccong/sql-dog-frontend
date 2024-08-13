@@ -90,7 +90,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
   const tabsItems: TabsProps['items'] = [
     {
       key: '1',
-      label: '题目描述',
+      label: '题目',
       icon: <BookOutlined/>,
       children: <>
         <Badge.Ribbon
