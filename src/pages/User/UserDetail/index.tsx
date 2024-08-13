@@ -1,13 +1,11 @@
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import React from "react";
-import LevelDetailCard from "@/components/LevelDetailCard/LevelDetailCard";
 import {useModel, useParams} from "@@/exports";
-import {Avatar, Button, Card, Col, Divider, Row, Statistic, Tabs, TabsProps} from "antd";
+import {Avatar, Button, Card, Col, Divider, Row, Tabs, TabsProps} from "antd";
 import {
   CreditCardOutlined,
   EnvironmentOutlined,
   FieldTimeOutlined,
-  LikeOutlined,
   ManOutlined,
   RocketOutlined
 } from "@ant-design/icons";

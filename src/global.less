@@ -1,4 +1,5 @@
 @import 'github-markdown-css';
+
 html,
 body,
 #root {
@@ -6,8 +7,8 @@ body,
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+  'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+  'Noto Color Emoji';
 }
 
 .colorWeak {
@@ -17,12 +18,18 @@ body,
 .ant-layout {
   min-height: 100vh;
 }
+
 .ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
   left: unset;
 }
 
 canvas {
   display: block;
+}
+
+.ant-pro-layout .ant-pro-layout-content {
+  background-image: linear-gradient(to bottom, rgba(255, 167, 104, 0.45), white);
+  height: 76vh;
 }
 
 body {
@@ -40,11 +47,13 @@ ol {
   .ant-table {
     width: 100%;
     overflow-x: auto;
+
     &-thead > tr,
     &-tbody > tr {
       > th,
       > td {
         white-space: pre;
+
         > span {
           display: block;
         }

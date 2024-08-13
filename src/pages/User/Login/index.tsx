@@ -1,5 +1,4 @@
 import Footer from '@/components/Footer';
-import { userLogin } from '@/services/backend/userController';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
@@ -8,6 +7,7 @@ import { message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
 import {Link} from "umi";
+import {userLogin} from "@/services/backend/userController";
 
 const Login: React.FC = () => {
   const [type, setType] = useState<string>('account');

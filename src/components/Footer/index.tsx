@@ -1,5 +1,5 @@
-import { GithubOutlined } from '@ant-design/icons';
-import { DefaultFooter } from '@ant-design/pro-components';
+import {GithubOutlined} from '@ant-design/icons';
+import {DefaultFooter} from '@ant-design/pro-components';
 import '@umijs/max';
 import React from 'react';
 
@@ -9,7 +9,8 @@ const Footer: React.FC = () => {
   return (
     <DefaultFooter
       style={{
-        background: 'none',
+        background: 'white',
+        paddingTop: 30
       }}
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
@@ -23,7 +24,7 @@ const Footer: React.FC = () => {
           key: 'shortDog',
           title: (
             <>
-              <GithubOutlined /> wanwu产物-SQL Dog源码
+              <GithubOutlined/> wanwu产物-SQL Dog源码
             </>
           ),
           href: 'https://github.com/lhccong/sql-dog-backend',

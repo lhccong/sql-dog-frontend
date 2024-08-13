@@ -56,7 +56,7 @@ const LevelIndex: React.FC = () => {
           <Badge.Ribbon text={"官方精选⭐"} color={"green"}>
             <Card title={"主线关卡"}>
               <List
-                pagination={{total: currentSystemTotal, pageSize: 10, onChange: onPageSystemChange}}
+                pagination={{total: currentSystemTotal, pageSize: 8, onChange: onPageSystemChange}}
                 itemLayout="horizontal"
                 dataSource={topicSystemData as API.TopicVo[]}
                 renderItem={(item) => (

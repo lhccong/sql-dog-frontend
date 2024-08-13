@@ -133,7 +133,7 @@ const CodeGenerate: React.FC = () => {
       <PageContainer
         title={
           <>
-            快来生成属于你的代码吧🥳～
+           <div style={{color:"gray"}}></div>
           </>
         }
         extra={
