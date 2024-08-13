@@ -96,9 +96,11 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
   };
 
   const formatSQL = () => {
-    const resultStr = format(querySQL === null ? "" : querySQL as string, {language: "sqlite"});
+    // @ts-ignore
+    const resultStr = format(editorRef.current.getValue() === null ? "" : editorRef.current.getValue() as string, {language: "sqlite"});
     // @ts-ignore
     editorRef.current.setValue(resultStr);
+
     console.log('格式化' + resultStr);
   };
 
@@ -134,7 +136,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
   };
   return (
     <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
-      <div style={{height: 650, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
+      <div style={{height: "55vh", width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%', maxWidth: 800}}>
         <Button type="primary" onClick={run}>运行</Button>
         <Button onClick={formatSQL}>格式化</Button>
