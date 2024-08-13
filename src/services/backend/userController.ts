@@ -101,7 +101,7 @@ export async function listUserVoByPage(
 
 /** 用户登录 POST /user/login */
 export async function userLogin(body: API.UserLoginRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponseLoginUserVO>('/user/login', {
+  return request<API.BaseResponseTokenLoginUserVo>('/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

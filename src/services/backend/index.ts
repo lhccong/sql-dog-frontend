@@ -2,6 +2,7 @@
 /* eslint-disable */
 // API 更新时间：
 // API 唯一标识：
+import * as executeInfoController from './executeInfoController';
 import * as fieldInfoController from './fieldInfoController';
 import * as fileController from './fileController';
 import * as restAuthController from './restAuthController';
@@ -16,5 +17,6 @@ export default {
   sqlController,
   fileController,
   fieldInfoController,
+  executeInfoController,
   restAuthController,
 };
