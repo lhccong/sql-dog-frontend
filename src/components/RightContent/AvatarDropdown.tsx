@@ -49,7 +49,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({menu}) => {
       if (key === 'userMessage') {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        history.push(`/user/${currentUser.id}`);
+        history.push(`/userDetail`);
         return;
       }
       history.push(`/account/${key}`);
