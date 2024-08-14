@@ -58,7 +58,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
           errorMsg = "与正确答案不符喔";
         }
       }
-      onSubmit("", result, answerResult, execPlanResult, errorMsg);  // 将结果传递给父组件
+      onSubmit(sql as any, result, answerResult, execPlanResult, errorMsg);  // 将结果传递给父组件
       // 将结果传递给父组件
       return result;
     }
@@ -88,7 +88,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       }
       const execPlanResult = runSQL(db.current as any, "EXPLAIN QUERY PLAN " + currentSQL);
       console.log("执行结果：", result);
-      onSubmit("", result, answerResult, execPlanResult, errorMsg); // 将结果传递给父组件
+      onSubmit(currentSQL, result, answerResult, execPlanResult, errorMsg); // 将结果传递给父组件
       // 将结果传递给父组件
     } catch (error: any) {
       message.error("语句错误，" + error.message).then();

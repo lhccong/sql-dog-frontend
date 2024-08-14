@@ -31,7 +31,7 @@ export async function getSchemaBySql(
 
 /** SQL 评分 POST /sql/score */
 export async function scoreBySql(body: API.SqlAnalysisRequest, options?: { [key: string]: any }) {
-  return request<API.SqlAnalysisVO>('/sql/score', {
+  return request<API.BaseResponseSqlAnalysisVO>('/sql/score', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

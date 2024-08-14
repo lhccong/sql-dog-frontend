@@ -9,6 +9,7 @@ import {PageContainer} from '@ant-design/pro-components';
 
 const Square: React.FC = () => {
   const [initSQL, setInitSQL] = useState('');
+  const [sql, setSql] = useState('');
   const [loading, setLoading] = useState(true);
   const [sqlExecResult, setSqlExecResult] = useState<number>(1);
   useEffect(() => {
@@ -41,6 +42,7 @@ const Square: React.FC = () => {
     }]
   )
   const handleResult = (sql: string, result: QueryExecResult[], answerResult: QueryExecResult[], execPlanResult: QueryExecResult[], errorMsg: string | undefined) => {
+    setSql(sql);
     console.log("获取到执行结果啦:", result);
     if (errorMsg === "") {
       setSqlExecResult(1);
@@ -94,10 +96,12 @@ const Square: React.FC = () => {
                xl={layout === 'half' ? 12 : 24}
                order={layout === 'output' ? 1 : 2}>
             <Card>
-              <SqlResultCard result={result}
-                             answerResult={result}
-                             execPlanResult={execPlanResult}
-                             resultStatus={sqlExecResult}/>
+              <SqlResultCard
+                sql={sql}
+                result={result}
+                answerResult={result}
+                execPlanResult={execPlanResult}
+                resultStatus={sqlExecResult}/>
             </Card>
           </Col>
         </Row>

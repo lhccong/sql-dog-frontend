@@ -30,6 +30,7 @@ interface LevelsPageProps {
 
 const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
   const [topicId, setTopicId] = useState(id); // 用于存储当前题目
+  const [sql, setSql] = useState(""); // 用于存储当前题目
 
   const onChange = (key: string | string[]) => {
     console.log(key);
@@ -75,6 +76,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
   );
 
   const handleResult = (sql: string, result: QueryExecResult[], answerResult: QueryExecResult[], execPlanResult: QueryExecResult[], errorMsg: string | undefined) => {
+    setSql(sql);
     console.log("获取到执行结果啦:", result);
     if (errorMsg === "") {
       setSqlExecResult(1);
@@ -129,10 +131,12 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
       key: '2',
       label: '运行',
       icon: <BugOutlined/>,
-      children: <SqlResultCard result={result}
-                               answerResult={result}
-                               execPlanResult={execPlanResult}
-                               resultStatus={sqlExecResult}/>,
+      children: <SqlResultCard
+        sql={sql}
+        result={result}
+        answerResult={result}
+        execPlanResult={execPlanResult}
+        resultStatus={sqlExecResult}/>,
     },
     {
       key: '3',

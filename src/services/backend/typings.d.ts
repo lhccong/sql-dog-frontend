@@ -116,6 +116,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseSqlAnalysisVO = {
+    code?: number;
+    data?: SqlAnalysisVO;
+    message?: string;
+  };
+
   type BaseResponseString = {
     code?: number;
     data?: string;

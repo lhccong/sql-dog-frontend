@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Empty, Tabs} from 'antd';
 import {SqlResultTable} from '../SqlResultTable/SqlResultTable';
 import {AlignLeftOutlined, AreaChartOutlined, SunOutlined} from "@ant-design/icons";
+import {scoreBySql} from "@/services/backend/sqlController";
 
 interface QueryExecResult {
   columns: string[];
@@ -9,6 +10,7 @@ interface QueryExecResult {
 }
 
 interface Props {
+  sql: string;
   result: QueryExecResult[];
   answerResult: QueryExecResult[];
   execPlanResult: QueryExecResult[];
@@ -24,7 +26,9 @@ const RESULT_STATUS_INFO_MAP: Record<number, string> = {
   // 添加其他状态映射
 };
 
+
 export const SqlResultCard: React.FC<Props> = ({
+                                                 sql = '',
                                                  result = [],
                                                  // answerResult = [],
                                                  execPlanResult = [],
@@ -32,6 +36,13 @@ export const SqlResultCard: React.FC<Props> = ({
                                                  errorMsg = '',
                                                  // level,
                                                }) => {
+  const [analysisResult, setAnalysisResult] = useState('');
+  const getSQLAdvice = (sql: string, result: QueryExecResult[]) => {
+    scoreBySql({sql: sql, detail: result[0].values[0][3]}).then((results: any) => {
+      setAnalysisResult(results.data.sqlAnalysisBySlowMirror as any);
+    });
+  }
+
   return (
     <>
       <Tabs>
@@ -69,12 +80,18 @@ export const SqlResultCard: React.FC<Props> = ({
           <Card
             id="sqlResult"
             title="advice"
-            extra={<Button type={"primary"} onClick={() => {
-            }}>生成建议🔍</Button>}
+            extra={<Button type={"primary"} onClick={() => getSQLAdvice(sql, execPlanResult)}>生成建议🔍</Button>}
             bordered={false}
             style={{maxHeight: '420px', overflowY: 'auto'}}
           >
-            <Empty/>
+            {analysisResult === '' ? <Empty/> : <div>
+              {analysisResult.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br/>
+                </React.Fragment>
+              ))}
+            </div>}
           </Card>
         </Tabs.TabPane>
       </Tabs>
