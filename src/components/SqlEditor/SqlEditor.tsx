@@ -35,7 +35,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
       width: "600",
       height: "600",
       theme: "vs-dark",
-      fontSize: 20,
+      fontSize: 16,
       value: "-- 请在此处输入 SQL\n" + defaultSQL,
       language: 'sql'
     });

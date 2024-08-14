@@ -13,3 +13,15 @@ export async function generateBySchema(body: API.TableSchema, options?: { [key: 
     ...(options || {}),
   });
 }
+
+/** SQL 评分 POST /sql/score */
+export async function scoreBySql(body: API.SqlAnalysisRequest, options?: { [key: string]: any }) {
+  return request<API.SqlAnalysisVO>('/sql/score', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

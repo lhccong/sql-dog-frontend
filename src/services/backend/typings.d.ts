@@ -20,6 +20,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseExecuteInfoVO = {
+    code?: number;
+    data?: ExecuteInfoVO;
+    message?: string;
+  };
+
   type BaseResponseFieldInfoVO = {
     code?: number;
     data?: FieldInfoVO;
@@ -41,6 +47,18 @@ declare namespace API {
   type BaseResponseLong = {
     code?: number;
     data?: number;
+    message?: string;
+  };
+
+  type BaseResponsePageExecuteInfo = {
+    code?: number;
+    data?: PageExecuteInfo;
+    message?: string;
+  };
+
+  type BaseResponsePageExecuteInfoVO = {
+    code?: number;
+    data?: PageExecuteInfoVO;
     message?: string;
   };
 
@@ -156,6 +174,65 @@ declare namespace API {
     id?: number;
   };
 
+  type ExecuteInfo = {
+    id?: number;
+    sqlContent?: string;
+    sqlAnalyzeResult?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+  };
+
+  type ExecuteInfoAddRequest = {
+    sqlContent?: string;
+    sqlAnalyzeResult?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type ExecuteInfoEditRequest = {
+    id?: number;
+    sqlContent?: string;
+    sqlAnalyzeResult?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type ExecuteInfoQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    id?: number;
+    sqlContent?: string;
+    sqlAnalyzeResult?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    searchText?: string;
+    userId?: number;
+  };
+
+  type ExecuteInfoUpdateRequest = {
+    id?: number;
+    sqlContent?: string;
+    sqlAnalyzeResult?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
+  type ExecuteInfoVO = {
+    id?: number;
+    sqlContent?: string;
+    sqlAnalyzeResult?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    userId?: number;
+    user?: UserVO;
+  };
+
   type Field = {
     fieldName?: string;
     fieldType?: string;
@@ -248,6 +325,10 @@ declare namespace API {
     plantUmlCode?: string;
   };
 
+  type getExecuteInfoVOByIdParams = {
+    id: number;
+  };
+
   type getFieldInfoVoByIdParams = {
     id: number;
   };
@@ -281,6 +362,34 @@ declare namespace API {
   type OrderItem = {
     column?: string;
     asc?: boolean;
+  };
+
+  type PageExecuteInfo = {
+    records?: ExecuteInfo[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageExecuteInfo;
+    searchCount?: PageExecuteInfo;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageExecuteInfoVO = {
+    records?: ExecuteInfoVO[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageExecuteInfoVO;
+    searchCount?: PageExecuteInfoVO;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
   };
 
   type PageFieldInfo = {
@@ -427,6 +536,16 @@ declare namespace API {
     tokenActiveTimeout?: number;
     loginDevice?: string;
     tag?: string;
+  };
+
+  type SqlAnalysisRequest = {
+    sql?: string;
+    detail?: string;
+  };
+
+  type SqlAnalysisVO = {
+    sqlAnalysisBySlowMirror?: string;
+    sqlAnalysisByAIGC?: string;
   };
 
   type TableInfo = {
