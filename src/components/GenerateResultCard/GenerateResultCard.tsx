@@ -184,6 +184,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
             <>
               <Space>
                 <Button
+                  disabled={true}
                   icon={<DownloadOutlined/>}
                   type="primary"
                   onClick={() => doDownloadDataExcel()}
@@ -193,6 +194,7 @@ const GenerateResultCard: React.FC<Props> = (props) => {
               </Space>
               <div style={{marginTop: 16}}/>
               <Table
+                scroll={{x: '100%'}}
                 bordered={true}
                 dataSource={result.dataList}
                 columns={schemaToColumn(result.tableSchema)}
