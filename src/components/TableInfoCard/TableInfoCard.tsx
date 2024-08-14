@@ -1,9 +1,9 @@
-// import {listTableInfoByPage} from '@/services/tableInfoService';
 import {Link, useModel} from '@umijs/max';
 import {Button, Card, Empty, Input, message, Space} from 'antd';
 import React, {useEffect, useState} from 'react';
 import './index.less';
 import TableInfoList from "@/components/TableInfoList/TableInfoList";
+import {listTableInfoVoByPage} from "@/services/backend/tableInfoController";
 
 // 默认分页大小
 const DEFAULT_PAGE_SIZE = 10;
@@ -14,10 +14,10 @@ interface Props {
   showTag?: boolean;
   onLoad?: (
     searchParams: TableInfoType.TableInfoQueryRequest,
-    setDataList: (dataList: TableInfoType.TableInfo[]) => void,
+    setDataList: (dataList: API.TableInfoVo[]) => void,
     setTotal: (total: number) => void,
   ) => void;
-  onImport?: (values: TableInfoType.TableInfo) => void;
+  onImport?: (values: API.TableInfoVo) => void;
 }
 
 /**
@@ -30,7 +30,7 @@ const TableInfoCard: React.FC<Props> = (props) => {
   const {title = '表信息列表', needLogin = false, showTag = true, onLoad, onImport} = props;
 
   // 公开数据
-  const [dataList, setDataList] = useState<TableInfoType.TableInfo[]>([]);
+  const [dataList, setDataList] = useState<API.TableInfoVo[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const initSearchParams: TableInfoType.TableInfoQueryRequest = {
@@ -49,18 +49,20 @@ const TableInfoCard: React.FC<Props> = (props) => {
    * 加载数据
    */
   const innerOnLoad = () => {
-    // listTableInfoByPage({
-    //   ...searchParams,
-    //   // 只展示已审核通过的
-    //   reviewStatus: 1,
-    // })
-    //   .then((res: { data: { records: React.SetStateAction<TableInfoType.TableInfo[]>; total: React.SetStateAction<number>; }; }) => {
-    //     setDataList(res.data.records);
-    //     setTotal(res.data.total);
-    //   })
-    //   .catch((e: { message: string; }) => {
-    //     message.error('加载失败，' + e.message);
-    //   });
+    listTableInfoVoByPage({
+      ...searchParams,
+      // 只展示已审核通过的
+      reviewStatus: 1,
+    })
+      .then((res) => {
+        // @ts-ignore
+        setDataList(res.data.records);
+        // @ts-ignore
+        setTotal(res.data.total);
+      })
+      .catch((e: { message: string; }) => {
+        message.error('加载失败，' + e.message);
+      });
   };
 
   // 加载数据

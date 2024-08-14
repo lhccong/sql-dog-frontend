@@ -2,7 +2,7 @@
 //   deleteTableInfo,
 //   generateCreateTableSql,
 // } from '@/services/tableInfoService';
-import { useModel } from '@umijs/max';
+import {useModel} from '@umijs/max';
 import {
   Button,
   Descriptions,
@@ -14,18 +14,19 @@ import {
   Tag,
   Typography,
 } from 'antd';
-import { PaginationConfig } from 'antd/es/pagination';
+import {PaginationConfig} from 'antd/es/pagination';
 import copy from 'copy-to-clipboard';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './index.less';
 import ReportModal from "@/components/ReportModal/ReportModal";
+import {deleteTableInfo} from "@/services/backend/tableInfoController";
 
 interface Props {
   pagination: PaginationConfig;
   loading?: boolean;
-  dataList: TableInfoType.TableInfo[];
+  dataList: API.TableInfoVo[];
   showTag?: boolean;
-  onImport?: (values: TableInfoType.TableInfo) => void;
+  onImport?: (values: API.TableInfoVo) => void;
 }
 
 /**
@@ -35,11 +36,11 @@ interface Props {
  * @author https://github.com/lhccong
  */
 const TableInfoList: React.FC<Props> = (props) => {
-  const { dataList, pagination, loading, showTag = true, onImport } = props;
+  const {dataList, pagination, loading, showTag = true, onImport} = props;
   const [reportModalVisible, setReportModalVisible] = useState(false);
   const [reportedId, setReportedId] = useState(0);
 
-  const { initialState } = useModel('@@initialState');
+  const {initialState} = useModel('@@initialState');
   const loginUser = initialState?.currentUser;
 
   /**
@@ -50,9 +51,9 @@ const TableInfoList: React.FC<Props> = (props) => {
     const hide = message.loading('正在删除');
     if (!id) return true;
     try {
-      // await deleteTableInfo({
-      //   id,
-      // });
+      await deleteTableInfo({
+        id,
+      });
       message.success('操作成功');
     } catch (e: any) {
       message.error('操作失败，' + e.message);
@@ -63,13 +64,14 @@ const TableInfoList: React.FC<Props> = (props) => {
 
   return (
     <div className="table-info-list">
-      <List<TableInfoType.TableInfo>
+      <List<API.TableInfoVo>
         itemLayout="vertical"
         size="large"
         loading={loading}
         pagination={pagination}
         dataSource={dataList}
         renderItem={(item, index) => {
+          // @ts-ignore
           const content: TableSchema = JSON.parse(item.content);
           return (
             <List.Item
@@ -111,19 +113,19 @@ const TableInfoList: React.FC<Props> = (props) => {
                 </Descriptions.Item>
               </Descriptions>
               <Space
-                split={<Divider type="vertical" />}
-                style={{ fontSize: 14 }}
+                split={<Divider type="vertical"/>}
+                style={{fontSize: 14}}
               >
-                <Typography.Text type="secondary">
-                  {item.createTime.toString().split('T')[0]}
-                </Typography.Text>
+                {/*<Typography.Text type="secondary">*/}
+                {/*  {item.createTime.toString().split('T')[0]}*/}
+                {/*</Typography.Text>*/}
                 <Button
                   type="text"
                   onClick={() => {
                     // generateCreateTableSql(item.id)
                     //   .then((res: { data: string; }) => {
                     //     copy(res.data);
-                    //     message.success('复制建表 SQL 成功');
+                    message.success('复制建表 SQL 成功');
                     //   })
                     //   .catch((e: { message: string; }) => {
                     //     message.error('复制失败，' + e.message);
@@ -135,7 +137,7 @@ const TableInfoList: React.FC<Props> = (props) => {
                 <Button
                   type="text"
                   onClick={() => {
-                    setReportedId(item.id);
+                    setReportedId(item.id as any);
                     setReportModalVisible(true);
                   }}
                 >
@@ -145,7 +147,7 @@ const TableInfoList: React.FC<Props> = (props) => {
                   <Popconfirm
                     title="你确定要删除么？"
                     onConfirm={() => {
-                      doDelete(item.id);
+                      doDelete(item.id as any);
                     }}
                   >
                     <Button type="text" danger>

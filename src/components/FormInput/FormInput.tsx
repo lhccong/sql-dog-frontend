@@ -56,7 +56,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
   const [createFieldInfo, setCreateFieldInfo] =
     useState<FieldInfoType.FieldInfo>();
   const [createTableInfo, setCreateTableInfo] =
-    useState<TableInfoType.TableInfo>();
+    useState<API.TableInfoVo>();
   const [importFieldDrawerVisible, setImportFieldDrawerVisible] =
     useState(false);
   // 导入字段的位置
@@ -487,7 +487,7 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                 setCreateTableInfo({
                   name: values.tableComment,
                   content: JSON.stringify(values),
-                } as TableInfoType.TableInfo);
+                } as API.TableInfoVo);
                 setTableInfoCreateModalVisible(true);
               }}
             >

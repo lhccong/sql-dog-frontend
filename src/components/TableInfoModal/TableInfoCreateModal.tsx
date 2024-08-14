@@ -2,10 +2,11 @@
 import {ProColumns, ProTable} from '@ant-design/pro-components';
 import {message, Modal, Typography} from 'antd';
 import React, {PropsWithChildren} from 'react';
+import {addTableInfo} from "@/services/backend/tableInfoController";
 
 interface Props {
   modalVisible: boolean;
-  initialValues?: TableInfoType.TableInfo;
+  initialValues?: API.TableInfoVo;
   onSubmit: () => void;
   onCancel: () => void;
 }
@@ -14,10 +15,10 @@ interface Props {
  * 添加节点
  * @param fields
  */
-const handleAdd = async (fields: TableInfoType.TableInfo) => {
+const handleAdd = async (fields: API.TableInfoVo) => {
   const hide = message.loading('正在添加');
   try {
-    // await addTableInfo({...fields} as TableInfoType.TableInfoAddRequest);
+    await addTableInfo({...fields} as TableInfoType.TableInfoAddRequest);
     hide();
     message.success('添加成功');
     return true;
@@ -39,7 +40,7 @@ const TableInfoCreateModal: React.FC<PropsWithChildren<Props>> = (props) => {
   /**
    * 表格列配置
    */
-  const columns: ProColumns<TableInfoType.TableInfo>[] = [
+  const columns: ProColumns<API.TableInfoVo>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -70,7 +71,7 @@ const TableInfoCreateModal: React.FC<PropsWithChildren<Props>> = (props) => {
         注意，你提交的内容可能会被公开！
       </Typography.Text>
       <div style={{marginBottom: 16}}/>
-      <ProTable<TableInfoType.TableInfo, TableInfoType.TableInfo>
+      <ProTable<API.TableInfoVo, API.TableInfoVo>
         form={{
           initialValues,
           submitter: {

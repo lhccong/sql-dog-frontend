@@ -1,11 +1,11 @@
-// import TableInfoCard from '@/components/TableInfoCard';
-// import { listMyTableInfoByPage } from '@/services/tableInfoService';
-import { useModel } from '@@/exports';
-import { Drawer, message } from 'antd';
+import {useModel} from '@@/exports';
+import {Drawer, message} from 'antd';
 import React from 'react';
+import TableInfoCard from "@/components/TableInfoCard/TableInfoCard";
+import {listMyTableInfoVoByPage} from "@/services/backend/tableInfoController";
 
 interface Props {
-  onImport: (values: TableInfoType.TableInfo) => void;
+  onImport: (values: API.TableInfoVo) => void;
   visible: boolean;
   onClose: () => void;
 }
@@ -17,8 +17,8 @@ interface Props {
  * @author https://github.com/lhccong
  */
 const ImportTableDrawer: React.FC<Props> = (props) => {
-  const { visible, onImport, onClose } = props;
-  const { initialState } = useModel('@@initialState');
+  const {visible, onImport, onClose} = props;
+  const {initialState} = useModel('@@initialState');
   const loginUser = initialState?.currentUser;
 
   /**
@@ -30,28 +30,28 @@ const ImportTableDrawer: React.FC<Props> = (props) => {
   const loadMyData = loginUser
     ? (
       searchParams: TableInfoType.TableInfoQueryRequest,
-      setDataList: (dataList: TableInfoType.TableInfo[]) => void,
+      setDataList: (dataList: API.TableInfoVo[]) => void,
       setTotal: (total: number) => void,
     ) => {
-      // listMyTableInfoByPage(searchParams)
-      //   .then((res) => {
-      //     setDataList(res.data.records);
-      //     setTotal(res.data.total);
-      //   })
-      //   .catch((e) => {
-      //     message.error('加载失败，' + e.message);
-      //   });
+      listMyTableInfoVoByPage(searchParams)
+        .then((res) => {
+          setDataList(res.data?.records as any);
+          setTotal(res.data?.total as any);
+        })
+        .catch((e) => {
+          message.error('加载失败，' + e.message);
+        });
     }
     : undefined;
 
   return (
     <Drawer
       title="导入表"
-      contentWrapperStyle={{ width: '60%', minWidth: 320 }}
+      contentWrapperStyle={{width: '60%', minWidth: 320}}
       open={visible}
       onClose={onClose}
     >
-      {/*<TableInfoCard onLoad={loadMyData} onImport={onImport} />*/}
+      <TableInfoCard onLoad={loadMyData} onImport={onImport}/>
     </Drawer>
   );
 };

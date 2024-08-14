@@ -2,6 +2,7 @@
 import { ProColumns, ProTable } from '@ant-design/pro-components';
 import { message, Modal, Typography } from 'antd';
 import React, { PropsWithChildren } from 'react';
+import {addFieldInfo} from "@/services/backend/fieldInfoController";
 
 interface Props {
   modalVisible: boolean;
