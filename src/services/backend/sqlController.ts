@@ -14,6 +14,21 @@ export async function generateBySchema(body: API.TableSchema, options?: { [key: 
   });
 }
 
+/** 此处后端没有提供注释 POST /sql/get/schema/sql */
+export async function getSchemaBySql(
+  body: API.GenerateBySqlRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseTableSchema>('/sql/get/schema/sql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** SQL 评分 POST /sql/score */
 export async function scoreBySql(body: API.SqlAnalysisRequest, options?: { [key: string]: any }) {
   return request<API.SqlAnalysisVO>('/sql/score', {

@@ -128,6 +128,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseTableSchema = {
+    code?: number;
+    data?: TableSchema;
+    message?: string;
+  };
+
   type BaseResponseTokenLoginUserVo = {
     code?: number;
     data?: TokenLoginUserVo;
@@ -155,19 +161,6 @@ declare namespace API {
   type CaptchaVO = {
     key?: string;
     code?: string;
-  };
-
-  type ContentJson = {
-    fieldName?: string;
-    fieldType?: string;
-    defaultValue?: string;
-    notNull?: boolean;
-    comment?: string;
-    primaryKey?: boolean;
-    autoIncrement?: boolean;
-    mockType?: string;
-    mockParams?: string;
-    onUpdate?: string;
   };
 
   type DeleteRequest = {
@@ -262,16 +255,14 @@ declare namespace API {
   type FieldInfoAddRequest = {
     name?: string;
     fieldName?: string;
-    content?: ContentJson;
-    reviewStatus?: number;
-    reviewMessage?: string;
+    content?: string;
   };
 
   type FieldInfoEditRequest = {
     id?: number;
     name?: string;
     fieldName?: string;
-    content?: ContentJson;
+    content?: string;
   };
 
   type FieldInfoQueryRequest = {
@@ -284,10 +275,7 @@ declare namespace API {
     fieldName?: string;
     content?: string;
     reviewStatus?: number;
-    reviewMessage?: string;
     userId?: number;
-    createTime?: string;
-    updateTime?: string;
     searchText?: string;
   };
 
@@ -311,6 +299,10 @@ declare namespace API {
     createTime?: string;
     updateTime?: string;
     userVO?: UserVO;
+  };
+
+  type GenerateBySqlRequest = {
+    sql?: string;
   };
 
   type GenerateVO = {

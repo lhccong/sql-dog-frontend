@@ -48,6 +48,7 @@ const CodeGenerate: React.FC = () => {
     getTableInfoVoById({id: BigInt(tableId)})
       .then((res) => {
         const tableSchema = JSON.parse(res.data?.content as any);
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         importTableSchema(tableSchema);
       })
       .catch((e) => {

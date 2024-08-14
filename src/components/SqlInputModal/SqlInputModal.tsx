@@ -1,7 +1,8 @@
-import { SQL_INPUT_EXAMPLE } from '@/constants/examples';
-import { Button, Form, message, Modal, Space } from 'antd';
+import {SQL_INPUT_EXAMPLE} from '@/constants/examples';
+import {Button, Form, message, Modal, Space} from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React from 'react';
+import {getSchemaBySql} from "@/services/backend/sqlController";
 
 interface Props {
   onSubmit: (values: TableSchema) => void;
@@ -16,7 +17,7 @@ interface Props {
  * @author https://github.com/lhccong
  */
 const SqlInput: React.FC<Props> = (props) => {
-  const { onSubmit, visible, onClose } = props;
+  const {onSubmit, visible, onClose} = props;
   const [form] = Form.useForm();
 
   /**
@@ -28,8 +29,8 @@ const SqlInput: React.FC<Props> = (props) => {
       return;
     }
     try {
-      // const res = await getSchemaBySql(values);
-      // onSubmit?.(res.data);
+      const res = await getSchemaBySql(values);
+      onSubmit?.(res.data as any);
     } catch (e: any) {
       message.error('导入错误，' + e.message);
     }
@@ -54,16 +55,16 @@ const SqlInput: React.FC<Props> = (props) => {
               </Button>
             </>
           }
-          rules={[{ required: true, message: '请输入建表 SQL' }]}
+          rules={[{required: true, message: '请输入建表 SQL'}]}
         >
           <TextArea
             placeholder="请输入建表 SQL 语句，可以在生成结果后复制"
-            autoSize={{ minRows: 16 }}
+            autoSize={{minRows: 16}}
           />
         </Form.Item>
         <Form.Item>
           <Space size="large">
-            <Button type="primary" htmlType="submit" style={{ width: 120 }}>
+            <Button type="primary" htmlType="submit" style={{width: 120}}>
               导入
             </Button>
             <Button htmlType="reset">重置</Button>
