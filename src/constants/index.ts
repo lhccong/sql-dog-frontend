@@ -115,7 +115,8 @@ export const COMMON_FIELD_LIST: any[] = [
 /**
  * 模拟类型列表
  */
-export const MOCK_TYPE_LIST = ['固定', '随机', '递增', '规则', '词库', '不模拟'];
+export const MOCK_TYPE_LIST = ['固定', '随机', '递增', '规则', '不模拟'];
+// export const MOCK_TYPE_LIST = ['固定', '随机', '递增', '规则', '词库', '不模拟'];
 
 /**
  * 模拟参数随机生成类型列表
