@@ -118,8 +118,8 @@ const CodeGenerate: React.FC = () => {
         <Button onClick={() => setSqlInputModalVisible(true)}>
           导入建表 SQL
         </Button>
-        <Upload {...uploadProps}>
-          <Button>导入 Excel</Button>
+        <Upload  {...uploadProps}>
+          <Button disabled={true}>导入 Excel</Button>
         </Upload>
       </Space>
       <div style={{marginTop: 16}}/>
@@ -133,7 +133,7 @@ const CodeGenerate: React.FC = () => {
       <PageContainer
         title={
           <>
-           <div style={{color:"gray"}}></div>
+            <div style={{color: "gray"}}></div>
           </>
         }
         extra={
@@ -182,7 +182,7 @@ const CodeGenerate: React.FC = () => {
       />
       <ImportTableDrawer
         onImport={(tableInfo) => {
-          formInputRef.current.setFormValues(JSON.parse(tableInfo.content));
+          formInputRef.current.setFormValues(JSON.parse(tableInfo.content as any));
           setImportTableDrawerVisible(false);
           message.success('导入成功');
         }}
