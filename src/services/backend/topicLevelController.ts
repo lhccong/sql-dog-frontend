@@ -119,6 +119,21 @@ export async function listMyTopicLevelVoByPage(
   });
 }
 
+/** 表信息状态审核（仅管理员可用） POST /topicLevel/review */
+export async function doTopicLevelReview(
+  body: API.ReviewRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseBoolean>('/topicLevel/review', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 更新关卡题目（仅管理员可用） POST /topicLevel/update */
 export async function updateTopicLevel(
   body: API.TopicLevelUpdateRequest,
