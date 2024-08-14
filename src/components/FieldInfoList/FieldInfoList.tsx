@@ -2,8 +2,9 @@
 //   deleteFieldInfo,
 //   generateCreateFieldSql,
 // } from '@/services/fieldInfoService';
-import { useModel } from '@umijs/max';
+import {useModel} from '@umijs/max';
 import {
+  Badge,
   Button,
   Descriptions,
   Divider,
@@ -14,11 +15,12 @@ import {
   Tag,
   Typography,
 } from 'antd';
-import { PaginationConfig } from 'antd/es/pagination';
+import {PaginationConfig} from 'antd/es/pagination';
 import copy from 'copy-to-clipboard';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './index.less';
 import ReportModal from "@/components/ReportModal/ReportModal";
+import {deleteFieldInfo} from "@/services/backend/fieldInfoController";
 
 interface Props {
   pagination: PaginationConfig;
@@ -35,11 +37,11 @@ interface Props {
  * @author https://github.com/lhccong
  */
 const FieldInfoList: React.FC<Props> = (props) => {
-  const { dataList, pagination, loading, showTag = true, onImport } = props;
+  const {dataList, pagination, loading, showTag = true, onImport} = props;
   const [reportModalVisible, setReportModalVisible] = useState(false);
   const [reportedId, setReportedId] = useState(0);
 
-  const { initialState } = useModel('@@initialState');
+  const {initialState} = useModel('@@initialState');
   const loginUser = initialState?.currentUser;
 
   /**
@@ -50,9 +52,9 @@ const FieldInfoList: React.FC<Props> = (props) => {
     const hide = message.loading('正在删除');
     if (!id) return true;
     try {
-      // await deleteFieldInfo({
-      //   id,
-      // });
+      await deleteFieldInfo({
+        id,
+      });
       message.success('操作成功');
     } catch (e: any) {
       message.error('操作失败，' + e.message);
@@ -86,48 +88,40 @@ const FieldInfoList: React.FC<Props> = (props) => {
                 )
               }
             >
-              <Descriptions
-                title={
-                  <Space align="center">
-                    <div>{item.name}</div>
-                    <div>
-                      {showTag && item.reviewStatus === 1 && (
-                        <Tag color="success">公开</Tag>
-                      )}
-                      {item.userId === 1 && <Tag color="gold">官方</Tag>}
-                    </div>
-                  </Space>
-                }
-                column={3}
-              >
-                <Descriptions.Item label="字段名">
-                  {content.fieldName}
-                </Descriptions.Item>
-                <Descriptions.Item label="类型">
-                  {content.fieldType ?? '无'}
-                </Descriptions.Item>
-                <Descriptions.Item label="注释">
-                  {content.comment ?? '无'}
-                </Descriptions.Item>
-                <Descriptions.Item label="默认值">
-                  {content.defaultValue ?? '无'}
-                </Descriptions.Item>
-                <Descriptions.Item label="自增">
-                  {content.autoIncrement ? '是' : '否'}
-                </Descriptions.Item>
-                <Descriptions.Item label="主键">
-                  {content.primaryKey ? '是' : '否'}
-                </Descriptions.Item>
-                <Descriptions.Item label="非空">
-                  {content.notNull ? '是' : '否'}
-                </Descriptions.Item>
-                <Descriptions.Item label="onUpdate">
-                  {content.onUpdate ?? '无'}
-                </Descriptions.Item>
-              </Descriptions>
+              <Badge.Ribbon text={item.userId == 1 ? "官方" : showTag && item.reviewStatus === 1 ? "公开" : ""}
+                            color={item.userId == 1 ? "gold" : showTag && item.reviewStatus === 1 ? "green" : ""}>
+                <Descriptions
+                  column={3}
+                >
+                  <Descriptions.Item label="字段名">
+                    {content.fieldName}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="类型">
+                    {content.fieldType ?? '无'}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="注释">
+                    {content.comment ?? '无'}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="默认值">
+                    {content.defaultValue ?? '无'}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="自增">
+                    {content.autoIncrement ? '是' : '否'}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="主键">
+                    {content.primaryKey ? '是' : '否'}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="非空">
+                    {content.notNull ? '是' : '否'}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="onUpdate">
+                    {content.onUpdate ?? '无'}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Badge.Ribbon>
               <Space
-                split={<Divider type="vertical" />}
-                style={{ fontSize: 14 }}
+                split={<Divider type="vertical"/>}
+                style={{fontSize: 14}}
               >
                 <Typography.Text type="secondary">
                   {item.createTime.toString().split('T')[0]}
@@ -138,7 +132,7 @@ const FieldInfoList: React.FC<Props> = (props) => {
                     // generateCreateFieldSql(item.id)
                     //   .then((res) => {
                     //     copy(res.data);
-                    //     message.success('复制创建字段 SQL 成功');
+                    message.success('复制创建字段 SQL 成功');
                     //   })
                     //   .catch((e) => {
                     //     message.error('复制失败，' + e.message);

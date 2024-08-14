@@ -96,7 +96,7 @@ const TableInfoList: React.FC<Props> = (props) => {
                       {showTag && item.reviewStatus === 1 && (
                         <Tag color="success">公开</Tag>
                       )}
-                      {item.userId === 1 && <Tag color="gold">官方</Tag>}
+                      {item.userId == 1 && <Tag color="gold">官方</Tag>}
                     </div>
                   </Space>
                 }

@@ -3,9 +3,10 @@ import {Link, useModel} from '@umijs/max';
 import {Button, Card, Empty, Input, message, Space} from 'antd';
 import React, {useEffect, useState} from 'react';
 import FieldInfoList from "@/components/FieldInfoList/FieldInfoList";
+import {listFieldInfoByPage, listFieldInfoVoByPage} from "@/services/backend/fieldInfoController";
 
 // 默认分页大小
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 3;
 
 interface Props {
   title?: string;
@@ -48,18 +49,19 @@ const FieldInfoCard: React.FC<Props> = (props) => {
    * 加载数据
    */
   const innerOnLoad = () => {
-    // listFieldInfoByPage({
-    //   ...searchParams,
-    //   // 只展示已审核通过的
-    //   reviewStatus: 1,
-    // })
-    //   .then((res: { data: { records: React.SetStateAction<FieldInfoType.FieldInfo[]>; total: React.SetStateAction<number>; }; }) => {
-    //     setDataList(res.data.records);
-    //     setTotal(res.data.total);
-    //   })
-    //   .catch((e: { message: string; }) => {
-    //     message.error('加载失败，' + e.message);
-    //   });
+    listFieldInfoVoByPage({
+      ...searchParams,
+      // 只展示已审核通过的
+      reviewStatus: 1,
+      pageSize: 4,
+    })
+      .then((res) => {
+        setDataList(res.data?.records as any);
+        setTotal(res.data?.total as any);
+      })
+      .catch((e: { message: string; }) => {
+        message.error('加载失败，' + e.message);
+      });
   };
 
   // 加载数据
@@ -78,7 +80,7 @@ const FieldInfoCard: React.FC<Props> = (props) => {
   }, [searchParams]);
 
   return (
-    <div className="field-info-card">
+    <div>
       <Card
         title={title}
         extra={
@@ -96,7 +98,8 @@ const FieldInfoCard: React.FC<Props> = (props) => {
                 onSearch={(value) => {
                   setSearchParams({
                     ...initSearchParams,
-                    searchName: value,
+                    fieldName: value,
+                    pageSize: 4,
                   });
                 }}
               />

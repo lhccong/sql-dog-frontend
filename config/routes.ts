@@ -17,7 +17,7 @@ export default [
     routes: [
       {icon: 'table', path: '/library/dict', component: './TableInfo/TableInfo', name: '🧊词库大全'},
       {icon: 'table', path: '/library/table', component: './TableInfo/TableInfo', name: '📜表大全'},
-      {icon: 'table', path: '/library/field', component: './TableInfo/TableInfo', name: '📗字段大全'},
+      {icon: 'table', path: '/library/field', component: './FieldInfo/FieldInfo', name: '📗字段大全'},
     ],
   },
   {
