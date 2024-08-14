@@ -49,21 +49,26 @@ const Square: React.FC = () => {
     setResult(result);
     setExecPlanResult(execPlanResult);
   };
+  const [layout, setLayout] = useState('half');
+
   // 当数据仍在加载时显示加载指示器
   if (loading) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={"加载中啦，别催！！"}/>;
   }
-
   return (
     <>
-      <Row>
-        <Col span={11}>
+      <Row gutter={[12, 12]}>
+        <Col xs={24}
+             xl={layout === 'half' ? 12 : 24}
+             order={layout === 'output' ? 2 : 1}>
           <Card>
             <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={"select * from student"} resultStatus={0}
                        level={null as any}/>
           </Card>
         </Col>
-        <Col span={12} style={{marginLeft: 10}}>
+        <Col xs={24}
+             xl={layout === 'half' ? 12 : 24}
+             order={layout === 'output' ? 1 : 2}>
           <Card>
             <SqlResultCard result={result}
                            answerResult={result}

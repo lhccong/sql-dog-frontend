@@ -49,9 +49,12 @@ const LevelIndex: React.FC = () => {
   };
 
   const style: React.CSSProperties = {padding: '8px 0'};
+  const [layout, setLayout] = useState('half');
   return (
-    <Row gutter={16}>
-      <Col className="gutter-row" span={12}>
+    <Row gutter={[12, 12]}>
+      <Col className="gutter-row" span={12} xs={24}
+           xl={layout === 'half' ? 12 : 24}
+           order={layout === 'output' ? 2 : 1}>
         <div style={style}>
           <Badge.Ribbon text={"官方精选⭐"} color={"green"}>
             <Card title={"主线关卡"}>
@@ -71,7 +74,9 @@ const LevelIndex: React.FC = () => {
           </Badge.Ribbon>
         </div>
       </Col>
-      <Col className="gutter-row" span={12}>
+      <Col className="gutter-row" span={12} xs={24}
+           xl={layout === 'half' ? 12 : 24}
+           order={layout === 'output' ? 2 : 1}>
         <div style={style}>
           <Card title={"自定义关卡"}>
             <List
