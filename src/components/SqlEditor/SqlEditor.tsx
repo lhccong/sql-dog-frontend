@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, message} from 'antd';
+import {Button, Col, message, Row} from 'antd';
 import * as monaco from "monaco-editor";
 import {format} from "sql-formatter";
 import {initDB, runSQL} from "@/core/sqlExecutor";
@@ -23,6 +23,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
   const [querySQL, setQuerySQL] = useState(sql);
   const editorRef = useRef(null);
   const db = useRef<Database>();
+  const [layout, setLayout] = useState('half');
   const defaultSQL = sql;
   // @ts-ignore
   useEffect(() => {
@@ -135,14 +136,22 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
     return RESULT_STATUS_ENUM.ERROR;
   };
   return (
-    <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
-      <div style={{height: "55vh", width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%', maxWidth: 800}}>
-        <Button type="primary" onClick={run}>运行</Button>
-        <Button onClick={formatSQL}>格式化</Button>
-        <Button onClick={reset}>重置</Button>
-      </div>
-    </div>
+    <Row gutter={[12, 12]}>
+      <Col
+        xs={24}
+        xl={layout === 'half' ? 24 : 24}
+        order={layout === 'output' ? 2 : 2}
+      >
+        <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
+          <div style={{height: "55vh", width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
+          <div
+            style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%', maxWidth: 800}}>
+            <Button type="primary" onClick={run}>运行</Button>
+            <Button onClick={formatSQL}>格式化</Button>
+            <Button onClick={reset}>重置</Button>
+          </div>
+        </div>
+      </Col></Row>
 
   );
 };

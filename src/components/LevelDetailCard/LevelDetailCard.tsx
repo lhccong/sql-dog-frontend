@@ -25,6 +25,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
   const [initMd, setInitMd] = useState('');
   const [loading, setLoading] = useState(true);
   const [sqlExecResult, setSqlExecResult] = useState<number>(0);
+  const [layout, setLayout] = useState('half');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -134,13 +135,17 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
 
   return (
     <>
-      <Row>
-        <Col span={11}>
+      <Row gutter={[12, 12]}>
+        <Col xs={24}
+             xl={layout === 'half' ? 12 : 24}
+             order={layout === 'output' ? 2 : 1}>
           <Card>
             <Tabs tabPosition={"left"} defaultActiveKey="1" items={tabsItems} onChange={onChange}/>
           </Card>
         </Col>
-        <Col span={12} style={{marginLeft: 10}}>
+        <Col xs={24}
+             xl={layout === 'half' ? 12 : 24}
+             order={layout === 'output' ? 1 : 2}>
           <Card title={"Tip：在输入框中执行📑"} extra={<Image style={{width: 40}}
                                                             src={"https://5b0988e595225.cdn.sohucs.com/images/20190421/8c4ca8cbc42b46c6ae43a12b55065e8a.gif.gif"}/>}>
             <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={topicData?.defaultSQL}
