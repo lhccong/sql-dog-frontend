@@ -11,14 +11,14 @@ const LevelIndex: React.FC = () => {
   const [topicSystemData, setTopicSystemData] = useState<API.TopicVo[]>(); // 用于存储当前页码
 
   const getSystemTopicData = async () => {
-    await listTopicVoByPage({type: "system", current: currentSystemPage}).then(res => {
+    await listTopicVoByPage({type: "system", current: currentSystemPage, pageSize: 8}).then(res => {
       console.log("收到数据啦：", res.data)
       setTopicSystemData(res.data?.records as API.TopicVo[]);
       setCurrentSystemTotal(res.data?.total as any)
     })
   }
   const getCustomTopicData = async () => {
-    await listTopicVoByPage({type: "custom", current: currentCustomPage}).then(res => {
+    await listTopicVoByPage({type: "custom", current: currentCustomPage, pageSize: 8}).then(res => {
       console.log("收到数据啦：", res.data)
       setTopicCustomData(res.data?.records as API.TopicVo[]);
       setCurrentCustomTotal(res.data?.total as any)
@@ -60,7 +60,7 @@ const LevelIndex: React.FC = () => {
                 itemLayout="horizontal"
                 dataSource={topicSystemData as API.TopicVo[]}
                 renderItem={(item) => (
-                  <List.Item extra={<Button onClick={() => toDetail(item.id)}>挑战</Button>}>
+                  <List.Item extra={<Button type={"primary"} onClick={() => toDetail(item.id)}>挑战</Button>}>
                     <List.Item.Meta
                       title={<a href="https://ant.design">{item.title}</a>}
                     />
@@ -79,7 +79,7 @@ const LevelIndex: React.FC = () => {
               pagination={{total: currentCustomTotal, pageSize: 10, onChange: onPageCustomChange}}
               dataSource={topicCustomData as API.TopicVo[]}
               renderItem={(item) => (
-                <List.Item extra={<Button onClick={() => toDetail(item.id)}>挑战</Button>}>
+                <List.Item extra={<Button type={"primary"} onClick={() => toDetail(item.id)}>挑战</Button>}>
                   <List.Item.Meta
                     title={<a href="https://ant.design">{item.title}</a>}
                   />
