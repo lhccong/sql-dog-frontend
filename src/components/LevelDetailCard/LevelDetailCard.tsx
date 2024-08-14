@@ -1,4 +1,18 @@
-import {Badge, Button, Card, Col, Collapse, CollapseProps, Empty, Image, Row, Tabs, TabsProps, Tooltip} from 'antd';
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  Collapse,
+  CollapseProps,
+  Empty,
+  Image,
+  Radio, RadioChangeEvent,
+  Row,
+  Tabs,
+  TabsProps,
+  Tooltip
+} from 'antd';
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import React, {useEffect, useState} from "react";
 import {SqlEditor} from "@/components/SqlEditor/SqlEditor";
@@ -8,6 +22,7 @@ import {SqlResultCard} from "@/components/SqlResult/SqlResult";
 import {CodeEditor} from "@/components/CodeEditor/CodeEditor";
 import {getTopicLevelVoById} from "@/services/backend/topicLevelController";
 import {BookOutlined, BugOutlined, BulbOutlined} from '@ant-design/icons';
+import {PageContainer} from "@ant-design/pro-components";
 
 interface LevelsPageProps {
   id: number;
@@ -127,7 +142,13 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
       ,
     },
   ];
-
+  /**
+   * 更改布局
+   * @param e
+   */
+  const onLayoutChange = (e: RadioChangeEvent) => {
+    setLayout(e.target.value);
+  };
 
   if (loading) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={"加载中啦，别催！！"}/>;
@@ -135,25 +156,43 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
 
   return (
     <>
-      <Row gutter={[12, 12]}>
-        <Col xs={24}
-             xl={layout === 'half' ? 12 : 24}
-             order={layout === 'output' ? 2 : 1}>
-          <Card>
-            <Tabs tabPosition={"left"} defaultActiveKey="1" items={tabsItems} onChange={onChange}/>
-          </Card>
-        </Col>
-        <Col xs={24}
-             xl={layout === 'half' ? 12 : 24}
-             order={layout === 'output' ? 1 : 2}>
-          <Card title={"Tip：在输入框中执行📑"} extra={<Image style={{width: 40}}
-                                                            src={"https://5b0988e595225.cdn.sohucs.com/images/20190421/8c4ca8cbc42b46c6ae43a12b55065e8a.gif.gif"}/>}>
-            <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={topicData?.defaultSQL}
-                       resultStatus={sqlExecResult}
-                       level={topicData as any}/>
-          </Card>
-        </Col>
-      </Row>
+      <PageContainer
+        title={
+          <>
+            <div style={{color: "gray"}}></div>
+          </>
+        }
+        extra={
+          <div style={{marginLeft: 0}}>
+            切换布局：
+            <Radio.Group onChange={onLayoutChange} value={layout}>
+              <Radio.Button value="input">题目</Radio.Button>
+              <Radio.Button value="half">同屏</Radio.Button>
+              <Radio.Button value="output">输入</Radio.Button>
+            </Radio.Group>
+          </div>
+        }
+      >
+        <Row gutter={[12, 12]}>
+          <Col xs={24}
+               xl={layout === 'half' ? 12 : 24}
+               order={layout === 'output' ? 2 : 1}>
+            <Card>
+              <Tabs tabPosition={"left"} defaultActiveKey="1" items={tabsItems} onChange={onChange}/>
+            </Card>
+          </Col>
+          <Col xs={24}
+               xl={layout === 'half' ? 12 : 24}
+               order={layout === 'output' ? 1 : 2}>
+            <Card title={"Tip：在输入框中执行📑"} extra={<Image style={{width: 40}}
+                                                              src={"https://5b0988e595225.cdn.sohucs.com/images/20190421/8c4ca8cbc42b46c6ae43a12b55065e8a.gif.gif"}/>}>
+              <SqlEditor onSubmit={handleResult} initSql={initSQL} sql={topicData?.defaultSQL}
+                         resultStatus={sqlExecResult}
+                         level={topicData as any}/>
+            </Card>
+          </Col>
+        </Row>
+      </PageContainer>
     </>
   );
 };
