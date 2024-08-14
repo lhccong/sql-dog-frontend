@@ -85,7 +85,7 @@ const TableInfoCard: React.FC<Props> = (props) => {
       <Card
         title={title}
         extra={
-          <Link to="/">
+          <Link to="/code">
             <Button type="primary">创建表</Button>
           </Link>
         }

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
   BackTop,
   Button,
@@ -24,6 +24,7 @@ import JsonInputModal from "@/components/JsonInputModal/JsonInputModal";
 import SqlInputModal from "@/components/SqlInputModal/SqlInputModal";
 import ImportTableDrawer from "@/components/ImportTableDrawer/ImportTableDrawer";
 import {generateBySchema} from "@/services/backend/sqlController";
+import {getTableInfoVoById} from "@/services/backend/tableInfoController";
 
 const CodeGenerate: React.FC = () => {
   const [result, setResult] = useState<GenerateVO>();
@@ -35,9 +36,24 @@ const CodeGenerate: React.FC = () => {
   const [genLoading, setGenLoading] = useState(false);
   const formInputRef: any = useRef();
   const [layout, setLayout] = useState('half');
-
   const [searchParams] = useSearchParams();
+  const tableId = searchParams.get('table_id');
 
+
+  // 根据 url 参数导入表
+  useEffect(() => {
+    if (!tableId) {
+      return;
+    }
+    getTableInfoVoById({id: BigInt(tableId)})
+      .then((res) => {
+        const tableSchema = JSON.parse(res.data?.content as any);
+        importTableSchema(tableSchema);
+      })
+      .catch((e) => {
+        message.error('导入表失败，' + e.message);
+      });
+  }, [tableId]);
   /**
    * 导入 tableSchema
    * @param tableSchema

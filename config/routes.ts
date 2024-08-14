@@ -15,9 +15,9 @@ export default [
     icon: 'crown',
     name: '库表大全',
     routes: [
-      {icon: 'table', path: '/library/vocabulary', component: './Admin/User', name: '词库'},
-      {icon: 'table', path: '/library/table', component: './Admin/User', name: '表'},
-      {icon: 'table', path: '/library/field', component: './Admin/User', name: '字段'},
+      {icon: 'table', path: '/library/dict', component: './TableInfo/TableInfo', name: '🧊词库大全'},
+      {icon: 'table', path: '/library/table', component: './TableInfo/TableInfo', name: '📜表大全'},
+      {icon: 'table', path: '/library/field', component: './TableInfo/TableInfo', name: '📗字段大全'},
     ],
   },
   {

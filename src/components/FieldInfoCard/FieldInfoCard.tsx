@@ -82,7 +82,7 @@ const FieldInfoCard: React.FC<Props> = (props) => {
       <Card
         title={title}
         extra={
-          <Link to="/">
+          <Link to="/code">
             <Button type="primary">去创建</Button>
           </Link>
         }
