@@ -19,6 +19,7 @@ import {
   Input,
   InputNumber,
   message,
+  Popconfirm,
   Select,
   Space,
 } from 'antd';
@@ -63,6 +64,32 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
   const [importIndex, setImportIndex] = useState(0);
   // 字段折叠面板展开的键
   const [activeKey, setActiveKey] = useState([]);
+
+  const [open, setOpen] = useState(false);
+  const [condition, setCondition] = useState(true);
+
+
+  const cancel = () => {
+    setOpen(false);
+  };
+
+  // const handleOpenChange = (newOpen: boolean) => {
+  //   if (!newOpen) {
+  //     setOpen(newOpen);
+  //     return;
+  //   }
+  //   // Determining condition before show the popconfirm.
+  //   console.log(condition);
+  //   if (condition) {
+  //     setOpen(false);
+  //     COMMON_FIELD_LIST.forEach((field) => {
+  //       add(field);
+  //     }); // next step
+  //   } else {
+  //     setOpen(newOpen);
+  //   }
+  // };
+
 
   const onFinish = (values: any) => {
     if (!values.fieldList || values.fieldList.length < 1) {
@@ -445,18 +472,48 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                   >
                     导入字段
                   </Button>
-                  <Button
-                    type="dashed"
-                    onClick={() => {
+                  <Popconfirm
+                    title="注意❗"
+                    description="你已添加过通用配置，是否重复添加"
+                    open={open}
+                    onOpenChange={(newOpen: boolean) => {
+                      if (!newOpen) {
+                        setOpen(newOpen);
+                        return;
+                      }
+                      if (condition) {
+                        setOpen(false);
+                        COMMON_FIELD_LIST.forEach((field) => {
+                          add(field);
+                        });
+                        setCondition(false)
+                      } else {
+                        setOpen(newOpen);
+                      }
+                    }}
+                    onConfirm={() => {
+                      setOpen(false);
                       COMMON_FIELD_LIST.forEach((field) => {
                         add(field);
                       });
                     }}
-                    block
-                    icon={<PlusOutlined/>}
+                    onCancel={cancel}
+                    okText="确定"
+                    cancelText="取消"
                   >
-                    新增通用字段
-                  </Button>
+                    <Button
+                      type="dashed"
+                      // onClick={() => {
+                      //   COMMON_FIELD_LIST.forEach((field) => {
+                      //     add(field);
+                      //   });
+                      // }}
+                      block
+                      icon={<PlusOutlined/>}
+                    >
+                      新增通用字段
+                    </Button>
+                  </Popconfirm>
                 </Space>
               </Form.Item>
               <ImportFieldDrawer
@@ -501,7 +558,10 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
             >
               复制配置
             </Button>
-            <Button htmlType="reset">重置</Button>
+            <Button htmlType="reset" onClick={() => {
+              setCondition(true);
+              setOpen(false);
+            }}>重置</Button>
           </Space>
         </Form.Item>
       </Form>
