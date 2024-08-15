@@ -52,7 +52,7 @@ const TopicLevelAdminPage: React.FC = () => {
    * @param row
    */
   const handleReview = async (row: API.TopicLevel) => {
-   // todo 审核功能待实现
+    // todo 审核功能待实现
   };
 
 
@@ -73,6 +73,7 @@ const TopicLevelAdminPage: React.FC = () => {
       dataIndex: 'title',
       valueType: 'text',
       order: 2,
+      width: 200,
     },
     {
       title: '初始化 SQL',
@@ -90,11 +91,13 @@ const TopicLevelAdminPage: React.FC = () => {
       title: '标准答案',
       dataIndex: 'answer',
       valueType: 'text',
+      ellipsis: true,
     },
     {
       title: '提示',
       dataIndex: 'hint',
       valueType: 'text',
+      ellipsis: true,
     },
     {
       title: '类别',
@@ -108,26 +111,28 @@ const TopicLevelAdminPage: React.FC = () => {
         },
       },
       order: 1,
+      width: 50,
     },
     {
       title: "审核状态",
       dataIndex: "reviewStatus",
       valueEnum: REVIEW_STATUS_ENUM,
       order: 1,
+      width: 150,
     },
 
+    // {
+    //   title: '创建用户 ID',
+    //   dataIndex: 'userId',
+    //   valueType: 'text',
+    // },
     {
-      title: '创建用户 ID',
-      dataIndex: 'userId',
-      valueType: 'text',
-    },
-    {
-      title:"上一题 ID",
+      title: "上一题 ID",
       dataIndex: 'preLevelId',
       valueType: 'text',
     },
     {
-      title:"下一题 ID",
+      title: "下一题 ID",
       dataIndex: 'nextLevelId',
       valueType: 'text',
     },
@@ -151,92 +156,98 @@ const TopicLevelAdminPage: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
+      width: 200,
       render: (_, record) => (
-          <Space size="middle">
-            <Typography.Link
-                onClick={() => {
-                  setCurrentRow(record);
-                  setUpdateModalVisible(true);
-                }}
-            >
-              修改
-            </Typography.Link>
-            <Typography.Link type="warning" onClick={() => handleDelete(record)}>
-              // todo 审核功能待实现
-              审核
-            </Typography.Link>
-            <Typography.Link type="danger" onClick={() => handleReview(record)}>
-              删除
-            </Typography.Link>
-          </Space>
+        <Space size="middle">
+          <Typography.Link
+            onClick={() => {
+              setCurrentRow(record);
+              setUpdateModalVisible(true);
+            }}
+          >
+            修改
+          </Typography.Link>
+          <Typography.Link type="warning" onClick={() => handleReview(record)}>
+            审核
+          </Typography.Link>
+          <Typography.Link type="danger" onClick={() => handleDelete(record)}>
+            删除
+          </Typography.Link>
+        </Space>
       ),
     },
   ];
 
   return (
-      <>
-        <ProTable<API.TopicLevel>
-            headerTitle={'查询表格'}
-            actionRef={actionRef}
-            rowKey="id"
-            search={{
-              labelWidth: 120,
+    <>
+      <ProTable<API.TopicLevel>
+        headerTitle={'查询表格'}
+        actionRef={actionRef}
+        pagination={{
+          defaultPageSize: 5, // 设置默认的每页显示条数
+          showSizeChanger: true, // 显示每页条数切换器
+          pageSizeOptions: ['5', '10', '20', '50'], // 自定义每页显示条数选项
+        }}
+        params={{pageSize: 5}}
+        rowKey="id"
+        search={{
+          labelWidth: 120,
+        }}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              setCreateModalVisible(true);
             }}
-            toolBarRender={() => [
-              <Button
-                  type="primary"
-                  key="primary"
-                  onClick={() => {
-                    setCreateModalVisible(true);
-                  }}
-              >
-                <PlusOutlined /> 新建
-              </Button>,
-            ]}
-            request={async (params, sort, filter) => {
-              const sortField = Object.keys(sort)?.[0];
-              const sortOrder = sort?.[sortField] ?? undefined;
+          >
+            <PlusOutlined/> 新建
+          </Button>,
+        ]}
+        request={async (params, sort, filter) => {
+          const sortField = Object.keys(sort)?.[0];
+          const sortOrder = sort?.[sortField] ?? undefined;
 
-              const { data, code } = await listTopicLevelByPage({
-                ...params,
-                sortField,
-                sortOrder,
-                ...filter,
-              } as API.TopicLevelQueryRequest);
+          const {data, code} = await listTopicLevelByPage({
+            ...params,
+            sortField,
+            sortOrder,
+            ...filter,
+          } as API.TopicLevelQueryRequest);
 
-              return {
-                success: code === 0,
-                data: data?.records || [],
-                total: Number(data?.total) || 0,
-              };
-            }}
-            columns={columns}
-        />
-        <CreateModal
-            visible={createModalVisible}
-            columns={columns}
-            onSubmit={() => {
-              setCreateModalVisible(false);
-              actionRef.current?.reload();
-            }}
-            onCancel={() => {
-              setCreateModalVisible(false);
-            }}
-        />
-        <UpdateModal
-            visible={updateModalVisible}
-            columns={columns}
-            oldData={currentRow}
-            onSubmit={() => {
-              setUpdateModalVisible(false);
-              setCurrentRow(undefined);
-              actionRef.current?.reload();
-            }}
-            onCancel={() => {
-              setUpdateModalVisible(false);
-            }}
-        />
-      </>
+          return {
+            success: code === 0,
+            data: data?.records || [],
+            total: Number(data?.total) || 0,
+          };
+        }}
+        columns={columns}
+      />
+      <CreateModal
+        visible={createModalVisible}
+        columns={columns}
+        onSubmit={() => {
+          setCreateModalVisible(false);
+          actionRef.current?.reload();
+        }}
+        onCancel={() => {
+          setCreateModalVisible(false);
+        }}
+      />
+      <UpdateModal
+        visible={updateModalVisible}
+        columns={columns}
+        oldData={currentRow}
+        onSubmit={() => {
+          setUpdateModalVisible(false);
+          setCurrentRow(undefined);
+          actionRef.current?.reload();
+        }}
+        onCancel={() => {
+          setUpdateModalVisible(false);
+        }}
+      />
+    </>
   );
 };
 
