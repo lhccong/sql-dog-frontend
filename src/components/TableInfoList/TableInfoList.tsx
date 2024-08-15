@@ -1,7 +1,3 @@
-// import {
-//   deleteTableInfo,
-//   generateCreateTableSql,
-// } from '@/services/tableInfoService';
 import {useModel} from '@umijs/max';
 import {
   Button,
@@ -12,14 +8,13 @@ import {
   Popconfirm,
   Space,
   Tag,
-  Typography,
 } from 'antd';
 import {PaginationConfig} from 'antd/es/pagination';
 import copy from 'copy-to-clipboard';
 import React, {useEffect, useState} from 'react';
 import './index.less';
 import ReportModal from "@/components/ReportModal/ReportModal";
-import {deleteTableInfo} from "@/services/backend/tableInfoController";
+import {deleteTableInfo, generateCreateSql} from "@/services/backend/tableInfoController";
 
 interface Props {
   pagination: PaginationConfig;
@@ -125,20 +120,17 @@ const TableInfoList: React.FC<Props> = (props) => {
                 split={<Divider type="vertical"/>}
                 style={{fontSize: 14}}
               >
-                {/*<Typography.Text type="secondary">*/}
-                {/*  {item.createTime.toString().split('T')[0]}*/}
-                {/*</Typography.Text>*/}
                 <Button
                   type="text"
                   onClick={() => {
-                    // generateCreateTableSql(item.id)
-                    //   .then((res: { data: string; }) => {
-                    //     copy(res.data);
-                    message.success('复制建表 SQL 成功');
-                    //   })
-                    //   .catch((e: { message: string; }) => {
-                    //     message.error('复制失败，' + e.message);
-                    //   });
+                    generateCreateSql(item.id)
+                      .then((res: { data: string; }) => {
+                        copy(res.data);
+                        message.success('复制建表 SQL 成功');
+                      })
+                      .catch((e: { message: string; }) => {
+                        message.error('复制失败，' + e.message);
+                      });
                   }}
                 >
                   复制语句

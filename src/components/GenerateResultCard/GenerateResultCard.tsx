@@ -14,6 +14,7 @@ import copy from 'copy-to-clipboard';
 import React from 'react';
 import {CodeEditor} from "@/components/CodeEditor/CodeEditor";
 import ReactPlantUML from "react-plantuml";
+import {downloadDataExcel} from "@/services/backend/sqlController";
 
 interface Props {
   result?: any;
@@ -38,19 +39,19 @@ const GenerateResultCard: React.FC<Props> = (props) => {
     if (!result) {
       return;
     }
-    // try {
-    //   const res = await downloadDataExcel(result);
-    //   // 下载文件
-    //   const blob = new Blob([res]);
-    //   const objectURL = URL.createObjectURL(blob);
-    //   const btn = document.createElement('a');
-    //   btn.download = `${result.tableSchema.tableName}表数据.xlsx`;
-    //   btn.href = objectURL;
-    //   btn.click();
-    //   URL.revokeObjectURL(objectURL);
-    // } catch (e: any) {
-    //   message.error('操作失败，' + e.message);
-    // }
+    try {
+      const res = await downloadDataExcel(result);
+      // 下载文件
+      const blob = new Blob([res]);
+      const objectURL = URL.createObjectURL(blob);
+      const btn = document.createElement('a');
+      btn.download = `${result.tableSchema.tableName}表数据.xlsx`;
+      btn.href = objectURL;
+      btn.click();
+      URL.revokeObjectURL(objectURL);
+    } catch (e: any) {
+      message.error('操作失败，' + e.message);
+    }
   };
 
   /**
@@ -184,7 +185,6 @@ const GenerateResultCard: React.FC<Props> = (props) => {
             <>
               <Space>
                 <Button
-                  disabled={true}
                   icon={<DownloadOutlined/>}
                   type="primary"
                   onClick={() => doDownloadDataExcel()}

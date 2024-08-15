@@ -44,6 +44,18 @@ export async function editTableInfo(
   });
 }
 
+/** 此处后端没有提供注释 POST /tableInfo/generate/sql */
+export async function generateCreateSql(body: number, options?: { [key: string]: any }) {
+  return request<API.BaseResponseString>('/tableInfo/generate/sql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 根据 id 获取表信息（封装类） GET /tableInfo/get/vo */
 export async function getTableInfoVoById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
