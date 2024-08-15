@@ -53,7 +53,7 @@ const FieldInfoCard: React.FC<Props> = (props) => {
       ...searchParams,
       // 只展示已审核通过的
       reviewStatus: 1,
-      pageSize: 4,
+      pageSize: 3,
     })
       .then((res) => {
         setDataList(res.data?.records as any);
@@ -99,7 +99,7 @@ const FieldInfoCard: React.FC<Props> = (props) => {
                   setSearchParams({
                     ...initSearchParams,
                     fieldName: value,
-                    pageSize: 4,
+                    pageSize: 3,
                   });
                 }}
               />
