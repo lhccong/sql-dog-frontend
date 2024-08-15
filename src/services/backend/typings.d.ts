@@ -280,7 +280,6 @@ declare namespace API {
     name?: string;
     fieldName?: string;
     content?: string;
-    reviewStatus?: number;
     userId?: number;
     searchText?: string;
   };
@@ -305,6 +304,10 @@ declare namespace API {
     createTime?: string;
     updateTime?: string;
     userVO?: UserVO;
+  };
+
+  type GenerateByAutoRequest = {
+    content?: string;
   };
 
   type GenerateBySqlRequest = {
@@ -631,10 +634,12 @@ declare namespace API {
     answer?: string;
     hint?: string;
     type?: string;
-    userId?: number;
-    createTime?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
     preLevelId?: number;
     nextLevelId?: number;
+    userId?: number;
+    createTime?: string;
     updateTime?: string;
     isDelete?: number;
   };
@@ -645,6 +650,8 @@ declare namespace API {
     mdContent?: string;
     defaultSQL?: string;
     answer?: string;
+    preLevelId?: number;
+    nextLevelId?: number;
     hint?: string;
     type?: string;
   };
@@ -656,6 +663,8 @@ declare namespace API {
     mdContent?: string;
     defaultSQL?: string;
     answer?: string;
+    preLevelId?: number;
+    nextLevelId?: number;
     hint?: string;
     type?: string;
   };
@@ -673,6 +682,10 @@ declare namespace API {
     answer?: string;
     hint?: string;
     type?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
+    preLevelId?: number;
+    nextLevelId?: number;
     searchText?: string;
     userId?: number;
   };
@@ -683,9 +696,13 @@ declare namespace API {
     initSQL?: string;
     mdContent?: string;
     defaultSQL?: string;
+    preLevelId?: number;
+    nextLevelId?: number;
     answer?: string;
     hint?: string;
     type?: string;
+    reviewStatus?: number;
+    reviewMessage?: string;
   };
 
   type TopicLevelVo = {
@@ -714,6 +731,7 @@ declare namespace API {
     title?: string;
     type?: string;
     searchText?: string;
+    reviewStatus?: number;
   };
 
   type TopicVo = {

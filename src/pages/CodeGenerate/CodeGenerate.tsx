@@ -129,7 +129,7 @@ const CodeGenerate: React.FC = () => {
           智能导入
         </Button>
         <Button onClick={() => setImportTableDrawerVisible(true)}>
-          导入表
+          导入我的表
         </Button>
         <Button onClick={() => setJsonInputModalVisible(true)}>导入配置</Button>
         <Button onClick={() => setSqlInputModalVisible(true)}>

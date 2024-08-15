@@ -14,6 +14,21 @@ export async function generateBySchema(body: API.TableSchema, options?: { [key: 
   });
 }
 
+/** 此处后端没有提供注释 POST /sql/get/schema/auto */
+export async function getSchemaByAuto(
+  body: API.GenerateByAutoRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseTableSchema>('/sql/get/schema/auto', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 此处后端没有提供注释 POST /sql/get/schema/sql */
 export async function getSchemaBySql(
   body: API.GenerateBySqlRequest,
