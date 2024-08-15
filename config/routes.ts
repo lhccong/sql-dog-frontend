@@ -37,6 +37,8 @@ export default [
     routes: [
       {path: '/admin', redirect: '/admin/user'},
       {icon: 'table', path: '/admin/user', component: './Admin/User', name: '用户管理'},
+      {path: '/admin', redirect: '/admin/topicLevel'},
+      {icon: 'table', path: '/admin/topicLevel', component: './Admin/TopicLevel', name: '关卡管理'},
     ],
   },
   {path: '/', redirect: '/square'},
