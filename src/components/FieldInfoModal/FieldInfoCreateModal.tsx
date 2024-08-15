@@ -1,7 +1,7 @@
 // import { addFieldInfo } from '@/services/fieldInfoService';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
-import { message, Modal, Typography } from 'antd';
-import React, { PropsWithChildren } from 'react';
+import {ProColumns, ProTable} from '@ant-design/pro-components';
+import {message, Modal, Typography} from 'antd';
+import React, {PropsWithChildren} from 'react';
 import {addFieldInfo} from "@/services/backend/fieldInfoController";
 
 interface Props {
@@ -18,10 +18,14 @@ interface Props {
 const handleAdd = async (fields: FieldInfoType.FieldInfo) => {
   const hide = message.loading('正在添加');
   try {
-    await addFieldInfo({ ...fields } as FieldInfoType.FieldInfoAddRequest);
-    hide();
-    message.success('添加成功');
-    return true;
+    const res = await addFieldInfo({...fields} as FieldInfoType.FieldInfoAddRequest);
+    if (res.data) {
+      hide();
+      message.success('添加成功');
+      return true;
+    } else {
+      return false;
+    }
   } catch (e: any) {
     hide();
     message.error('添加失败，' + e.message);
@@ -35,7 +39,7 @@ const handleAdd = async (fields: FieldInfoType.FieldInfo) => {
  * @constructor
  */
 const FieldInfoCreateModal: React.FC<PropsWithChildren<Props>> = (props) => {
-  const { modalVisible, initialValues, onSubmit, onCancel } = props;
+  const {modalVisible, initialValues, onSubmit, onCancel} = props;
 
   /**
    * 表格列配置
@@ -45,7 +49,7 @@ const FieldInfoCreateModal: React.FC<PropsWithChildren<Props>> = (props) => {
       title: '名称',
       dataIndex: 'name',
       formItemProps: {
-        rules: [{ required: true }],
+        rules: [{required: true}],
       },
       fieldProps: {
         autoFocus: true,
@@ -70,7 +74,7 @@ const FieldInfoCreateModal: React.FC<PropsWithChildren<Props>> = (props) => {
       <Typography.Text type="secondary">
         注意，你提交的内容可能会被公开！
       </Typography.Text>
-      <div style={{ marginBottom: 16 }} />
+      <div style={{marginBottom: 16}}/>
       <ProTable<FieldInfoType.FieldInfo, FieldInfoType.FieldInfo>
         form={{
           initialValues,
