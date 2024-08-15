@@ -64,52 +64,53 @@ const UserDetail: React.FC = () => {
     '天青色等烟雨，而我在等你.',
     '好像还能生成 SQL 以及模拟数据诶🚀.',
     '赶快用起来吧☁️.',
+    '对你有帮助的话能否给我点个star呢谢谢你💖',
   ];
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: '帖子',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '2',
       label: '评论',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '3',
       label: '笔记',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '4',
       label: '问答',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '5',
       label: '专栏',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '6',
       label: '资料',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '7',
       label: '收藏',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '8',
       label: '关注',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
     {
       key: '9',
       label: '粉丝',
-      children: <Empty/>,
+      children: <Empty style={{height: 300}}/>,
     },
   ];
 
