@@ -1,6 +1,6 @@
 import CreateModal from '@/pages/Admin/FieldInfo/components/CreateModal';
 import UpdateModal from '@/pages/Admin/FieldInfo/components/UpdateModal';
-import {deleteFieldInfo, listFieldInfoByPage, updateFieldInfo} from '@/services/backend/fieldInfoController';
+import {deleteFieldInfo, listFieldInfoByPage, editReviewStatus} from '@/services/backend/fieldInfoController';
 import {PlusOutlined} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
@@ -55,7 +55,7 @@ const FieldInfoAdminPage: React.FC = () => {
 
     try {
       // 调用接口更新审核状态
-      await  updateFieldInfo({
+      await  editReviewStatus({
         id: row.id as any,
         reviewStatus: status,  // 传递枚举值的键，如 1（通过）或 2（拒绝）
         reviewMessage,         // 传递审核信息
@@ -86,7 +86,7 @@ const FieldInfoAdminPage: React.FC = () => {
     },
     {
       title: '名称',
-      dataIndex: 'dName',
+      dataIndex: 'name',
       valueType: 'text',
       order: 2,
       width: 150,
