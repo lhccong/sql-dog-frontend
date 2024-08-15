@@ -40,6 +40,6 @@ export default [
       {icon: 'table', path: '/admin/topicLevel', component: './Admin/TopicLevel', name: '关卡管理'},
     ],
   },
-  {path: '/', redirect: '/square'},
+  {path: '/', redirect: '/code'},
   {path: '*', layout: false, component: './404'},
 ];
