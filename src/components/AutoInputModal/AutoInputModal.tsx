@@ -1,8 +1,9 @@
-import { AUTO_INPUT_EXAMPLE } from '@/constants/examples';
+import {AUTO_INPUT_EXAMPLE} from '@/constants/examples';
 // import { getSchemaByAuto } from '@/services/sqlService';
-import { Button, Form, message, Modal, Space } from 'antd';
+import {Button, Form, message, Modal, Space} from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React from 'react';
+import {getSchemaByAuto} from "@/services/backend/sqlController";
 
 interface Props {
   onSubmit: (values: TableSchema) => void;
@@ -16,7 +17,7 @@ interface Props {
  * @constructor
  */
 const AutoInputModal: React.FC<Props> = (props) => {
-  const { visible, onSubmit, onClose } = props;
+  const {visible, onSubmit, onClose} = props;
   const [form] = Form.useForm();
 
   /**
@@ -28,8 +29,8 @@ const AutoInputModal: React.FC<Props> = (props) => {
       return;
     }
     try {
-      // const res = await getSchemaByAuto(values);
-      // onSubmit?.(res.data);
+      const res = await getSchemaByAuto(values);
+      onSubmit?.(res.data as any);
     } catch (e: any) {
       message.error('导入错误，' + e.message);
     }
@@ -52,16 +53,16 @@ const AutoInputModal: React.FC<Props> = (props) => {
               </Button>
             </>
           }
-          rules={[{ required: true, message: '请输入配置' }]}
+          rules={[{required: true, message: '请输入配置'}]}
         >
           <TextArea
             placeholder="请输入表的列名，多个列以【英文或中文逗号】分隔："
-            autoSize={{ minRows: 16 }}
+            autoSize={{minRows: 16}}
           />
         </Form.Item>
         <Form.Item>
           <Space size="large">
-            <Button type="primary" htmlType="submit" style={{ width: 120 }}>
+            <Button type="primary" htmlType="submit" style={{width: 120}}>
               导入
             </Button>
             <Button htmlType="reset">重置</Button>

@@ -17,7 +17,7 @@ import {
 } from 'antd';
 import {PaginationConfig} from 'antd/es/pagination';
 import copy from 'copy-to-clipboard';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.less';
 import ReportModal from "@/components/ReportModal/ReportModal";
 import {deleteFieldInfo} from "@/services/backend/fieldInfoController";
@@ -38,12 +38,18 @@ interface Props {
  */
 const FieldInfoList: React.FC<Props> = (props) => {
   const {dataList, pagination, loading, showTag = true, onImport} = props;
+  const [list, setList] = useState(dataList);
+
   const [reportModalVisible, setReportModalVisible] = useState(false);
   const [reportedId, setReportedId] = useState(0);
 
   const {initialState} = useModel('@@initialState');
   const loginUser = initialState?.currentUser;
 
+  // 监听 props.dataList 变化，并更新 list 状态
+  useEffect(() => {
+    setList(dataList);
+  }, [dataList]);
   /**
    * 删除节点
    * @param id
@@ -54,8 +60,13 @@ const FieldInfoList: React.FC<Props> = (props) => {
     try {
       await deleteFieldInfo({
         id,
+      }).then(res => {
+        if (res.code === 0) {
+          setList(list.filter(item => item.id !== id));
+          message.success('操作成功');
+        }
       });
-      message.success('操作成功');
+
     } catch (e: any) {
       message.error('操作失败，' + e.message);
     } finally {
@@ -70,7 +81,7 @@ const FieldInfoList: React.FC<Props> = (props) => {
         size="large"
         loading={loading}
         pagination={pagination}
-        dataSource={dataList}
+        dataSource={list}
         renderItem={(item, index) => {
           const content: Field = JSON.parse(item.content);
           return (
@@ -80,7 +91,9 @@ const FieldInfoList: React.FC<Props> = (props) => {
                 onImport && (
                   <Button
                     onClick={() => {
-                      onImport(item);
+                      if (onImport) {
+                        onImport(item);
+                      }
                     }}
                   >
                     导入

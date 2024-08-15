@@ -45,7 +45,7 @@ const CodeGenerate: React.FC = () => {
     if (!tableId) {
       return;
     }
-    getTableInfoVoById({id: BigInt(tableId)})
+    getTableInfoVoById({id: BigInt(tableId) as any})
       .then((res) => {
         const tableSchema = JSON.parse(res.data?.content as any);
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -129,7 +129,7 @@ const CodeGenerate: React.FC = () => {
           智能导入
         </Button>
         <Button onClick={() => setImportTableDrawerVisible(true)}>
-          导入表
+          导入我的表
         </Button>
         <Button onClick={() => setJsonInputModalVisible(true)}>导入配置</Button>
         <Button onClick={() => setSqlInputModalVisible(true)}>
