@@ -123,9 +123,9 @@ const TableInfoList: React.FC<Props> = (props) => {
                 <Button
                   type="text"
                   onClick={() => {
-                    generateCreateSql(item.id)
-                      .then((res: { data: string; }) => {
-                        copy(res.data);
+                    generateCreateSql({id: item.id})
+                      .then((res) => {
+                        copy(res.data as string);
                         message.success('复制建表 SQL 成功');
                       })
                       .catch((e: { message: string; }) => {

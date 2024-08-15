@@ -314,6 +314,10 @@ declare namespace API {
     sql?: string;
   };
 
+  type generateCreateSqlParams = {
+    id: number;
+  };
+
   type GenerateVO = {
     tableSchema?: TableSchema;
     createSql?: string;
