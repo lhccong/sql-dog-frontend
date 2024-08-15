@@ -1,6 +1,6 @@
 <p align="center">
     <a href="" target="_blank">
-      <img src="./public//icon.jpg" width="280" />
+      <img src="./public/img.png" width="280" />
     </a>
 </p>
 <h1 align="center">SQL Dog</h1>
