@@ -73,24 +73,6 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
     setOpen(false);
   };
 
-  // const handleOpenChange = (newOpen: boolean) => {
-  //   if (!newOpen) {
-  //     setOpen(newOpen);
-  //     return;
-  //   }
-  //   // Determining condition before show the popconfirm.
-  //   console.log(condition);
-  //   if (condition) {
-  //     setOpen(false);
-  //     COMMON_FIELD_LIST.forEach((field) => {
-  //       add(field);
-  //     }); // next step
-  //   } else {
-  //     setOpen(newOpen);
-  //   }
-  // };
-
-
   const onFinish = (values: any) => {
     if (!values.fieldList || values.fieldList.length < 1) {
       message.error('至少新增 1 个字段');
@@ -503,11 +485,6 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
                   >
                     <Button
                       type="dashed"
-                      // onClick={() => {
-                      //   COMMON_FIELD_LIST.forEach((field) => {
-                      //     add(field);
-                      //   });
-                      // }}
                       block
                       icon={<PlusOutlined/>}
                     >
