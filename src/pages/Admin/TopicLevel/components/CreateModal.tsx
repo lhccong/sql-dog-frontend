@@ -6,7 +6,7 @@ import {addTopicLevel} from "@/services/backend/topicLevelController";
 
 interface Props {
   visible: boolean;
-  columns: ProColumns<API.User>[];
+  columns: ProColumns<API.TopicLevelAddRequest>[];
   onSubmit: (values: API.TopicLevelAddRequest) => void;
   onCancel: () => void;
 }

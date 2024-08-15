@@ -2,13 +2,13 @@ import {ProColumns, ProTable} from '@ant-design/pro-components';
 import '@umijs/max';
 import {message, Modal} from 'antd';
 import React from 'react';
-import {updateTopicLevel} from "@/services/backend/topicLevelController";
+import {updateTableInfo} from "@/services/backend/tableInfoController";
 
 interface Props {
-  oldData?: API.TopicLevel;
+  oldData?: API.TableInfo;
   visible: boolean;
-  columns: ProColumns<API.TopicLevelUpdateRequest>[];
-  onSubmit: (values: API.TopicLevelUpdateRequest) => void;
+  columns: ProColumns<API.TableInfoUpdateRequest>[];
+  onSubmit: (values: API.TableInfoUpdateRequest) => void;
   onCancel: () => void;
 }
 
@@ -17,10 +17,10 @@ interface Props {
  *
  * @param fields
  */
-const handleUpdate = async (fields: API.TopicLevelUpdateRequest) => {
+const handleUpdate = async (fields: API.TableInfoUpdateRequest) => {
   const hide = message.loading('正在更新');
   try {
-    await updateTopicLevel(fields);
+    await updateTableInfo(fields);
     hide();
     message.success('更新成功');
     return true;
@@ -59,7 +59,7 @@ const UpdateModal: React.FC<Props> = (props) => {
         form={{
           initialValues: oldData,
         }}
-        onSubmit={async (values: API.TopicLevelAddRequest) => {
+        onSubmit={async (values: API.TableInfoAddRequest) => {
           const success = await handleUpdate({
             ...values,
             id: oldData.id as any,
