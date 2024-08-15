@@ -45,7 +45,7 @@ const CodeGenerate: React.FC = () => {
     if (!tableId) {
       return;
     }
-    getTableInfoVoById({id: BigInt(tableId)})
+    getTableInfoVoById({id: BigInt(tableId) as any})
       .then((res) => {
         const tableSchema = JSON.parse(res.data?.content as any);
         // eslint-disable-next-line @typescript-eslint/no-use-before-define

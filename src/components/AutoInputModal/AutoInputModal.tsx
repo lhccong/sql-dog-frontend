@@ -30,7 +30,7 @@ const AutoInputModal: React.FC<Props> = (props) => {
     }
     try {
       const res = await getSchemaByAuto(values);
-      onSubmit?.(res.data);
+      onSubmit?.(res.data as any);
     } catch (e: any) {
       message.error('导入错误，' + e.message);
     }
