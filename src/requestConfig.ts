@@ -64,7 +64,7 @@ export const requestConfig: RequestConfig = {
         throw new Error('请先登录');
       }
 
-      if (code !== 0) {
+      if (code !== 0 && !requestPath.includes('download')) {
         message.error(data.message);
       }
       return response;
