@@ -3,7 +3,7 @@ import {Link, useModel} from '@umijs/max';
 import {Button, Card, Empty, Input, message, Space} from 'antd';
 import React, {useEffect, useState} from 'react';
 import FieldInfoList from "@/components/FieldInfoList/FieldInfoList";
-import {listFieldInfoByPage, listFieldInfoVoByPage} from "@/services/backend/fieldInfoController";
+import {listFieldInfoVoByPage} from "@/services/backend/fieldInfoController";
 
 // 默认分页大小
 const DEFAULT_PAGE_SIZE = 3;
@@ -51,8 +51,6 @@ const FieldInfoCard: React.FC<Props> = (props) => {
   const innerOnLoad = () => {
     listFieldInfoVoByPage({
       ...searchParams,
-      // 只展示已审核通过的
-      reviewStatus: 1,
       pageSize: 3,
     })
       .then((res) => {
