@@ -151,7 +151,7 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
               <div className="circle green"></div>
             </div>
             <div
-              style={{height: "50vh", width: '100%', maxWidth: 800, borderRadius: "10px", backgroundColor: '#f0f0f0'}}
+              style={{height: "50vh", width: '100%', maxWidth: 800, borderRadius: "10px", backgroundColor: '#1E1E1E'}}
               id={'container'}/>
           </div>
 

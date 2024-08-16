@@ -33,7 +33,7 @@ export const CodeEditor: React.FC<SqlEditorProps> = ({code, language}) => {
             <div className="circle yellow"></div>
             <div className="circle green"></div>
           </div>
-          <div style={{height: 400, maxHeight: 400, width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}}
+          <div style={{height: 400, maxHeight: 400, width: '100%', maxWidth: 800, backgroundColor: '#1E1E1E'}}
                ref={editorRef}/>
         </div>
       </div>
