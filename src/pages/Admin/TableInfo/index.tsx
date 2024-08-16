@@ -1,6 +1,10 @@
-import CreateModal from '@/pages/Admin/TopicLevel/components/CreateModal';
-import UpdateModal from '@/pages/Admin/TopicLevel/components/UpdateModal';
-import {deleteTopicLevel, doTopicLevelReview, listTopicLevelByPage} from '@/services/backend/topicLevelController';
+import CreateModal from '@/pages/Admin/TableInfo/components/CreateModal';
+import UpdateModal from '@/pages/Admin/TableInfo/components/UpdateModal';
+import {
+  deleteTableInfo,
+  doTableInfoReview,
+  listTableInfoByPage,
+} from '@/services/backend/tableInfoController';
 import {PlusOutlined} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
@@ -10,29 +14,29 @@ import React, {useRef, useState} from 'react';
 import {REVIEW_STATUS_ENUM} from "@/constants";
 
 /**
- * 关卡题目管理页面
+ * 表格管理页面
  *
  * @constructor
  */
-const TopicLevelAdminPage: React.FC = () => {
+const TableInfoAdminPage: React.FC = () => {
   // 是否显示新建窗口
   const [createModalVisible, setCreateModalVisible] = useState<boolean>(false);
   // 是否显示更新窗口
   const [updateModalVisible, setUpdateModalVisible] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   // 当前用户点击的数据
-  const [currentRow, setCurrentRow] = useState<API.TopicLevel>();
+  const [currentRow, setCurrentRow] = useState<API.TableInfo>();
 
   /**
    * 删除节点
    *
    * @param row
    */
-  const handleDelete = async (row: API.TopicLevel) => {
+  const handleDelete = async (row: API.TableInfo) => {
     const hide = message.loading('正在删除');
     if (!row) return true;
     try {
-      await deleteTopicLevel({
+      await deleteTableInfo({
         id: row.id as any,
       });
       hide();
@@ -55,7 +59,7 @@ const TopicLevelAdminPage: React.FC = () => {
 
     try {
       // 调用接口更新审核状态
-      await doTopicLevelReview({
+      await doTableInfoReview({
         id: row.id as any,
         reviewStatus: status,  // 传递枚举值的键，如 1（通过）或 2（拒绝）
         reviewMessage,         // 传递审核信息
@@ -72,93 +76,49 @@ const TopicLevelAdminPage: React.FC = () => {
     }
   };
 
+
   /**
    * 表格列配置
    */
-  const columns: ProColumns<API.TopicLevel>[] = [
+  const columns: ProColumns<API.TableInfo>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
       valueType: 'text',
       hideInForm: true,
-      width: 40,
+      width: 160,
       order: 3,
     },
     {
-      title: '关卡名称',
-      dataIndex: 'title',
+      title: '表格名称',
+      dataIndex: 'name',
       valueType: 'text',
       order: 2,
-      width: 150,
+      width: 200,
     },
     {
-      title: '初始化 SQL',
-      dataIndex: 'initSQL',
+      title: '表格信息',
+      dataIndex: 'content',
       valueType: 'text',
       ellipsis: true,
-      width: 120,
+      width: 200,
     },
-    {
-      title: 'Markdown 内容',
-      dataIndex: 'mdContent',
-      valueType: 'text',
-      ellipsis: true,
-      width: 250,
-    },
-    {
-      title: '标准答案',
-      dataIndex: 'answer',
-      valueType: 'text',
-      ellipsis: true,
-      width: 150,
-    },
-    {
-      title: '提示',
-      dataIndex: 'hint',
-      valueType: 'text',
-      ellipsis: true,
-      width: 100,
-    },
-    {
-      title: '类别',
-      dataIndex: 'type',
-      valueEnum: {
-        custom: {
-          text: '自定义',
-        },
-        system: {
-          text: '系统',
-        },
-      },
-      order: 1,
-      width: 50,
-    },
+
     {
       title: "审核状态",
       dataIndex: "reviewStatus",
       valueEnum: REVIEW_STATUS_ENUM,
       order: 1,
-      width: 80,
+      width: 100,
     },
     {
       title: '审核信息',
       dataIndex: 'reviewMessage',
       valueType: 'text',
       ellipsis: true,
-      width: 80,
+      width: 200,
     },
-    {
-      title: "上一题 ID",
-      dataIndex: 'preLevelId',
-      valueType: 'text',
-      width: 80,
-    },
-    {
-      title: "下一题 ID",
-      dataIndex: 'nextLevelId',
-      valueType: 'text',
-      width: 80,
-    },
+
     {
       title: '创建时间',
       sorter: true,
@@ -166,7 +126,7 @@ const TopicLevelAdminPage: React.FC = () => {
       valueType: 'dateTime',
       hideInSearch: true,
       hideInForm: true,
-      width: 100,
+      width: 200,
     },
     {
       title: '更新时间',
@@ -175,7 +135,7 @@ const TopicLevelAdminPage: React.FC = () => {
       valueType: 'dateTime',
       hideInSearch: true,
       hideInForm: true,
-      width: 100,
+      width: 200,
     },
     {
       title: '操作',
@@ -223,7 +183,7 @@ const TopicLevelAdminPage: React.FC = () => {
 
   return (
     <>
-      <ProTable<API.TopicLevel>
+      <ProTable<API.TableInfo>
         headerTitle={'查询表格'}
         actionRef={actionRef}
         pagination={{
@@ -251,12 +211,12 @@ const TopicLevelAdminPage: React.FC = () => {
           const sortField = Object.keys(sort)?.[0];
           const sortOrder = sort?.[sortField] ?? undefined;
 
-          const {data, code} = await listTopicLevelByPage({
+          const {data, code} = await listTableInfoByPage({
             ...params,
             sortField,
             sortOrder,
             ...filter,
-          } as API.TopicLevelQueryRequest);
+          } as API.TableInfoQueryRequest);
 
           return {
             success: code === 0,
@@ -268,7 +228,6 @@ const TopicLevelAdminPage: React.FC = () => {
       />
       <CreateModal
         visible={createModalVisible}
-        columns={columns}
         onSubmit={() => {
           setCreateModalVisible(false);
           actionRef.current?.reload();
@@ -294,4 +253,4 @@ const TopicLevelAdminPage: React.FC = () => {
   );
 };
 
-export default TopicLevelAdminPage;
+export default TableInfoAdminPage;

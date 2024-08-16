@@ -1,3 +1,4 @@
+import { BarChartOutlined, FileOutlined, TableOutlined, EditOutlined } from '@ant-design/icons';
 export default [
   {
     path: '/user',
@@ -38,6 +39,8 @@ export default [
       {path: '/admin', redirect: '/admin/user'},
       {icon: 'table', path: '/admin/user', component: './Admin/User', name: '用户管理'},
       {icon: 'table', path: '/admin/topicLevel', component: './Admin/TopicLevel', name: '关卡管理'},
+      {icon: 'table', path: '/admin/tableInfo', component: './Admin/TableInfo', name: '表格管理'},
+      {icon: 'table', path: '/admin/fieldInfo', component: './Admin/FieldInfo', name: '字段管理'},
     ],
   },
   {path: '/', redirect: '/code'},
