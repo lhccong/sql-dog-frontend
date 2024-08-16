@@ -5,6 +5,7 @@ import {format} from "sql-formatter";
 import {initDB, runSQL} from "@/core/sqlExecutor";
 import {Database, QueryExecResult} from "sql.js";
 import {RESULT_STATUS_ENUM} from "@/core/useCheckResult";
+import "./index.less"
 
 interface SqlEditorProps {
   level: API.TopicLevelVo;
@@ -143,7 +144,17 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
         order={layout === 'output' ? 2 : 2}
       >
         <div style={{display: 'grid', gridTemplateRows: '1fr auto', gap: '20px', justifyItems: 'center'}}>
-          <div style={{height: "55vh", width: '100%', maxWidth: 800, backgroundColor: '#f0f0f0'}} id={'container'}/>
+          <div className="code-container">
+            <div className="code-header">
+              <div className="circle red"></div>
+              <div className="circle yellow"></div>
+              <div className="circle green"></div>
+            </div>
+            <div
+              style={{height: "50vh", width: '100%', maxWidth: 800, borderRadius: "10px", backgroundColor: '#f0f0f0'}}
+              id={'container'}/>
+          </div>
+
           <div
             style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%', maxWidth: 800}}>
             <Button type="primary" onClick={run}>运行</Button>
