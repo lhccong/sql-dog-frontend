@@ -40,7 +40,8 @@ const GenerateResultCard: React.FC<Props> = (props) => {
       return;
     }
     try {
-      const res = await downloadDataExcel(result);
+
+      const res = await downloadDataExcel({tableSchema: result.tableSchema, dataList: result.dataList});
       // 下载文件
       const blob = new Blob([res]);
       const objectURL = URL.createObjectURL(blob);
