@@ -60,7 +60,7 @@ export async function editReviewStatus(
 }
 
 /** 生成创建字段的 SQL GET /fieldInfo/generate/sql */
-export async function generateCreateSql1(
+export async function generateCreateSqlByField(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.generateCreateSql1Params,
   options?: { [key: string]: any },

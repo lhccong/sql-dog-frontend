@@ -12,7 +12,6 @@ import {
   message,
   Popconfirm,
   Space,
-  Tag,
   Typography,
 } from 'antd';
 import {PaginationConfig} from 'antd/es/pagination';
@@ -20,7 +19,7 @@ import copy from 'copy-to-clipboard';
 import React, {useEffect, useState} from 'react';
 import './index.less';
 import ReportModal from "@/components/ReportModal/ReportModal";
-import {deleteFieldInfo} from "@/services/backend/fieldInfoController";
+import {deleteFieldInfo, generateCreateSqlByField} from "@/services/backend/fieldInfoController";
 
 interface Props {
   pagination: PaginationConfig;
@@ -101,8 +100,8 @@ const FieldInfoList: React.FC<Props> = (props) => {
                 )
               }
             >
-              <Badge.Ribbon text={item.userId == 1 ? "官方" : showTag && item.reviewStatus === 1 ? "公开" : ""}
-                            color={item.userId == 1 ? "gold" : showTag && item.reviewStatus === 1 ? "green" : ""}>
+              <Badge.Ribbon text={item.userId == 1 ? "官方" : item.reviewStatus === 1 ? "公开" : ""}
+                            color={item.userId == 1 ? "gold" : item.reviewStatus === 1 ? "green" : ""}>
                 <Descriptions
                   column={3}
                 >
@@ -142,14 +141,14 @@ const FieldInfoList: React.FC<Props> = (props) => {
                 <Button
                   type="text"
                   onClick={() => {
-                    // generateCreateFieldSql(item.id)
-                    //   .then((res) => {
-                    //     copy(res.data);
-                    message.success('复制创建字段 SQL 成功');
-                    //   })
-                    //   .catch((e) => {
-                    //     message.error('复制失败，' + e.message);
-                    //   });
+                    generateCreateSqlByField({id: item.id})
+                      .then((res) => {
+                        copy(res.data as any);
+                        message.success('复制创建字段 SQL 成功');
+                      })
+                      .catch((e: { message: string; }) => {
+                        message.error('复制失败，' + e.message);
+                      });
                   }}
                 >
                   复制语句
