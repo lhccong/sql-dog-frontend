@@ -44,6 +44,36 @@ export async function editFieldInfo(
   });
 }
 
+/** 更改审批字段状态 POST /fieldInfo/edit/status */
+export async function editReviewStatus(
+  body: API.FieldInfoEditReviewStatusRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseBoolean>('/fieldInfo/edit/status', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 生成创建字段的 SQL GET /fieldInfo/generate/sql */
+export async function generateCreateSql1(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.generateCreateSql1Params,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseString>('/fieldInfo/generate/sql', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 根据 id 获取字段信息（封装类） GET /fieldInfo/get/vo */
 export async function getFieldInfoVoById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

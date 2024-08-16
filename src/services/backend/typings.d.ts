@@ -271,6 +271,12 @@ declare namespace API {
     content?: string;
   };
 
+  type FieldInfoEditReviewStatusRequest = {
+    id?: number;
+    reviewStatus?: number;
+    reviewMessage?: string;
+  };
+
   type FieldInfoQueryRequest = {
     current?: number;
     pageSize?: number;
@@ -312,6 +318,10 @@ declare namespace API {
 
   type GenerateBySqlRequest = {
     sql?: string;
+  };
+
+  type generateCreateSql1Params = {
+    id: number;
   };
 
   type generateCreateSqlParams = {
