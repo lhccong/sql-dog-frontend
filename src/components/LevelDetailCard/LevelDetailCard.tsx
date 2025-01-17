@@ -84,7 +84,9 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
         type: 'success',
         content: '恭喜解答成功🎉',
       });
-    } else {
+    }else if(errorMsg === "init"){
+      setSqlExecResult(0);
+    }else {
       setSqlExecResult(0);
       messageApi.open({
         type: 'error',

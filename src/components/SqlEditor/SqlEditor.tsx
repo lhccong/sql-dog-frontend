@@ -47,21 +47,21 @@ export const SqlEditor: React.FC<SqlEditorProps> = ({sql, onSubmit, initSql, lev
 
     async function fetchData() {
       db.current = await initDB(initSql);
-      let answerResult = null as unknown as QueryExecResult[];
-      const result = runSQL(db.current, sql === null ? "" : sql as string);
-      const execPlanResult = runSQL(db.current, sql === null ? "" : "EXPLAIN QUERY PLAN " + sql as string);
-      let errorMsg = ""
-      if (level !== null) {
-        answerResult = runSQL(db.current, level === null ? "" : level.answer as string);
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        const compareResult = checkResult(result, answerResult);
-        if (compareResult !== 1) {
-          errorMsg = "与正确答案不符喔";
-        }
-      }
-      onSubmit(sql as any, result, answerResult, execPlanResult, errorMsg);  // 将结果传递给父组件
-      // 将结果传递给父组件
-      return result;
+      // let answerResult = null as unknown as QueryExecResult[];
+      // const result = runSQL(db.current, sql === null ? "" : sql as string);
+      // const execPlanResult = runSQL(db.current, sql === null ? "" : "EXPLAIN QUERY PLAN " + sql as string);
+      let errorMsg = "init"
+      // if (level !== null) {
+      //   answerResult = runSQL(db.current, level === null ? "" : level.answer as string);
+      //   // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      //   const compareResult = checkResult(result, answerResult);
+      //   if (compareResult !== 1) {
+      //     errorMsg = "与正确答案不符喔";
+      //   }
+      // }
+      onSubmit(sql as any, null, null, null, errorMsg);  // 将结果传递给父组件
+      // // 将结果传递给父组件
+      // return result;
     }
 
     fetchData().then(r => {
