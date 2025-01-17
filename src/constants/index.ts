@@ -1,12 +1,12 @@
 /**
  * 本地后端地址
  */
-export const BACKEND_HOST_LOCAL = 'https://qingxin.store/sqldog/api';
+export const BACKEND_HOST_LOCAL = 'https://codebug.icu/sqldog/api';
 
 /**
  * 线上后端地址
  */
-export const BACKEND_HOST_PROD = 'https://qingxin.store/sqldog/api';
+export const BACKEND_HOST_PROD = 'https://codebug.icu/sqldog/api';
 
 export const BACKEND_HOST_LOCAL_REDIRECT = BACKEND_HOST_LOCAL + '/api/dog/';
 

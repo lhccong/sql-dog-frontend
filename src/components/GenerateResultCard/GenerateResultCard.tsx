@@ -185,13 +185,17 @@ const GenerateResultCard: React.FC<Props> = (props) => {
           children: (
             <>
               <Space>
-                <Button
-                  icon={<DownloadOutlined/>}
-                  type="primary"
-                  onClick={() => doDownloadDataExcel()}
-                >
-                  下载数据
-                </Button>
+                {/*<Button*/}
+                {/*  disabled={true}*/}
+                {/*  icon={<DownloadOutlined/>}*/}
+                {/*  type="primary"*/}
+                {/*  onClick={() => {*/}
+                {/*    //doDownloadDataExcel()*/}
+                {/*    message.warning("下载异常暂时关闭")*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  下载数据*/}
+                {/*</Button>*/}
               </Space>
               <div style={{marginTop: 16}}/>
               <Table

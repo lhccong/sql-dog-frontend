@@ -6,7 +6,7 @@ import {
   Collapse,
   CollapseProps,
   Empty,
-  Image,
+  Image, message,
   Radio, RadioChangeEvent,
   Row,
   Tabs,
@@ -64,7 +64,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
       ],
     }]
   );
-
+  const [messageApi, contextHolder] = message.useMessage();
   const [execPlanResult, setExecPlanResult] = useState<QueryExecResult[]>(
     [{
       columns: ['a', 'b'],
@@ -80,8 +80,16 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
     console.log("获取到执行结果啦:", result);
     if (errorMsg === "") {
       setSqlExecResult(1);
+      messageApi.open({
+        type: 'success',
+        content: '恭喜解答成功🎉',
+      });
     } else {
       setSqlExecResult(0);
+      messageApi.open({
+        type: 'error',
+        content: '回答失败了喔，再试试吧👻',
+      });
     }
     setResult(result);
     setExecPlanResult(execPlanResult);
@@ -160,6 +168,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
 
   return (
     <>
+      {contextHolder}
       <PageContainer
         title={
           <>

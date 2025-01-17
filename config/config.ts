@@ -129,7 +129,7 @@ export default defineConfig({
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      schemaPath: 'https://qingxin.store/sqldog/api/v3/api-docs',
+      schemaPath: 'https://codebug.icu/sqldog/api/v3/api-docs',
       projectName: 'backend',
     },
   ],
