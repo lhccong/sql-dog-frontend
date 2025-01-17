@@ -6,7 +6,7 @@ import {
   Collapse,
   CollapseProps,
   Empty,
-  Image, message,
+  Image, message, notification,
   Radio, RadioChangeEvent,
   Row,
   Tabs,
@@ -65,6 +65,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
     }]
   );
   const [messageApi, contextHolder] = message.useMessage();
+  const [api, contextHolderEnd] = notification.useNotification();
   const [execPlanResult, setExecPlanResult] = useState<QueryExecResult[]>(
     [{
       columns: ['a', 'b'],
@@ -74,7 +75,15 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
       ],
     }]
   );
-
+  const openNotificationWithIcon = (type: string) => {
+    // @ts-ignore
+    api[type]({
+      message: '见证 SQL 大佬的诞生😍',
+      showProgress: true,
+      description:
+        '恭喜你闯关成功🎉，觉得不错的话能给作者点个 star⭐ 吗，谢谢啦~\ngithub地址：https://github.com/lhccong/sql-dog-backend',
+    });
+  };
   const handleResult = (sql: string, result: QueryExecResult[], answerResult: QueryExecResult[], execPlanResult: QueryExecResult[], errorMsg: string | undefined) => {
     setSql(sql);
     console.log("获取到执行结果啦:", result);
@@ -84,9 +93,9 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
         type: 'success',
         content: '恭喜解答成功🎉',
       });
-    }else if(errorMsg === "init"){
+    } else if (errorMsg === "init") {
       setSqlExecResult(0);
-    }else {
+    } else {
       setSqlExecResult(0);
       messageApi.open({
         type: 'error',
@@ -129,10 +138,17 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
         <div style={{display: "flex", float: "right", paddingTop: 20}}>
           {topicData?.preLevelId as any > 0 && (
             <Button style={{width: 100}} onClick={() => setTopicId(topicData?.preLevelId as any)}>上一题</Button>)}
-          {topicData?.nextLevelId as any > 0 && (
+          {topicData?.nextLevelId as any && (
             <Tooltip placement="topLeft" title={"回答正确✅才可以进行下一关喔"}>
               <Button type={"primary"} disabled={sqlExecResult !== 1} style={{width: 100, marginLeft: 40}}
-                      onClick={() => setTopicId(topicData?.nextLevelId as any)}>下一题</Button></Tooltip>)
+                      onClick={() => {
+                        // eslint-disable-next-line eqeqeq
+                        if (topicData?.nextLevelId == -1) {
+                          openNotificationWithIcon('success');
+                        } else {
+                          setTopicId(topicData?.nextLevelId as any)
+                        }
+                      }}>下一题</Button></Tooltip>)
           }
         </div>
       </>,
@@ -171,6 +187,7 @@ const LevelDetailCard: React.FC<LevelsPageProps> = ({id}) => {
   return (
     <>
       {contextHolder}
+      {contextHolderEnd}
       <PageContainer
         title={
           <>
